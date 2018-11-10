@@ -48,10 +48,16 @@ function validateField(fieldData, formData) {
     const rules = fieldData.rules.split('|');
 
     for (let i = 0; i < rules.length; i++) {
-        const rule = parseRule(rules[i]);
+        let rule;
+        try {
+            rule = parseRule(rules[i]);
+        } catch (e) {
+            console.warn(`Invalid rule on field ${fieldData.key} rule=${rules[i]}`);
+            continue;
+        }
 
         if (!RULES[rule.key]) {
-            console.warn(`Invalid rule on field ${fieldData.key} rule=${rule}`);
+            console.warn(`Could not find rule on field ${fieldData.key} rule=${rules[i]}`);
             continue;
         }
 
@@ -74,5 +80,6 @@ function validateField(fieldData, formData) {
 
 toExport.validateForm = validateForm;
 toExport.validateField = validateField;
+toExport.parseRule = parseRule;
 
 exports.validate = toExport;
