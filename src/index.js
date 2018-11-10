@@ -18,7 +18,7 @@ function validateForm(formData) {
         if (result.error) {
             return {
                 error: true,
-                name: key,
+                key,
                 rule: result.rule,
             }
         }
@@ -54,7 +54,6 @@ function validateField(fieldData, formData) {
             return {
                 error: true,
                 rule,
-                name: fieldData.name,
             }
         }
     }

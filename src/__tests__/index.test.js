@@ -31,6 +31,8 @@ describe('Form Validator', () => {
         const result = validateForm(formData)
 
         expect(result.error).toBe(true);
+        expect(result.key).toEqual("test");
+        expect(result.rule).toEqual('required');
         expect(console.warn).not.toHaveBeenCalled();
     })
 
