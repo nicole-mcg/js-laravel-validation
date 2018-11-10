@@ -4,9 +4,12 @@ describe('Rules', () => {
 
     function createRuleTests(rule, tests) {
         describe(`${rule} rule`, () => {
-            tests.forEach(({ desc, ruleParams={}, result, skip=false }) => {
+            tests.forEach(({ desc, ruleParams={}, result, skip=false, value=undefined }) => {
+                if (value !== undefined) ruleParams.value = value;
                 const testName = `can ${result ? 'allow' : 'deny'} a ${desc}`;
-                const testFunc = () => expect(rules[rule](ruleParams)).toEqual(result);
+                const testFunc = () => {
+                    expect(rules[rule](ruleParams)).toEqual(result)
+                }
 
                 if (skip) {
                     xit(testName, testFunc);
@@ -18,20 +21,46 @@ describe('Rules', () => {
         });
     }
 
+    // For rules: accepted, filled, required
+    const NOT_EMPTY_TESTS = [
+        {
+            desc: 'boolean (true)',
+            value: true,
+            result: true,
+        },
+        {
+            desc: 'truthy value',
+            value: 1,
+            result: true,
+        },
+        {
+            desc: 'falsy value',
+            value: 0,
+            result: false,
+        },
+        {
+            desc: 'boolean (false)',
+            value: false,
+            result: false,
+        },
+    ]
+
+    createRuleTests('accepted', NOT_EMPTY_TESTS);
+
     createRuleTests('alpha', [
         {
             desc: 'valid value',
-            ruleParams: { value: 'ff' },
+            value: 'ff',
             result: true,
         },
         {
             desc: 'number',
-            ruleParams: { value: 'f4' },
+            value: 'f4',
             result: false,
         },
         {
             desc: 'symbol',
-            ruleParams: { value: 'f%' },
+            value: 'f%',
             result: false,
         }
     ]);
@@ -39,7 +68,7 @@ describe('Rules', () => {
     createRuleTests('array', [
         {
             desc: 'valid value',
-            ruleParams: { value: [] },
+            value: [],
             result: true,
         },
         {
@@ -60,22 +89,22 @@ describe('Rules', () => {
     createRuleTests('boolean', [
         {
             desc: 'valid value (true)',
-            ruleParams: { value: true },
+            value: true,
             result: true,
         },
         {
             desc: 'valid value (false)',
-            ruleParams: { value: true },
+            value: true,
             result: true,
         },
         {
             desc: 'truthy value',
-            ruleParams: { value: 1 },
+            value: 1,
             result: false,
         },
         {
             desc: 'falsy value',
-            ruleParams: { value: 0 },
+            value: 0,
             result: false,
         }
     ]);
@@ -118,23 +147,23 @@ describe('Rules', () => {
     createRuleTests('date', [
         {
             desc: 'valid date string',
-            ruleParams: { value: '09/17/2018' },
+            value: '09/17/2018',
             result: true,
         },
         {
             desc: 'number (timestamp)',
-            ruleParams: { value: 0 },
+            value: 0,
             result: true,
         },
         {
             desc: 'valid date object',
-            ruleParams: { value: new Date('09/17/2018') },
+            value: new Date('09/17/2018'),
             result: true,
         },
         {
             skip: true,
             desc: 'string',
-            ruleParams: { value: "whatup" },
+            value: "whatup",
             result: false,
         }
     ]);
@@ -164,6 +193,167 @@ describe('Rules', () => {
             },
             result: false,
         }
+    ]);
+
+    createRuleTests('email', [
+        {
+            desc: 'valid email',
+            value: "test@test.ca",
+            result: true,
+        },
+        {
+            desc: 'email with no @ sign',
+            value: "test.ca",
+            result: false,
+        },
+        {
+            desc: 'email with nothing before @ sign',
+            value: "@test.invalid",
+            result: false,
+        },
+        {
+            desc: 'email with an invalid website (.invalid)',
+            value: "test@test.invalid",
+            result: false,
+        },
+        {
+            desc: 'email with an invalid website (no .)',
+            value: "test@test",
+            result: false,
+        },
     ])
 
+    createRuleTests('filled', NOT_EMPTY_TESTS);
+
+    createRuleTests('integer', [
+        {
+            desc: 'integer',
+            value: 1,
+            result: true,
+        },
+        {
+            desc: 'string integer',
+            value: "1",
+            result: true,
+        },
+        {
+            desc: 'zero',
+            value: 0,
+            result: true,
+        },
+        {
+            desc: 'float',
+            value: 1.1,
+            result: false,
+        },
+        {
+            desc: 'undefined value',
+            result: false,
+        }
+    ]);
+
+    createRuleTests('json', [
+        {
+            desc: "valid JSON",
+            value: `{
+                "test": 1
+            }`,
+            result: true,
+        },
+        {
+            desc: "invalid JSON",
+            value: `{},`,
+            result: false,
+        },
+        {
+            desc: "object",
+            value: {},
+            result: false,
+        },
+        {
+            desc: "string",
+            value: "test",
+            result: false,
+        },
+    ]);
+
+    createRuleTests('numeric', [
+        {
+            desc: "integer",
+            value: 1,
+            result: true,
+        },
+        {
+            desc: "float",
+            value: 1.1,
+            result: true,
+        },
+        {
+            desc: "string integer",
+            value: "1",
+            result: true
+        },
+        {
+            desc: "string float",
+            value: "1.1",
+            result: true,
+        },
+        {
+            desc: "string",
+            value: "test",
+            result: false,
+        },
+        {
+            desc: "object",
+            value: {},
+            result: false,
+        },
+    ]);
+
+    createRuleTests('present', [
+        {
+            desc: 'present value',
+            value: true,
+            result: true,
+        },
+        {
+            desc: 'false',
+            value: false,
+            result: true,
+        },
+        {
+            desc: 'null',
+            value: null,
+            result: true,
+        },
+        {
+            desc: 'undefined',
+            result: false,
+        }
+    ]);
+
+    createRuleTests('required', NOT_EMPTY_TESTS);
+
+    createRuleTests('string', [
+        {
+            desc: 'string',
+            value: 'test',
+            result: true,
+        },
+        {
+            desc: 'empty string',
+            value: "",
+            result: true,
+        },
+        {
+            desc: 'boolean',
+            value: true,
+            result: false,
+        },
+        {
+            desc: 'number',
+            value: 1,
+            result: false,
+        }
+    ]);
 })
