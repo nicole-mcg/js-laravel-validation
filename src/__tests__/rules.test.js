@@ -4,21 +4,30 @@ describe('Rules', () => {
 
     function createRuleTests(rule, tests) {
         describe(`${rule} rule`, () => {
-            tests.forEach(({
-                desc,
-                ruleParams={},
-                result,
-                skip=false,
-                value=undefined,
-                values=undefined,
-                params=undefined,
-            }) => {
+            tests.forEach((test) => {
+                const {
+                    desc,
+                    ruleParams={},
+                    result,
+                    skip=false,
+                    value=undefined,
+                    values=undefined,
+                    params=undefined,
+                } = test;
                 if (values !== undefined) ruleParams.values = values;
                 if (value !== undefined) ruleParams.value = value;
                 if (params !== undefined) ruleParams.params = params;
                 const testName = `can ${result ? 'allow' : 'deny'} a ${desc}`;
                 const testFunc = () => {
-                    expect(rules[rule](ruleParams)).toEqual(result);
+                    if (result === undefined) {
+                        expect('You must specify a result').toBe(false);
+                    }
+                    const realResult = rules[rule](ruleParams);
+                    if (realResult != result) {
+                        expect(test).toBe(`Rule test failed:`);
+                        //expect(test).toBe(false);
+                    }
+                    expect(realResult).toEqual(result);
                 };
 
                 if (skip) {
@@ -410,16 +419,53 @@ describe('Rules', () => {
         }
     ]);
 
-    // createRuleTests('different', [
-    //     {
-    //         desc: 'different value',
-    //         value: 1,
-    //         params: ['test'],
-    //         values: {
-                
-    //         }
-    //     }
-    // ])
+    createRuleTests('different', [
+        {
+            desc: 'different bool',
+            value: true,
+            params: ['test'],
+            values: {
+                test: false,
+            },
+            result: true,
+        },
+        {
+            desc: 'different object',
+            value: { x: 1 },
+            params: ['test'],
+            values: {
+                test: { x: 0 },
+            },
+            result: true,
+        },
+        {
+            desc: 'same object',
+            value: { x: 1 },
+            params: ['test'],
+            values: {
+                test: { x: 1 },
+            },
+            result: true,
+        },
+        {
+            desc: 'same array',
+            value: [1],
+            params: ['test'],
+            values: {
+                test: [1],
+            },
+            result: true,
+        },
+        {
+            desc: 'same bool',
+            value: true,
+            params: ['test'],
+            values: {
+                test: true,
+            },
+            result: false,
+        },
+    ])
 
     createRuleTests('distinct', [
         {

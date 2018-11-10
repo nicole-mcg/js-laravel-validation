@@ -32,13 +32,16 @@ export default {
   boolean: ({ value }) => typeof value === 'boolean',
 
   confirmed: ({ value, key, values }) => b(value === values[`${key}_confirmed`]),
+  
   date: ({ value }) => (Date.parse(value) !== NaN),
   date_equals: ({ value, params }) => (Date.parse(value) !== NaN && Date.parse(value) === Date.parse(params[0])),
-
   //date_format
-  //different
+
+  different: ({ value, values, params }) => !b(value == values[params[0]]),//allows same arrays and objects
+
   //digits
   //digits_between
+
   //dimensions
 
   distinct: ({ values, value }) => {
@@ -59,6 +62,7 @@ export default {
   //gte
 
   //image
+
   //in
   //in_array
   
@@ -99,7 +103,9 @@ export default {
   //required_with
   //required_with_all
   //required_without
+
   //same
+
   //size
 
   string: ({ value }) => typeof value === 'string',
