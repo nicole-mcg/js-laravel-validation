@@ -29,6 +29,14 @@ function validateForm(formData) {
     return {};
 }
 
+function parseRule(rule) {
+    const ruleParts = rule.split(':')
+    return {
+        key: ruleParts[0],
+        params: ruleParts[1] ? ruleParts[1].split(',') : [],
+    };
+}
+
 // {key, value, rules}
 function validateField(fieldData, formData) {
 
@@ -40,23 +48,29 @@ function validateField(fieldData, formData) {
     const rules = fieldData.rules.split('|');
 
     for (let i = 0; i < rules.length; i++) {
-        const rule = rules[i];
-
-        if (!RULES[rule]) {
-            console.warn(`Invalid rule on field ${fieldData.key} rule=${rule}`);
+        let rule;
+        try {
+            rule = parseRule(rules[i]);
+        } catch (e) {
+            console.warn(`Invalid rule on field ${fieldData.key} rule=${rules[i]}`);
             continue;
         }
 
-        const ruleParams = {
+        if (!RULES[rule.key]) {
+            console.warn(`Could not find rule on field ${fieldData.key} rule=${rules[i]}`);
+            continue;
+        }
+
+        const params = {
+            ...rule,
             value: fieldData.value,
-            key: fieldData.key,
             values,
         }
 
-        if (!RULES[rule](ruleParams)) {
+        if (!RULES[rule.key](params)) {
             return {
                 error: true,
-                rule,
+                rule: rules[i],
             }
         }
     }
@@ -66,5 +80,6 @@ function validateField(fieldData, formData) {
 
 toExport.validateForm = validateForm;
 toExport.validateField = validateField;
+toExport.parseRule = parseRule;
 
 exports.validate = toExport;
