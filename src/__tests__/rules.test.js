@@ -4,11 +4,16 @@ describe('Rules', () => {
 
     function createRuleTests(rule, tests) {
         describe(`${rule} rule`, () => {
-            tests.forEach(({ desc, ruleParams={}, result }) => {
-                const testName = `can ${result ? 'allow' : 'deny'} a ${desc}`
-                it(testName, () => {
-                    expect(rules[rule](ruleParams)).toEqual(result)
-                });
+            tests.forEach(({ desc, ruleParams={}, result, skip=false }) => {
+                const testName = `can ${result ? 'allow' : 'deny'} a ${desc}`;
+                const testFunc = () => expect(rules[rule](ruleParams)).toEqual(result);
+
+                if (skip) {
+                    xit(testName, testFunc);
+                    return;
+                }
+
+                it(testName, testFunc);
             })
         });
     }
@@ -105,6 +110,57 @@ describe('Rules', () => {
                 values: {
                     test_confirmed: "yo",
                 },
+            },
+            result: false,
+        }
+    ])
+
+    createRuleTests('date', [
+        {
+            desc: 'valid date string',
+            ruleParams: { value: '09/17/2018' },
+            result: true,
+        },
+        {
+            desc: 'number (timestamp)',
+            ruleParams: { value: 0 },
+            result: true,
+        },
+        {
+            desc: 'valid date object',
+            ruleParams: { value: new Date('09/17/2018') },
+            result: true,
+        },
+        {
+            skip: true,
+            desc: 'string',
+            ruleParams: { value: "whatup" },
+            result: false,
+        }
+    ]);
+
+    createRuleTests('distinct', [
+        {
+            desc: 'distinct value',
+            ruleParams: {
+                value: "hey",
+                values: ['hey', 'hi']
+            },
+            result: true,
+        },
+        {
+            desc: 'indistinct value',
+            ruleParams: {
+                value: "hey",
+                values: ['hey', 'hi', "hey"]
+            },
+            result: false,
+        },
+        {
+            desc: 'indistinct object',
+            ruleParams: {
+                value: "hey",
+                values: [{ x: 0 }, 'hi', { x: 0 }]
             },
             result: false,
         }
