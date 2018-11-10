@@ -8,7 +8,7 @@ export default {
   'alpha': ({ value }) => !/[^a-z]/i.test(value), // Value is only letters
   'array': ({ value }) => Array.isArray(value),
   'boolean': ({ value }) => typeof value === 'boolean',
-  'confirmed': ({ value, key, values }) => value === values[`${key}_confirmed`],
+  'confirmed': ({ value, key, values }) => !!(value === values[`${key}_confirmed`]),
   'date': ({ value }) => Date.parse(value) !== NaN,
 
   'distinct': ({ value }) => values.length && values.length === new Set(value).size,
