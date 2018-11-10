@@ -10,8 +10,10 @@ describe('Rules', () => {
                 result,
                 skip=false,
                 value=undefined,
+                values=undefined,
                 params=undefined,
             }) => {
+                if (values !== undefined) ruleParams.values = values;
                 if (value !== undefined) ruleParams.value = value;
                 if (params !== undefined) ruleParams.params = params;
                 const testName = `can ${result ? 'allow' : 'deny'} a ${desc}`;
@@ -406,14 +408,28 @@ describe('Rules', () => {
             params: [ new Date('01/20/2018') ],
             result: false,
         }
-    ])
+    ]);
+
+    // createRuleTests('different', [
+    //     {
+    //         desc: 'different value',
+    //         value: 1,
+    //         params: ['test'],
+    //         values: {
+                
+    //         }
+    //     }
+    // ])
 
     createRuleTests('distinct', [
         {
             desc: 'distinct value',
             ruleParams: {
                 value: "hey",
-                values: ['hey', 'hi']
+                values: {
+                    x: 'hey',
+                    y: 'hi',
+                }
             },
             result: true,
         },
@@ -421,7 +437,11 @@ describe('Rules', () => {
             desc: 'indistinct value',
             ruleParams: {
                 value: "hey",
-                values: ['hey', 'hi', "hey"]
+                values: {
+                    x: 'hey',
+                    y: 'hi',
+                    z: "hey",
+                }
             },
             result: false,
         },
@@ -429,7 +449,11 @@ describe('Rules', () => {
             desc: 'indistinct object',
             ruleParams: {
                 value: "hey",
-                values: [{ x: 0 }, 'hi', { x: 0 }]
+                values: {
+                    x: { x: 0 },
+                    y: 'hi',
+                    z: { x : 0 },
+                }
             },
             result: false,
         }
