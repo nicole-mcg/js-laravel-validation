@@ -393,6 +393,21 @@ describe('Rules', () => {
         }
     ]);
 
+    createRuleTests('date_equals', [
+        {
+            desc: 'equal date',
+            value: new Date('01/20/2018'),
+            params: [ new Date('01/20/2018') ],
+            result: true,
+        },
+        {
+            desc: 'different date',
+            value: new Date('01/21/2018'),
+            params: [ new Date('01/20/2018') ],
+            result: false,
+        }
+    ])
+
     createRuleTests('distinct', [
         {
             desc: 'distinct value',
