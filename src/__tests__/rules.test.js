@@ -587,6 +587,24 @@ describe('Rules', () => {
         },
     ]);
 
+    createRuleTests('file', [
+        {
+            desc: 'file',
+            value: new File([], 'test'),
+            result: true,
+        },
+        {
+            desc: 'bool',
+            value: true,
+            result: false,
+        },
+        {
+            desc: 'object',
+            value: {},
+            result: false,
+        }
+    ])
+
     createRuleTests('filled', NOT_EMPTY_TESTS);
 
     createRuleTests('integer', [

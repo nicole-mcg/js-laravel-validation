@@ -46,7 +46,11 @@ export default {
     return len > min && len < max;
   },
 
-  //dimensions
+  // dimensions: ({ value, params }) => {
+  //   if (value.hasOwnProperty('width') && value.hasOwnProperty('height')) {
+  //     return
+  //   }
+  // }
 
   distinct: ({ values, value }) => {
     return (Object.keys(values).reduce((count, key) => {
@@ -58,7 +62,7 @@ export default {
   },
   email: ({ value }) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value),
 
-  //file
+  file: ({ value }) => value instanceof File,
 
   filled: ({ value }) => isNotEmpty(value),
 
