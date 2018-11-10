@@ -1,52 +1,34 @@
 
-import { validateForm } from '../index.js'
+import { validateForm, validateField } from '../index.js'
 
 describe('Form Validator', () => {
 
     const oldWarn = console.warn;
     console.warn = jest.fn();
 
+    function createFieldData({ key="test", value=null, rules="required" }={}) {
+        return { key, value, rules };
+    }
+
     it('can allow a validated field', () => {
-        const formData = {
-            test: {
-                value: "hey",
-                rules: 'required'
-            }
-        }
+        const fieldData = createFieldData({ value: "hey" })
 
-        const result = validateForm(formData)
-
-        expect(result.error).toBeUndefined();
+        expect(validateField(fieldData)).toEqual({});
         expect(console.warn).not.toHaveBeenCalled();
     })
 
     it('can detect an invalid field', () => {
-        const formData = {
-            test: {
-                value: null,
-                rules: 'required'
-            }
-        }
-
-        const result = validateForm(formData)
+        const result = validateField(createFieldData())
 
         expect(result.error).toBe(true);
-        expect(result.key).toEqual("test");
         expect(result.rule).toEqual('required');
         expect(console.warn).not.toHaveBeenCalled();
     })
 
     it('will throw a warning if there is an unknown rule', () => {
-        const formData = {
-            test: {
-                value: null,
-                rules: 'unknown'
-            }
-        }
+        const fieldData = createFieldData({ rules: 'unknown' })
 
-        const result = validateForm(formData)
-
-        expect(result.error).toBeUndefined();
+        expect(validateField(fieldData)).toEqual({});
         expect(console.warn).toHaveBeenCalled();
     })
 
