@@ -959,6 +959,27 @@ describe('Rules', () => {
 
     createRuleTests('required', NOT_EMPTY_TESTS);
 
+    createRuleTests('same', [
+        {
+            desc: 'same number',
+            value: 1,
+            params: ['test'],
+            values: {
+                test: 1,
+            },
+            result: true,
+        },
+        {
+            desc: 'value that is the same but is a string',
+            value: "1",
+            params: ['test'],
+            values: {
+                test: 1,
+            },
+            result: true,
+        }
+    ])
+
     createRuleTests('string', [
         {
             desc: 'string',

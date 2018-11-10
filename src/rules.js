@@ -37,7 +37,7 @@ export default {
   date_equals: ({ value, params }) => (Date.parse(value) !== NaN && Date.parse(value) === Date.parse(params[0])),
   //date_format
 
-  different: ({ value, values, params }) => !b(value == values[params[0]]),//allows same arrays and objects
+  different: ({ value, values, params }) => b(value != values[params[0]]),//allows same arrays and objects
 
   digits: ({ value, params }) => !isNaN(value) && value.toString().length === parseInt(params[0]),
   digits_between: ({ value, params }) => {
@@ -112,7 +112,8 @@ export default {
   //required_with_all
   //required_without
 
-  //same
+  same: ({ value, values, params }) => b(value == values[params[0]]),//allows same arrays and objects
+
 
   //size
 
