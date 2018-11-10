@@ -761,6 +761,32 @@ describe('Rules', () => {
         }
     ]);
 
+    createRuleTests('ipv4', [
+        {
+            desc: 'valid ipv4',
+            value: "10.255.255.255",
+            result: true,
+        },
+        {
+            desc: 'invalid ipv4',
+            value: "10.255.255.2555",
+            result: false,
+        }
+    ]);
+
+    createRuleTests('ipv6', [
+        {
+            desc: 'valid ipv4',
+            value: "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+            result: true,
+        },
+        {
+            desc: 'invalid ipv4',
+            value: "10.255.255.2555",
+            result: false,
+        }
+    ]);
+
     createRuleTests('json', [
         {
             desc: "valid JSON",
