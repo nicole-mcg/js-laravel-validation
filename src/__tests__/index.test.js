@@ -37,6 +37,30 @@ describe('Form Validator', () => {
 
             restoreMocks();
         })
+
+        it('can return an error', () => {
+            const formData = {
+                test: {
+                    rules: 'required',
+                }
+            }
+
+            const validateField = mockValidateField({
+                error: true,
+                key: 'test',
+                rule: 'required',
+            });
+
+            expect(validateForm(formData)).toEqual({
+                errors: {
+                    test: {
+                        rule: 'required',
+                    }
+                }
+            })
+
+            restoreMocks();
+        })
     });
 
     describe('parseRule', () => {

@@ -3,10 +3,11 @@ import RULES from './rules'
 const toExport = {};
 
 // { fieldName: {value, rules} }
-function validateForm(formData) {
+function validateForm(formData, bail=true) {
 
     const keys = Object.keys(formData);
 
+    let errors = {};
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
         const fieldData = {
@@ -18,15 +19,19 @@ function validateForm(formData) {
         const result = toExport.validateField(fieldData, formData);
 
         if (result.error) {
-            return {
-                key,
-                error: true,
-                rule: result.rule,
+            errors[key] = {
+                rule: result.rule
+            }
+
+            if (bail) {
+                break;
             }
         }
     }
 
-    return {};
+    return {
+        errors: errors == {} ? false : errors,
+    }
 }
 
 function parseRule(rule) {
