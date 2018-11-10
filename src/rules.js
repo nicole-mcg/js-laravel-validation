@@ -39,7 +39,7 @@ export default {
 
   different: ({ value, values, params }) => !b(value == values[params[0]]),//allows same arrays and objects
 
-  //digits
+  digits: ({ value, params }) => !isNaN(value) && value.toString().length === parseInt(params[0]),
   //digits_between
 
   //dimensions

@@ -465,6 +465,33 @@ describe('Rules', () => {
             },
             result: false,
         },
+    ]);
+
+    createRuleTests('digits', [
+        {
+            desc: 'value with correct # of digits',
+            value: 123,
+            params: [3],
+            result: true,
+        },
+        {
+            desc: 'number string',
+            value: 123,
+            params: ["3"],
+            result: true,
+        },
+        {
+            desc: 'value with less digits',
+            value: 23,
+            params: [3],
+            result: false,
+        },
+        {
+            desc: 'value with more digits',
+            value: 2345,
+            params: [3],
+            result: false,
+        }
     ])
 
     createRuleTests('distinct', [
