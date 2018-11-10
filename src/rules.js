@@ -4,7 +4,7 @@
 
 export default {
   //key: verify function
-  //'accepted': ({ value }) => !! value, // Use for license accept fields (must be truthy)
+  'accepted': ({ value }) => isNotEmpty(value), // Use for license accept fields (must be truthy)
   'alpha': ({ value }) => !/[^a-z]/i.test(value), // Value is only letters
   'array': ({ value }) => Array.isArray(value),
   'boolean': ({ value }) => typeof value === 'boolean',
@@ -22,7 +22,7 @@ export default {
   'email': ({ value }) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value),
   'filled': ({ value }) => isNotEmpty(value),
   'integer': ({ value }) => {
-    Number.isInteger(typeof value === 'string' ? parseInt(value) : value)
+    return Number.isInteger(typeof value === 'string' ? parseInt(value) : value)
   },
   'json': ({ value }) => {
     try { JSON.parse(value ) } catch (e) { return false }
@@ -35,5 +35,5 @@ export default {
 }
 
 function isNotEmpty(value) {
-  return value && value !== "";
+  return !! value;
 }
