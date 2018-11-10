@@ -16,6 +16,12 @@ export default {
   'array': ({ value }) => Array.isArray(value),
 
   //bail: is on by default and can be set in `validateForm` call
+
+  'before': ({ value, params }) => !!(new Date(value) < new Date(params[0])),
+  'before_or_equal': ({ value, params }) => !!(new Date(value) <= new Date(params[0])),
+
+  //between:max,min
+
   'boolean': ({ value }) => typeof value === 'boolean',
 
   'confirmed': ({ value, key, values }) => !!(value === values[`${key}_confirmed`]),

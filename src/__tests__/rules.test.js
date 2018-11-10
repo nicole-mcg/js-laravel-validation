@@ -63,6 +63,12 @@ describe('Rules', () => {
             result: true,
         },
         {
+            desc: 'null param',
+            value: new Date('01/20/2018'),
+            params: [ null ],
+            result: true,
+        },
+        {
             desc: 'date before specified date',
             value: new Date('01/14/2018'),
             params: [ new Date('01/15/2018') ],
@@ -73,12 +79,6 @@ describe('Rules', () => {
             value: new Date('01/20/2018'),
             params: [ new Date('01/20/2018') ],
             result: false,
-        },
-        {
-            desc: 'null param',
-            value: new Date('01/20/2018'),
-            params: [ null ],
-            result: true,
         },
         {
             desc: 'null value',
@@ -96,6 +96,12 @@ describe('Rules', () => {
             result: true,
         },
         {
+            desc: 'null param',
+            value: new Date('01/20/2018'),
+            params: [ null ],
+            result: true,
+        },
+        {
             desc: 'date before specified date',
             value: new Date('01/14/2018'),
             params: [ new Date('01/15/2018') ],
@@ -105,12 +111,6 @@ describe('Rules', () => {
             desc: 'equal date',
             value: new Date('01/20/2018'),
             params: [ new Date('01/20/2018') ],
-            result: true,
-        },
-        {
-            desc: 'null param',
-            value: new Date('01/20/2018'),
-            params: [ null ],
             result: true,
         },
         {
@@ -217,6 +217,72 @@ describe('Rules', () => {
     ]);
 
     // bail: is on by default and can be set in `validateForm` call
+
+    createRuleTests('before', [
+        {
+            desc: 'date before specified date',
+            value: new Date('01/15/2018'),
+            params: [ new Date('01/20/2018') ],
+            result: true,
+        },
+        {
+            desc: 'null value',
+            value: null,
+            params: [ new Date('01/15/2018') ],
+            result: true,
+        },
+        {
+            desc: 'date after specified date',
+            value: new Date('01/25/2018'),
+            params: [ new Date('01/20/2018') ],
+            result: false,
+        },
+        {
+            desc: 'equal date',
+            value: new Date('01/20/2018'),
+            params: [ new Date('01/20/2018') ],
+            result: false,
+        },
+        {
+            desc: 'null param',
+            value: new Date('01/20/2018'),
+            params: [ null ],
+            result: false,
+        },
+    ]);
+
+    createRuleTests('before_or_equal', [
+        {
+            desc: 'date before specified date',
+            value: new Date('01/15/2018'),
+            params: [ new Date('01/20/2018') ],
+            result: true,
+        },
+        {
+            desc: 'equal date',
+            value: new Date('01/20/2018'),
+            params: [ new Date('01/20/2018') ],
+            result: true,
+        },
+        {
+            desc: 'null value',
+            value: null,
+            params: [ new Date('01/15/2018') ],
+            result: true,
+        },
+        {
+            desc: 'date after specified date',
+            value: new Date('01/25/2018'),
+            params: [ new Date('01/20/2018') ],
+            result: false,
+        },
+        {
+            desc: 'null param',
+            value: new Date('01/20/2018'),
+            params: [ null ],
+            result: false,
+        },
+    ]);
 
     createRuleTests('boolean', [
         {
