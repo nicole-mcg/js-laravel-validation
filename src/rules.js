@@ -21,11 +21,7 @@ export default {
 
   between: ({ value, params }) => {
     const [min, max] = params;
-
-    if (value.hasOwnProperty('length')) {
-      value = value.length;
-    }
-
+    value = sizeOf(value);
     return value > min && value < max;
   },
 
@@ -90,13 +86,13 @@ export default {
   lt: ({ value, values, params }) => value < values[params[0]],
   lte: ({ value, values, params }) => value <= values[params[0]],
 
-  //max
+  max: ({ value, params }) => sizeOf(value) <= params[0],
 
   //mimetypes?
 
-  //min
+  min: ({ value, params }) => sizeOf(value) >= params[0],
 
-  //not_in
+  not_in: ({ value, params }) => !params.includes(value),
   //not_regex
 
   numeric: ({ value }) => !isNaN(value),
@@ -124,6 +120,13 @@ export default {
 
 function isNotEmpty(value) {
   return !! value;
+}
+
+function sizeOf(value) {
+  if (value.hasOwnProperty('length')) {
+    value = value.length;
+  }
+  return value;
 }
 
 function b(value) {
