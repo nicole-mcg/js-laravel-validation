@@ -61,6 +61,8 @@ function validateField(fieldData, formData) {
             continue;
         }
 
+        //TODO custom handling for 'sometimes' rule
+
         const params = {
             ...rule,
             value: fieldData.value,
