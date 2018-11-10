@@ -78,8 +78,8 @@ export default {
     return Number.isInteger(typeof value === 'string' ? parseInt(value) : value);
   },
 
-  //ip
-  ipv4: ({ value }) => /^(?:\d{1,3}(?:\.|$)){4}/.test(value),
+  ip: ({ value }) => isIpv4(value) || checkipv6(value),
+  ipv4: ({ value }) => isIpv4(value),
   ipv6: ({ value }) => checkipv6(value),
 
   json: ({ value }) => {
@@ -127,6 +127,10 @@ function isNotEmpty(value) {
 
 function b(value) {
   return isNotEmpty(value)
+}
+
+function isIpv4(value) {
+  return /^(?:\d{1,3}(?:\.|$)){4}/.test(value);
 }
 
 // Created by Dartware
