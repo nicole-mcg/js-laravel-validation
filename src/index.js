@@ -29,6 +29,14 @@ function validateForm(formData) {
     return {};
 }
 
+function parseRule(rule) {
+    const ruleParts = rule.split(':')
+    return {
+        key: ruleParts[0],
+        params: ruleParts[1] ? ruleParts[1].split(',') : [],
+    };
+}
+
 // {key, value, rules}
 function validateField(fieldData, formData) {
 
@@ -40,28 +48,23 @@ function validateField(fieldData, formData) {
     const rules = fieldData.rules.split('|');
 
     for (let i = 0; i < rules.length; i++) {
-        const rule = rules[i];
+        const rule = parseRule(rules[i]);
 
-        if (!RULES[rule]) {
+        if (!RULES[rule.key]) {
             console.warn(`Invalid rule on field ${fieldData.key} rule=${rule}`);
             continue;
         }
 
-        let ruleParts = rule.split(':')
-        let ruleName = ruleParts[0];
-        let ruleParams = ruleParts[1] ? ruleParts[1].split(',') : [];
-
         const params = {
+            ...rule,
             value: fieldData.value,
-            key: fieldData.key,
-            params: ruleParams,
             values,
         }
 
-        if (!RULES[ruleName](params)) {
+        if (!RULES[rule.key](params)) {
             return {
                 error: true,
-                rule,
+                rule: rules[i],
             }
         }
     }
