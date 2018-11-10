@@ -1,0 +1,40 @@
+{
+  "name": "js-laravel-validation",
+  "version": "1.0.0",
+  "description": "Laravel style form validation for JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/c-mcg/JS-Laravel-validation.git"
+  },
+  "keywords": [
+    "laravel",
+    "javascript",
+    "form",
+    "rules",
+    "validate",
+    "validation"
+  ],
+  "author": "Connor McGrogan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/c-mcg/JS-Laravel-validation/issues"
+  },
+  "homepage": "https://github.com/c-mcg/JS-Laravel-validation#readme",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
+    "babel-preset-env": "^1.7.0"
+  },
+  "jest": {
+    "transform": {
+      ".*": "./node_modules/babel-jest"
+    }
+  }
+}
