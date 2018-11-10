@@ -8,7 +8,7 @@ function validateForm(formData) {
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i]
         const fieldData = {
-            name: key,
+            key,
             value: formData[key].value,
             rules: formData[key].rules,
         };
@@ -27,26 +27,27 @@ function validateForm(formData) {
     return {};
 }
 
-// {name, value, rules}
+// {key, value, rules}
 function validateField(fieldData, formData) {
 
-    const values = Object.keys(formData).reduce((values, name) => {
-        values[name] = formData[name].value;
+    const values = formData && Object.keys(formData).reduce((values, key) => {
+        values[key] = formData[key].value;
         return values;
-    }, {})
+    }, {});
+
     const rules = fieldData.rules.split('|');
 
     for (let i = 0; i < rules.length; i++) {
         const rule = rules[i];
 
         if (!RULES[rule]) {
-            console.warn(`Invalid rule on field ${fieldData.name} rule=${rule}`);
+            console.warn(`Invalid rule on field ${fieldData.key} rule=${rule}`);
             continue;
         }
 
         const ruleParams = {
             value: fieldData.value,
-            key: fieldData.name,
+            key: fieldData.key,
             values,
         }
 
@@ -62,3 +63,4 @@ function validateField(fieldData, formData) {
 }
 
 exports.validateForm = validateForm;
+exports.validateField = validateField;
