@@ -786,6 +786,78 @@ describe('Rules', () => {
         },
     ]);
 
+    createRuleTests('lt', [
+        {
+            desc: 'lesser string',
+            value: "0",
+            params: ['test'],
+            values: {
+                test: "1",
+            },
+            result: true,
+        },
+        {
+            desc: 'greater number',
+            value: 1,
+            params: ['test'],
+            values: {
+                test: 0,
+            },
+            result: false,
+        },
+        {
+            desc: 'equal number',
+            value: 0,
+            params: ['test'],
+            values: {
+                test: 0,
+            },
+            result: false,
+        },
+        {
+            skip: true,
+            desc: 'undefined field',
+            value: 1,
+            result: false,
+        },
+    ]);
+
+    createRuleTests('lte', [
+        {
+            desc: 'lesser string',
+            value: "0",
+            params: ['test'],
+            values: {
+                test: "1",
+            },
+            result: true,
+        },
+        {
+            desc: 'equal number',
+            value: 0,
+            params: ['test'],
+            values: {
+                test: 0,
+            },
+            result: true,
+        },
+        {
+            desc: 'greater number',
+            value: 1,
+            params: ['test'],
+            values: {
+                test: 0,
+            },
+            result: false,
+        },
+        {
+            skip: true,
+            desc: 'undefined field',
+            value: 1,
+            result: false,
+        },
+    ]);
+
     createRuleTests('numeric', [
         {
             desc: "integer",

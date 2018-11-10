@@ -87,8 +87,8 @@ export default {
     return true;
   },
 
-  //lt
-  //lte
+  lt: ({ value, values, params }) => value < values[params[0]],
+  lte: ({ value, values, params }) => value <= values[params[0]],
 
   //max
 
