@@ -1,35 +1,82 @@
 
-import { validateForm, validateField } from '../index.js'
+import { validate } from '../index.js'
+
+const { validateField, validateForm } = validate;
 
 describe('Form Validator', () => {
 
-    const oldWarn = console.warn;
-    console.warn = jest.fn();
-
-    function createFieldData({ key="test", value=null, rules="required" }={}) {
-        return { key, value, rules };
+    function mockValidateField(returnVal) {
+        const mock = jest.fn();
+        mock.mockReturnValue(returnVal);
+        validate.validateField = mock;
+        return mock;
     }
 
-    it('can allow a validated field', () => {
-        const fieldData = createFieldData({ value: "hey" })
+    function restoreMocks() {
+        validate.validateForm = validateForm;
+        validate.validateField = validateField;
+    }
 
-        expect(validateField(fieldData)).toEqual({});
-        expect(console.warn).not.toHaveBeenCalled();
+    describe('validateForm', () => {
+        it('can pass field data to validateField', () => {
+            const formData = {
+                test: {
+                    value: 1,
+                    rules: 'required',
+                }
+            }
+
+            const validateField = mockValidateField({});
+
+            validateForm(formData);
+            expect(validateField).toHaveBeenCalledWith({
+                key: 'test',
+                value: 1,
+                rules: 'required',
+            }, formData)
+
+            restoreMocks();
+        })
     })
 
-    it('can detect an invalid field', () => {
-        const result = validateField(createFieldData())
+    describe('validateField', () => {
+        function createFieldData({ key="test", value=null, rules="required" }={}) {
+            return { key, value, rules };
+        }
 
-        expect(result.error).toBe(true);
-        expect(result.rule).toEqual('required');
-        expect(console.warn).not.toHaveBeenCalled();
-    })
+        const oldWarn = console.warn;
 
-    it('will throw a warning if there is an unknown rule', () => {
-        const fieldData = createFieldData({ rules: 'unknown' })
+        beforeEach(() => {
+            console.warn = jest.fn();
+        })
 
-        expect(validateField(fieldData)).toEqual({});
-        expect(console.warn).toHaveBeenCalled();
+        afterEach(() => {
+            console.warn = oldWarn
+        })
+
+        it('can allow a validated field', () => {
+            const fieldData = createFieldData({ value: "hey" })
+
+            expect(validateField(fieldData)).toEqual({});
+            expect(console.warn).not.toHaveBeenCalled();
+        })
+
+        it('can detect an invalid field', () => {
+            const result = validateField(createFieldData())
+
+            expect(result.error).toBe(true);
+            expect(result.rule).toEqual('required');
+            expect(console.warn).not.toHaveBeenCalled();
+        })
+
+        it('will throw a warning if there is an unknown rule', () => {
+
+            const fieldData = createFieldData({ rules: 'unknown' })
+
+            expect(validateField(fieldData)).toEqual({});
+            expect(console.warn).toHaveBeenCalled();
+
+        })
     })
 
 })
