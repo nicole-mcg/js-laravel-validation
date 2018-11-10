@@ -5,9 +5,19 @@
 export default {
   //key: verify function
   'accepted': ({ value }) => isNotEmpty(value), // Use for license accept fields (must be truthy)
+
+  'after': ({ value, params }) => !!(new Date(value) > new Date(params[0])),
+  'after_or_equal': ({ value, params }) => !!(new Date(value) >= new Date(params[0])),
+
   'alpha': ({ value }) => !/[^a-z]/i.test(value), // Value is only letters
+  'alpha_dash': ({ value }) => /^[A-Za-z\-]+$/i.test(value),
+  'alpha_num': ({ value }) => /^[a-z0-9]+$/i.test(value),
+
   'array': ({ value }) => Array.isArray(value),
+
+  //bail: is on by default and can be set in `validateForm` call
   'boolean': ({ value }) => typeof value === 'boolean',
+
   'confirmed': ({ value, key, values }) => !!(value === values[`${key}_confirmed`]),
   'date': ({ value }) => (Date.parse(value) !== NaN),
 
@@ -22,17 +32,17 @@ export default {
   'email': ({ value }) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value),
   'filled': ({ value }) => isNotEmpty(value),
   'integer': ({ value }) => {
-    return Number.isInteger(typeof value === 'string' ? parseInt(value) : value)
+    return Number.isInteger(typeof value === 'string' ? parseInt(value) : value);
   },
   'json': ({ value }) => {
-    try { JSON.parse(value ) } catch (e) { return false }
+    try { JSON.parse(value ); } catch (e) { return false ;}
     return true;
   },
   'numeric': ({ value }) => !isNaN(value),
   'present': ({ value }) => value !== undefined,
   'required': ({ value }) => isNotEmpty(value),
   'string': ({ value }) => typeof value === 'string',
-}
+};
 
 function isNotEmpty(value) {
   return !! value;

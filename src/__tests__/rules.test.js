@@ -1,15 +1,23 @@
-import rules from '../rules'
+import rules from '../rules';
 
 describe('Rules', () => {
 
     function createRuleTests(rule, tests) {
         describe(`${rule} rule`, () => {
-            tests.forEach(({ desc, ruleParams={}, result, skip=false, value=undefined }) => {
+            tests.forEach(({
+                desc,
+                ruleParams={},
+                result,
+                skip=false,
+                value=undefined,
+                params=undefined,
+            }) => {
                 if (value !== undefined) ruleParams.value = value;
+                if (params !== undefined) ruleParams.params = params;
                 const testName = `can ${result ? 'allow' : 'deny'} a ${desc}`;
                 const testFunc = () => {
-                    expect(rules[rule](ruleParams)).toEqual(result)
-                }
+                    expect(rules[rule](ruleParams)).toEqual(result);
+                };
 
                 if (skip) {
                     xit(testName, testFunc);
@@ -17,7 +25,7 @@ describe('Rules', () => {
                 }
 
                 it(testName, testFunc);
-            })
+            });
         });
     }
 
@@ -43,9 +51,75 @@ describe('Rules', () => {
             value: false,
             result: false,
         },
-    ]
+    ];
 
     createRuleTests('accepted', NOT_EMPTY_TESTS);
+
+    createRuleTests('after', [
+        {
+            desc: 'date after specified date',
+            value: new Date('01/20/2018'),
+            params: [ new Date('01/15/2018') ],
+            result: true,
+        },
+        {
+            desc: 'date before specified date',
+            value: new Date('01/14/2018'),
+            params: [ new Date('01/15/2018') ],
+            result: false,
+        },
+        {
+            desc: 'equal date',
+            value: new Date('01/20/2018'),
+            params: [ new Date('01/20/2018') ],
+            result: false,
+        },
+        {
+            desc: 'null param',
+            value: new Date('01/20/2018'),
+            params: [ null ],
+            result: true,
+        },
+        {
+            desc: 'null value',
+            value: null,
+            params: [ new Date('01/15/2018') ],
+            result: false,
+        },
+    ]);
+
+    createRuleTests('after_or_equal', [
+        {
+            desc: 'date after specified date',
+            value: new Date('01/20/2018'),
+            params: [ new Date('01/15/2018') ],
+            result: true,
+        },
+        {
+            desc: 'date before specified date',
+            value: new Date('01/14/2018'),
+            params: [ new Date('01/15/2018') ],
+            result: false,
+        },
+        {
+            desc: 'equal date',
+            value: new Date('01/20/2018'),
+            params: [ new Date('01/20/2018') ],
+            result: true,
+        },
+        {
+            desc: 'null param',
+            value: new Date('01/20/2018'),
+            params: [ null ],
+            result: true,
+        },
+        {
+            desc: 'null value',
+            value: null,
+            params: [ new Date('01/15/2018') ],
+            result: false,
+        },
+    ]);
 
     createRuleTests('alpha', [
         {
@@ -63,6 +137,62 @@ describe('Rules', () => {
             value: 'f%',
             result: false,
         }
+    ]);
+
+    createRuleTests('alpha_dash', [
+        {
+            desc: 'alpha string',
+            value: "test",
+            result: true,
+        },
+        {
+            desc: 'dashed alpha string',
+            value: "test-test",
+            result: true,
+        },
+        {
+            desc: 'string with spaces',
+            value: "test f",
+            result: false,
+        },
+        {
+            desc: 'number string',
+            value: "1",
+            result: false,
+        }
+    ]);
+
+    createRuleTests('alpha_num', [
+        {
+            desc: 'alpha string',
+            value: 'test',
+            result: true,
+        },
+        {
+            desc: 'number string',
+            value: '12',
+            result: true,
+        },
+        {
+            desc: 'alnum string',
+            value: 'test1test',
+            result: true,
+        },
+        {
+            desc: 'string with spaces',
+            value: 'test 1',
+            result: false,
+        },
+        {
+            desc: 'dashed alnum string',
+            value: 'test-1-test',
+            result: false,
+        },
+        {
+            desc: 'string with symbols',
+            value: '$test4',
+            result: false,
+        },
     ]);
 
     createRuleTests('array', [
@@ -85,6 +215,8 @@ describe('Rules', () => {
             result: false,
         },
     ]);
+
+    // bail: is on by default and can be set in `validateForm` call
 
     createRuleTests('boolean', [
         {
@@ -142,7 +274,7 @@ describe('Rules', () => {
             },
             result: false,
         }
-    ])
+    ]);
 
     createRuleTests('date', [
         {
@@ -221,7 +353,7 @@ describe('Rules', () => {
             value: "test@test",
             result: false,
         },
-    ])
+    ]);
 
     createRuleTests('filled', NOT_EMPTY_TESTS);
 
@@ -356,4 +488,4 @@ describe('Rules', () => {
             result: false,
         }
     ]);
-})
+});
