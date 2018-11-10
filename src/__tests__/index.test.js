@@ -1,7 +1,7 @@
 
 import { validate } from '../index.js'
 
-const { validateField, validateForm } = validate;
+const { validateField, validateForm, parseRule } = validate;
 
 describe('Form Validator', () => {
 
@@ -37,6 +37,31 @@ describe('Form Validator', () => {
 
             restoreMocks();
         })
+    });
+
+    describe('parseRule', () => {
+
+        it('can parse a rule with no params', () => {
+            expect(parseRule('test')).toEqual({
+                key: 'test',
+                params: [],
+            })
+        })
+
+        it('can parse a rule with one param', () => {
+            expect(parseRule('test:0')).toEqual({
+                key: 'test',
+                params: ["0"],
+            })
+        })
+
+        it('can parse a rule with two params', () => {
+            expect(parseRule('test:0,1')).toEqual({
+                key: 'test',
+                params: ["0", "1"],
+            })
+        })
+
     })
 
     describe('validateField', () => {
@@ -51,7 +76,7 @@ describe('Form Validator', () => {
         })
 
         afterEach(() => {
-            console.warn = oldWarn
+            console.warn = oldWarn;
         })
 
         it('can allow a validated field', () => {
