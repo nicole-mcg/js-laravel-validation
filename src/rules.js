@@ -20,7 +20,15 @@ export default {
   'before': ({ value, params }) => !!(new Date(value) < new Date(params[0])),
   'before_or_equal': ({ value, params }) => !!(new Date(value) <= new Date(params[0])),
 
-  //between:max,min
+  'between': ({ value, params }) => {
+    const [min, max] = params;
+
+    if (value.hasOwnProperty('length')) {
+      value = value.length;
+    }
+
+    return value > min && value < max;
+  },
 
   'boolean': ({ value }) => typeof value === 'boolean',
 

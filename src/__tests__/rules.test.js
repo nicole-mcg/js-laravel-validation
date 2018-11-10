@@ -284,6 +284,33 @@ describe('Rules', () => {
         },
     ]);
 
+    createRuleTests('between', [
+        {
+            desc: 'valid value (number)',
+            value: 1,
+            params: [0, 2],
+            result: true,
+        },
+        {
+            desc: 'valid value (string)',
+            value: "test",
+            params: [3, 5],
+            result: true,
+        },
+        {
+            desc: 'low number',
+            value: 1,
+            params: [2, 4],
+            result: false,
+        },
+        {
+            desc: 'long string',
+            value: "test",
+            params: [1, 2],
+            result: false,
+        },
+    ])
+
     createRuleTests('boolean', [
         {
             desc: 'valid value (true)',
