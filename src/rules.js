@@ -40,7 +40,11 @@ export default {
   different: ({ value, values, params }) => !b(value == values[params[0]]),//allows same arrays and objects
 
   digits: ({ value, params }) => !isNaN(value) && value.toString().length === parseInt(params[0]),
-  //digits_between
+  digits_between: ({ value, params }) => {
+    const len = value.toString().length;
+    const [min, max] = params;
+    return len > min && len < max;
+  },
 
   //dimensions
 

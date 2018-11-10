@@ -492,6 +492,33 @@ describe('Rules', () => {
             params: [3],
             result: false,
         }
+    ]);
+
+    createRuleTests('digits_between', [
+        {
+            desc: 'value with correct # of digits',
+            value: 123,
+            params: [2, 4],
+            result: true,
+        },
+        {
+            desc: 'number string',
+            value: 123,
+            params: ["2", "4"],
+            result: true,
+        },
+        {
+            desc: 'value with less digits',
+            value: 23,
+            params: [2, 4],
+            result: false,
+        },
+        {
+            desc: 'value with more digits',
+            value: 2345,
+            params: [2, 4],
+            result: false,
+        }
     ])
 
     createRuleTests('distinct', [
