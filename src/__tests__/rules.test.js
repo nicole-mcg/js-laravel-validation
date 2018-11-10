@@ -690,6 +690,48 @@ describe('Rules', () => {
             value: {},
             result: false,
         }
+    ]);
+
+    createRuleTests('in', [
+        {
+            desc: 'number that is in specified values',
+            value: 0,
+            params: [1, 0, 2, 4],
+            result: true,
+        },
+        {
+            desc: 'number that is not in specified values',
+            value: 0,
+            params: [1, 2, 3, 4],
+            result: false,
+        },
+        {
+            desc: 'object that is in specified values',
+            value: { x: 0 },
+            params: [1, { x: 0 }, 2, 4],
+            result: false,
+        }
+    ]);
+
+    createRuleTests('in_array', [
+        {
+            desc: 'number that is in specified values',
+            value: 0,
+            params: [[1, 0, 2, 4]],
+            result: true,
+        },
+        {
+            desc: 'number that is not in specified values',
+            value: 0,
+            params: [[1, 2, 3, 4]],
+            result: false,
+        },
+        {
+            desc: 'object that is in specified values',
+            value: { x: 0 },
+            params: [[1, { x: 0 }, 2, 4]],
+            result: false,
+        }
     ])
 
     createRuleTests('integer', [

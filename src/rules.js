@@ -71,8 +71,8 @@ export default {
 
   image: ({ value }) => value instanceof Image,
 
-  //in
-  //in_array
+  in: ({ value, params }) => params.includes(value),
+  in_array: ({ value, params }) => params[0].includes(value),
   
   integer: ({ value }) => {
     return Number.isInteger(typeof value === 'string' ? parseInt(value) : value);
