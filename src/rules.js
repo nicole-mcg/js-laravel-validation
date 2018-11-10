@@ -9,9 +9,16 @@ export default {
   'array': ({ value }) => Array.isArray(value),
   'boolean': ({ value }) => typeof value === 'boolean',
   'confirmed': ({ value, key, values }) => !!(value === values[`${key}_confirmed`]),
-  'date': ({ value }) => Date.parse(value) !== NaN,
+  'date': ({ value }) => (Date.parse(value) !== NaN),
 
-  'distinct': ({ value }) => values.length && values.length === new Set(value).size,
+  'distinct': ({ values, value }) => {
+    return (Object.keys(values).reduce((count, key) => {
+      if (values[key] == value) {
+        count++;
+      }
+      return count;
+    }, 0) === 1);
+  },
   'email': ({ value }) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value),
   'filled': ({ value }) => isNotEmpty(value),
   'integer': ({ value }) => {
