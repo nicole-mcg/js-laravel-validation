@@ -66,8 +66,8 @@ export default {
 
   filled: ({ value }) => isNotEmpty(value),
 
-  //gt
-  //gte
+  gt: ({ value, values, params }) => value > values[params[0]],
+  gte: ({ value, values, params }) => value >= values[params[0]],
 
   //image
 

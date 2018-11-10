@@ -607,6 +607,78 @@ describe('Rules', () => {
 
     createRuleTests('filled', NOT_EMPTY_TESTS);
 
+    createRuleTests('gt', [
+        {
+            desc: 'greater string',
+            value: "1",
+            params: ['test'],
+            values: {
+                test: "0",
+            },
+            result: true,
+        },
+        {
+            skip: true,
+            desc: 'undefined field',
+            value: 1,
+            result: true,
+        },
+        {
+            desc: 'lesser number',
+            value: 0,
+            params: ['test'],
+            values: {
+                test: 1,
+            },
+            result: false,
+        },
+        {
+            desc: 'equal number',
+            value: 0,
+            params: ['test'],
+            values: {
+                test: 0,
+            },
+            result: false,
+        }
+    ]);
+
+    createRuleTests('gte', [
+        {
+            desc: 'greater string',
+            value: "1",
+            params: ['test'],
+            values: {
+                test: "0",
+            },
+            result: true,
+        },
+        {
+            skip: true,
+            desc: 'undefined field',
+            value: 1,
+            result: true,
+        },
+        {
+            desc: 'equal number',
+            value: 0,
+            params: ['test'],
+            values: {
+                test: 0,
+            },
+            result: true,
+        },
+        {
+            desc: 'lesser number',
+            value: 0,
+            params: ['test'],
+            values: {
+                test: 1,
+            },
+            result: false,
+        }
+    ]);
+
     createRuleTests('integer', [
         {
             desc: 'integer',
