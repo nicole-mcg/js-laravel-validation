@@ -69,7 +69,7 @@ export default {
   gt: ({ value, values, params }) => value > values[params[0]],
   gte: ({ value, values, params }) => value >= values[params[0]],
 
-  //image
+  image: ({ value }) => value instanceof Image,
 
   //in
   //in_array

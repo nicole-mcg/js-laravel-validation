@@ -679,6 +679,19 @@ describe('Rules', () => {
         }
     ]);
 
+    createRuleTests('image', [
+        {
+            desc: "image",
+            value: new Image(),
+            result: true,
+        },
+        {
+            desc: "object",
+            value: {},
+            result: false,
+        }
+    ])
+
     createRuleTests('integer', [
         {
             desc: 'integer',
