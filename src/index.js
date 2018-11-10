@@ -1,24 +1,26 @@
 import RULES from './rules'
 
+const toExport = {};
+
 // { fieldName: {value, rules} }
 function validateForm(formData) {
 
     const keys = Object.keys(formData);
 
     for (let i = 0; i < keys.length; i++) {
-        const key = keys[i]
+        const key = keys[i];
         const fieldData = {
             key,
             value: formData[key].value,
             rules: formData[key].rules,
         };
 
-        const result = validateField(fieldData, formData);
+        const result = toExport.validateField(fieldData, formData);
 
         if (result.error) {
             return {
-                error: true,
                 key,
+                error: true,
                 rule: result.rule,
             }
         }
@@ -62,5 +64,7 @@ function validateField(fieldData, formData) {
     return {};
 }
 
-exports.validateForm = validateForm;
-exports.validateField = validateField;
+toExport.validateForm = validateForm;
+toExport.validateField = validateField;
+
+exports.validate = toExport;
