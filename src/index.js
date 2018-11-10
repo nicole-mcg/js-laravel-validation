@@ -47,13 +47,18 @@ function validateField(fieldData, formData) {
             continue;
         }
 
-        const ruleParams = {
+        let ruleParts = rule.split(':')
+        let ruleName = ruleParts[0];
+        let ruleParams = ruleParts[1] ? ruleParts[1].split(',') : [];
+
+        const params = {
             value: fieldData.value,
             key: fieldData.key,
+            params: ruleParams,
             values,
         }
 
-        if (!RULES[rule](ruleParams)) {
+        if (!RULES[ruleName](params)) {
             return {
                 error: true,
                 rule,
