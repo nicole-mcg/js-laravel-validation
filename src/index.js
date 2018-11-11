@@ -107,15 +107,16 @@ function validateField(fieldData, formData) {
         }
 
         let result = false;
+        let overrideNullable = false;
         try {
             result = RULES[rule.key](params);
         } catch (e) {
             console.warn(`Error validative rule, most likely invalid params: rule${rule.key} field=${fieldData.key}`)
-            continue;
+            overrideNullable = true;
         }
 
         if (!result) {
-            if ((nullable && fieldData.value === null)) {
+            if (!overrideNullable && nullable && fieldData.value === null) {
                 continue;
             }
             errors.push(rule.key);

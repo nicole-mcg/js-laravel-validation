@@ -301,14 +301,14 @@ describe('Form Validator', () => {
 
         it('will throw a warning if there is an error validating rule', () => {
 
-            const fieldData = createFieldData({ rules: ['test'] })
+            const fieldData = createFieldData({ rules: ['testRule'] })
 
-            const ruleMock = mockRule('test');
+            const ruleMock = mockRule('testRule');
             ruleMock.mockImplementation(() => {
                 throw new Error();
             });
 
-            expect(validateField(fieldData)).toEqual({ errors: false });
+            expect(validateField(fieldData)).toEqual({ errors: ['testRule'] });
             expect(console.warn).toHaveBeenCalled();
             expect(ruleMock).toHaveBeenCalled();
 
@@ -324,7 +324,7 @@ describe('Form Validator', () => {
                 throw new Error();
             });
 
-            expect(validateField(fieldData)).toEqual({ errors: false });
+            expect(validateField(fieldData)).toEqual({ errors: ['test'] });
             expect(console.warn).toHaveBeenCalled();
             expect(ruleMock).toHaveBeenCalled();
 

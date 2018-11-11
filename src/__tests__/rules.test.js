@@ -1366,4 +1366,28 @@ describe('Rules', () => {
             result: false,
         }
     ]);
+
+    createRuleTests('url', [
+        {
+            desc: 'valid http url',
+            value: 'http://google.ca',
+            result: true,
+        },
+        {
+            desc: 'valid https url',
+            value: 'https://google.ca',
+            result: true,
+        },
+        {
+            skip: true,
+            desc: 'url with port',
+            value: 'http:google.ca:8000',
+            result: true,
+        },
+        {
+            desc: 'url with no protocol',
+            value: 'google.ca',
+            result: false,
+        }
+    ])
 });
