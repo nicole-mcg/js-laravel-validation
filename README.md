@@ -1,5 +1,15 @@
 # JS-Laravel-validation
 
+### Setup
+
+Set custom messages:
+
+```
+    import { validate } from 'js-laravel-validation'
+    
+    validate.setCustomMessage('required', ({ key, value }) => `${key} field is required.`)
+```
+
 ### Usage
 
 Currently no dist is provided
