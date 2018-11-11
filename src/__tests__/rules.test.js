@@ -24,7 +24,7 @@ describe('Rules', () => {
                     }
                     const realResult = rules[rule](ruleParams);
                     if (realResult != result) {
-                        expect(test).toBe(`Rule test failed:`);
+                        expect(test).toBe(`Rule test failed: result=${result} realResult=${realResult}`);
                         //expect(test).toBe(false);
                     }
                     expect(realResult).toEqual(result);
@@ -387,17 +387,16 @@ describe('Rules', () => {
             result: true,
         },
         {
-            desc: 'number (timestamp)',
-            value: 0,
-            result: true,
-        },
-        {
             desc: 'valid date object',
             value: new Date('09/17/2018'),
             result: true,
         },
         {
-            skip: true,
+            desc: 'number',
+            value: 0,
+            result: false,
+        },
+        {
             desc: 'string',
             value: "whatup",
             result: false,
@@ -617,10 +616,18 @@ describe('Rules', () => {
             },
             result: true,
         },
-        {
-            skip: true,
+        {// Because this shouldn't be a 'required' rule
             desc: 'undefined field',
+            params: ['test'],
             value: 1,
+            values: {},
+            result: true,
+        },
+        {
+            desc: 'null field',
+            params: ['test'],
+            value: 1,
+            values: { test: null },
             result: true,
         },
         {
@@ -640,7 +647,7 @@ describe('Rules', () => {
                 test: 0,
             },
             result: false,
-        }
+        },
     ]);
 
     createRuleTests('gte', [
@@ -654,18 +661,26 @@ describe('Rules', () => {
             result: true,
         },
         {
-            skip: true,
-            desc: 'undefined field',
-            value: 1,
-            result: true,
-        },
-        {
             desc: 'equal number',
             value: 0,
             params: ['test'],
             values: {
                 test: 0,
             },
+            result: true,
+        },
+        {// Because this shouldn't be a 'required' rule
+            desc: 'undefined field',
+            params: ['test'],
+            value: 1,
+            values: {},
+            result: true,
+        },
+        {
+            desc: 'undefined field',
+            params: ['test'],
+            value: 1,
+            values: { test: null },
             result: true,
         },
         {
@@ -676,7 +691,7 @@ describe('Rules', () => {
                 test: 1,
             },
             result: false,
-        }
+        },
     ]);
 
     createRuleTests('image', [
@@ -858,10 +873,11 @@ describe('Rules', () => {
             },
             result: false,
         },
-        {
-            skip: true,
+        {//Because this shouldn't be a 'required' field
             desc: 'undefined field',
+            params: ['test'],
             value: 1,
+            values: {},
             result: false,
         },
     ]);
@@ -895,9 +911,10 @@ describe('Rules', () => {
             result: false,
         },
         {
-            skip: true,
             desc: 'undefined field',
+            params: ['test'],
             value: 1,
+            values: {},
             result: false,
         },
     ]);
@@ -1193,7 +1210,16 @@ describe('Rules', () => {
                 test: 1,
             },
             result: true,
-        }
+        },
+        {
+            desc: 'different number',
+            value: 2,
+            params: ['test'],
+            values: {
+                test: 1,
+            },
+            result: false,
+        },
     ])
 
     createRuleTests('size', [

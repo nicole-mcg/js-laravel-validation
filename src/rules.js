@@ -29,7 +29,7 @@ export default {
 
   confirmed: ({ value, key, values }) => b(value === values[`${key}_confirmed`]),
   
-  date: ({ value }) => (Date.parse(value) !== NaN),
+  date: ({ value }) => b(typeof value !== 'number' && !isNaN(Date.parse(value))),
   date_equals: ({ value, params }) => (Date.parse(value) !== NaN && Date.parse(value) === Date.parse(params[0])),
   //date_format
 
@@ -42,6 +42,7 @@ export default {
     return len > min && len < max;
   },
 
+  //this need named
   // dimensions: ({ value, params }) => {
   //   if (value.hasOwnProperty('width') && value.hasOwnProperty('height')) {
   //     return
@@ -63,8 +64,8 @@ export default {
 
   filled: ({ value }) => isNotEmpty(value),
 
-  gt: ({ value, values, params }) => value > values[params[0]],
-  gte: ({ value, values, params }) => value >= values[params[0]],
+  gt: ({ value, values, params }) => values[params[0]] === undefined || value > values[params[0]],
+  gte: ({ value, values, params }) => values[params[0]] === undefined || value >= values[params[0]],
 
   image: ({ value }) => value instanceof Image,
 
