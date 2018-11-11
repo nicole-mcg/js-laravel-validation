@@ -1105,13 +1105,13 @@ describe('Rules', () => {
         },
         {
             desc: 'filled required value (2 params)',
-            value: 0,
+            value: 1,
             params: ['test', 'test2'],
             values: {
                 test: 0,
                 test2: 1,
             },
-            result: false,
+            result: true,
         },
         {
             desc: 'filled unrequired value',
@@ -1131,7 +1131,49 @@ describe('Rules', () => {
             },
             result: false,
         }
-    ])
+    ]);
+
+    createRuleTests('required_with_all', [
+        {
+            desc: 'filled required value',
+            value: 1,
+            params: ['test', 'test2'],
+            values: {
+                test: 1,
+                test2: 1,
+            },
+            result: true,
+        },
+        {
+            desc: 'empty unrequired value',
+            value: 0,
+            params: ['test', 'test2'],
+            values: {
+                test: 1,
+                test2: 0,
+            },
+            result: true,
+        },
+        {
+            desc: 'filled unrequired value',
+            value: 1,
+            params: ['test'],
+            values: {
+                test: 0,
+            },
+            result: true,
+        },
+        {
+            desc: 'empty required value',
+            value: 0,
+            params: ['test', 'test2'],
+            values: {
+                test: 1,
+                test2: 1,
+            },
+            result: false,
+        }
+    ]);
 
     createRuleTests('same', [
         {
