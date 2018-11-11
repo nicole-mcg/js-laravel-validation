@@ -9,7 +9,8 @@ function validateForm(formData) {
 
     let bail = false;
 
-    let errors = {};
+    let fields = [];
+    let errors = [];
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
         const rules = formData[key].rules.split('|');
@@ -29,10 +30,9 @@ function validateForm(formData) {
 
         const result = toExport.validateField(fieldData, formData);
 
-        if (result.error) {
-            errors[key] = {
-                rule: result.rule
-            }
+        if (result.errors) {
+            fields.push(key);
+            errors.push(result.errors);
 
             if (bail) {
                 break;
@@ -40,8 +40,23 @@ function validateForm(formData) {
         }
     }
 
+    if (bail) {
+
+        if (fields.length > 1) {//Only first field
+            fields = fields.slice(0, 1);
+            errors = errors.slice(0, 1);
+        }
+
+        if (errors[0].length > 1) {//Only first error
+            errors[0] = errors[0].slice(0, 1);
+        }
+    }
+
     return {
-        errors: errors == {} ? false : errors,
+        errors: errors.length === 0 ? false : errors.reduce((errors, error, index) => {
+            errors[fields[index]] = error;
+            return errors;
+        }, {}),
     }
 }
 
@@ -64,6 +79,7 @@ function validateField(fieldData, formData) {
     const rules = fieldData.rules;
     const nullable = rules.includes('nullable');
 
+    let errors = [];
     for (let i = 0; i < rules.length; i++) {
         let rule;
         try {
@@ -102,14 +118,13 @@ function validateField(fieldData, formData) {
             if ((nullable && fieldData.value === null)) {
                 continue;
             }
-            return {
-                error: true,
-                rule: rules[i],
-            }
+            errors.push(rule.key);
         }
     }
 
-    return {};
+    return {
+        errors: errors.length === 0 ? false : errors,
+    }
 }
 
 toExport.validateForm = validateForm;
