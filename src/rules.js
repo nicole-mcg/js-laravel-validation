@@ -129,6 +129,12 @@ export default {
   //timezone
 };
 
+
+/*****************************/
+/** START OF UTIL FUNCTIONS **/
+/*****************************/
+
+
 function isNotEmpty(value) {
   return !! value;
 }
