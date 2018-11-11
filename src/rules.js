@@ -5,7 +5,10 @@
 export default {
   accepted: ({ value }) => isNotEmpty(value),
 
-  //active url
+  // active_url: ({ value }) => {
+    //This cannot be supported because JS does not support hostname lookups (dns_get_record in PHP)
+    //This could be implemented if there was a reliable way to host a small API to do the lookup
+  // },
 
   after: ({ value, params }) => b(new Date(value) > new Date(params[0])),
   after_or_equal: ({ value, params }) => b(new Date(value) >= new Date(params[0])),
@@ -16,7 +19,7 @@ export default {
 
   array: ({ value }) => Array.isArray(value),
 
-  //bail: is on by default and can be set in `validateForm` call
+  //bail: is on by default but is `validateForm` call
 
   before: ({ value, params }) => b(new Date(value) < new Date(params[0])),
   before_or_equal: ({ value, params }) => b(new Date(value) <= new Date(params[0])),
@@ -100,7 +103,7 @@ export default {
 
   //not_regex
 
-  //nullable
+  //nullable: implemented in `validateField` method (index.js)
 
   numeric: ({ value }) => typeof value === 'number',
 

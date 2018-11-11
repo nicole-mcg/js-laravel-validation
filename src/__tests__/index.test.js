@@ -202,7 +202,7 @@ describe('Form Validator', () => {
 
         it('will throw a warning if there is an error validating rule with a nullable value', () => {
 
-            const fieldData = createFieldData({ rules: 'test|nullable ' })
+            const fieldData = createFieldData({ rules: 'test|nullable' })
 
             const ruleMock = mockRule('test');
             ruleMock.mockImplementation(() => {
