@@ -3,17 +3,28 @@ import RULES from './rules'
 const toExport = {};
 
 // { fieldName: {value, rules} }
-function validateForm(formData, bail=true) {
+function validateForm(formData) {
 
     const keys = Object.keys(formData);
+
+    let bail = false;
 
     let errors = {};
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
+        const rules = formData[key].rules.split('|');
+
+        if (rules.includes('bail')) {
+            bail = true;
+            if (Object.keys(errors).length > 0) {
+                break;
+            }
+        }
+
         const fieldData = {
             key,
+            rules,
             value: formData[key].value,
-            rules: formData[key].rules,
         };
 
         const result = toExport.validateField(fieldData, formData);
@@ -50,7 +61,7 @@ function validateField(fieldData, formData) {
         return values;
     }, {});
 
-    const rules = fieldData.rules.split('|');
+    const rules = fieldData.rules;
     const nullable = rules.includes('nullable');
 
     for (let i = 0; i < rules.length; i++) {

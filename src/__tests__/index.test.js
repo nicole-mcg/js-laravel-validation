@@ -47,7 +47,7 @@ describe('Form Validator', () => {
             expect(validateField).toHaveBeenCalledWith({
                 key: 'test',
                 value: 1,
-                rules: 'required',
+                rules: ['required'],
             }, formData)
 
             restoreMocks();
@@ -104,7 +104,7 @@ describe('Form Validator', () => {
     })
 
     describe('validateField', () => {
-        function createFieldData({ key="test", value=null, rules="required" }={}) {
+        function createFieldData({ key="test", value=null, rules=["required"] }={}) {
             return { key, value, rules };
         }
 
@@ -144,7 +144,7 @@ describe('Form Validator', () => {
         it('can allow a nullable field', () => {
             const fieldData = createFieldData({
                 value: null,
-                rules:"test|nullable"
+                rules: ['test', 'nullable'],
             });
 
 
@@ -168,7 +168,7 @@ describe('Form Validator', () => {
 
         it('will throw a warning if there is an unknown rule', () => {
 
-            const fieldData = createFieldData({ rules: 'unknown' })
+            const fieldData = createFieldData({ rules: ['unknown'] })
 
             expect(validateField(fieldData)).toEqual({});
             expect(console.warn).toHaveBeenCalled();
@@ -177,7 +177,7 @@ describe('Form Validator', () => {
 
         it('will throw a warning if a nullable field has an unknown rule', () => {
 
-            const fieldData = createFieldData({ rules: 'unknown|nullable' })
+            const fieldData = createFieldData({ rules: ['unknown', 'nullable'] })
 
             expect(validateField(fieldData)).toEqual({});
             expect(console.warn).toHaveBeenCalled();
@@ -186,7 +186,7 @@ describe('Form Validator', () => {
 
         it('will throw a warning if there is an error validating rule', () => {
 
-            const fieldData = createFieldData({ rules: 'test' })
+            const fieldData = createFieldData({ rules: ['test'] })
 
             const ruleMock = mockRule('test');
             ruleMock.mockImplementation(() => {
@@ -202,7 +202,7 @@ describe('Form Validator', () => {
 
         it('will throw a warning if there is an error validating rule with a nullable value', () => {
 
-            const fieldData = createFieldData({ rules: 'test|nullable' })
+            const fieldData = createFieldData({ rules: ['test', 'nullable'] })
 
             const ruleMock = mockRule('test');
             ruleMock.mockImplementation(() => {
