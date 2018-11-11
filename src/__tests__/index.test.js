@@ -52,7 +52,7 @@ describe('Form Validator', () => {
             const formData = {
                 test: {
                     value: 1,
-                    rules: 'required',
+                    validation: 'required',
                 }
             }
 
@@ -71,7 +71,7 @@ describe('Form Validator', () => {
         it('can return an error', () => {
             const formData = {
                 test: {
-                    rules: 'required',
+                    validation: 'required',
                 }
             }
 
@@ -82,7 +82,7 @@ describe('Form Validator', () => {
             expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
                     test: {
-                        rules: ['required'],
+                        errors: [{ rule: 'required' }],
                     }
                 }
             });
@@ -94,7 +94,7 @@ describe('Form Validator', () => {
         it('can return an error with a message', () => {
             const formData = {
                 test: {
-                    rules: 'testRule',
+                    validation: 'testRule',
                 }
             }
 
@@ -107,8 +107,10 @@ describe('Form Validator', () => {
             expect(validateForm({ formData, includeMessages: true } )).toEqual({
                 errors: {
                     test: {
-                        rules: ['testRule'],
-                        messages: ['hello'],
+                        errors: [{
+                            rule: 'testRule',
+                            message: 'hello',
+                        }],
                     }
                 }
             })
@@ -123,11 +125,11 @@ describe('Form Validator', () => {
             const formData = {
                 test: {
                     value: null,
-                    rules: 'required|bail',
+                    validation: 'required|bail',
                 },
                 test2: {
                     value: null,
-                    rules: 'required',
+                    validation: 'required',
                 }
             }
 
@@ -142,7 +144,7 @@ describe('Form Validator', () => {
             expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
                     test: {
-                        rules: ['required'],
+                        errors: [{ rule: 'required' }],
                     },
                 }
             })
@@ -154,11 +156,11 @@ describe('Form Validator', () => {
             const formData = {
                 test: {
                     value: null,
-                    rules: 'required',
+                    validation: 'required',
                 },
                 test2: {
                     value: null,
-                    rules: 'required|bail',
+                    validation: 'required|bail',
                 }
             }
 
@@ -173,7 +175,7 @@ describe('Form Validator', () => {
             expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
                     test: {
-                        rules: ['required'],
+                        errors: [{ rule: 'required' }],
                     }
                 }
             })
@@ -185,15 +187,15 @@ describe('Form Validator', () => {
             const formData = {
                 test: {
                     value: null,
-                    rules: 'required',
+                    validation: 'required',
                 },
                 test2: {
                     value: null,
-                    rules: 'required',
+                    validation: 'required',
                 },
                 test3: {
                     value: null,
-                    rules: 'required|bail',
+                    validation: 'required|bail',
                 }
             }
 
@@ -211,7 +213,7 @@ describe('Form Validator', () => {
             expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
                     test: {
-                        rules: ['required'],
+                        errors: [{ rule: 'required' }],
                     },
                 }
             })
@@ -219,11 +221,11 @@ describe('Form Validator', () => {
             restoreMocks();
         });
 
-        it('can will only give on error for field on bail', () => {
+        it('will only give an error for first field error on bail', () => {
             const formData = {
                 test: {
                     value: null,
-                    rules: 'required|string|bail',
+                    validation: 'required|string|bail',
                 },
             }
 
@@ -235,7 +237,7 @@ describe('Form Validator', () => {
             expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
                     test: {
-                        rules: ['required'],
+                        errors: [{ rule: 'required' }],
                     },
                 }
             })

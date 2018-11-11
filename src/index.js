@@ -15,7 +15,7 @@ function validateForm({ formData, includeMessages=true }) {
     let messages = [];
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
-        const rules = formData[key].rules.split('|');
+        const rules = formData[key].validation.split('|');
 
         if (rules.includes('bail')) {
             bail = true;
@@ -59,11 +59,17 @@ function validateForm({ formData, includeMessages=true }) {
     }
 
     return {
-        errors: errors.length === 0 ? false : errors.reduce((keyedErrors, error, index) => {
-            keyedErrors[fields[index]] = {
-                rules: error,
-            }
-            if (includeMessages) keyedErrors[fields[index]].messages = messages[index];
+        errors: errors.length === 0 ? false : errors.reduce((keyedErrors, fieldErrors, i) => {
+
+            fieldErrors = fieldErrors.map((rule, j) => {
+                rule = {
+                    rule,
+                }
+                if (includeMessages) rule.message = messages[i][j];
+                return rule;
+            })
+
+            keyedErrors[fields[i]] = { errors: fieldErrors };
             return keyedErrors;
         }, {}),
     }
