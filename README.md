@@ -25,8 +25,11 @@ Currently no dist is provided
   
   if (result.errors) {
     Object.keys(result.errors).forEach(key => {
-      const error = result.errors[key];
-      console.log(`invalid field field=${key} rules=${error.rules} messages=${error.messages}`
+      const errors = result.errors[key];
+      
+      errors.forEach(error => {
+        console.log(`invalid field field=${key} rule=${error.rule} messages=${error.message}`
+      }
     }
   }
 ```
