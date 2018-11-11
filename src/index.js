@@ -1,5 +1,7 @@
 import RULES from './rules'
-import MESSAGES from './messages'
+import defaultMessages from './messages'
+
+let MESSAGES = defaultMessages;
 
 const toExport = {};
 
@@ -13,7 +15,7 @@ function setCustomMessage({ rule, createMessage }) {
     });
 }
 
-// { fieldName: {value, rules} }
+// { fieldName: {value, validation} }
 function validateForm({ formData, includeMessages=true }) {
 
     const keys = Object.keys(formData);
@@ -25,9 +27,9 @@ function validateForm({ formData, includeMessages=true }) {
     let messages = [];
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
-        const rules = formData[key].validation.split('|');
+        const validation = formData[key].validation.split('|');
 
-        if (rules.includes('bail')) {
+        if (validation.includes('bail')) {
             bail = true;
             if (Object.keys(errors).length > 0) {
                 break;
@@ -35,9 +37,9 @@ function validateForm({ formData, includeMessages=true }) {
         }
 
         const fieldData = {
+            ...formData[key],
             key,
-            rules,
-            value: formData[key].value,
+            validation,
         };
 
         const result = toExport.validateField(fieldData, formData);
@@ -47,7 +49,7 @@ function validateForm({ formData, includeMessages=true }) {
             errors.push(result.errors);
 
             if (includeMessages) {
-                messages.push( result.errors.map(rule => MESSAGES[rule]()) );
+                messages.push( result.errors.map(rule => MESSAGES[rule](fieldData)) );
             }
 
             if (bail) {
@@ -93,7 +95,7 @@ function parseRule(rule) {
     };
 }
 
-// {key, value, rules}
+// {key, value, validation}
 function validateField(fieldData, formData) {
 
     const values = formData && Object.keys(formData).reduce((values, key) => {
@@ -101,16 +103,16 @@ function validateField(fieldData, formData) {
         return values;
     }, {});
 
-    const rules = fieldData.rules;
-    const nullable = rules.includes('nullable');
+    const validation = fieldData.validation;
+    const nullable = validation.includes('nullable');
 
     let errors = [];
-    for (let i = 0; i < rules.length; i++) {
+    for (let i = 0; i < validation.length; i++) {
         let rule;
         try {
-            rule = parseRule(rules[i]);
+            rule = parseRule(validation[i]);
         } catch (e) {
-            console.warn(`Invalid rule on field ${fieldData.key} rule=${rules[i]}`);
+            console.warn(`Invalid rule on field ${fieldData.key} rule=${validation[i]}`);
             continue;
         }
 
@@ -119,7 +121,7 @@ function validateField(fieldData, formData) {
         }
 
         if (!RULES[rule.key]) {
-            console.warn(`Could not find rule on field ${fieldData.key} rule=${rules[i]}`);
+            console.warn(`Could not find rule on field ${fieldData.key} rule=${validation[i]}`);
             continue;
         }
 

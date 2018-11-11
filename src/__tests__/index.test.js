@@ -62,7 +62,7 @@ describe('Form Validator', () => {
             expect(validateField).toHaveBeenCalledWith({
                 key: 'test',
                 value: 1,
-                rules: ['required'],
+                validation: ['required'],
             }, formData)
 
             restoreMocks();
@@ -94,7 +94,9 @@ describe('Form Validator', () => {
         it('can return an error with a message', () => {
             const formData = {
                 test: {
+                    value: "testVal",
                     validation: 'testRule',
+                    customProp: 1,
                 }
             }
 
@@ -116,7 +118,12 @@ describe('Form Validator', () => {
             })
 
             expect(validateField).toHaveBeenCalled();
-            expect(messageMock).toHaveBeenCalled();
+            expect(messageMock).toHaveBeenCalledWith({
+                key: 'test',
+                validation: ['testRule'],
+                value: 'testVal',
+                customProp: 1,
+            });
 
             restoreMocks();
         });
@@ -272,8 +279,8 @@ describe('Form Validator', () => {
     })
 
     describe('validateField', () => {
-        function createFieldData({ key="test", value, rules}={}) {
-            return { key, value, rules };
+        function createFieldData({ key="test", value, validation}={}) {
+            return { key, value, validation };
         }
 
         const oldWarn = console.warn;
@@ -287,21 +294,21 @@ describe('Form Validator', () => {
         })
 
         it('can allow a field with no rules', () => {
-            const fieldData = createFieldData({ value: "hey", rules: ['required'] })
+            const fieldData = createFieldData({ value: "hey", validation: ['required'] })
 
             expect(validateField(fieldData)).toEqual({ errors: false });
             expect(console.warn).not.toHaveBeenCalled();
         });
 
         it('can allow a validated field', () => {
-            const fieldData = createFieldData({ value: "hey", rules: ['required'] })
+            const fieldData = createFieldData({ value: "hey", validation: ['required'] })
 
             expect(validateField(fieldData)).toEqual({ errors: false });
             expect(console.warn).not.toHaveBeenCalled();
         });
 
         it('can allow a field with no rules', () => {
-            const fieldData = createFieldData({ value: "hey", rules: ['required']  })
+            const fieldData = createFieldData({ value: "hey", validation: ['required']  })
 
             expect(validateField(fieldData)).toEqual({ errors: false });
             expect(console.warn).not.toHaveBeenCalled();
@@ -310,9 +317,8 @@ describe('Form Validator', () => {
         it('can allow a nullable field', () => {
             const fieldData = createFieldData({
                 value: null,
-                rules: ['test', 'nullable'],
+                validation: ['test', 'nullable'],
             });
-
 
             const ruleMock = mockRule('test', false);
 
@@ -324,14 +330,14 @@ describe('Form Validator', () => {
         })
 
         it('can detect an invalid field', () => {
-            const result = validateField(createFieldData({ rules: ['required'] }))
+            const result = validateField(createFieldData({ validation: ['required'] }))
 
             expect(result.errors).toEqual(['required']);
             expect(console.warn).not.toHaveBeenCalled();
         });
 
         it('can detect multiple rules on one field', () => {
-            const result = validateField(createFieldData({ rules: ['required', 'string'] }))
+            const result = validateField(createFieldData({ validation: ['required', 'string'] }))
 
             expect(result.errors).toEqual(['required', 'string']);
             expect(console.warn).not.toHaveBeenCalled();
@@ -339,7 +345,7 @@ describe('Form Validator', () => {
 
         it('will throw a warning if there is an unknown rule', () => {
 
-            const fieldData = createFieldData({ rules: ['unknown'] })
+            const fieldData = createFieldData({ validation: ['unknown'] })
 
             expect(validateField(fieldData)).toEqual({ errors: false });
             expect(console.warn).toHaveBeenCalled();
@@ -348,7 +354,7 @@ describe('Form Validator', () => {
 
         it('will throw a warning if a nullable field has an unknown rule', () => {
 
-            const fieldData = createFieldData({ rules: ['unknown', 'nullable'] })
+            const fieldData = createFieldData({ validation: ['unknown', 'nullable'] })
 
             expect(validateField(fieldData)).toEqual({ errors: false });
             expect(console.warn).toHaveBeenCalled();
@@ -357,7 +363,7 @@ describe('Form Validator', () => {
 
         it('will throw a warning if there is an error validating rule', () => {
 
-            const fieldData = createFieldData({ rules: ['testRule'] })
+            const fieldData = createFieldData({ validation: ['testRule'] })
 
             const ruleMock = mockRule('testRule');
             ruleMock.mockImplementation(() => {
@@ -373,7 +379,7 @@ describe('Form Validator', () => {
 
         it('will throw a warning if there is an error validating rule with a nullable value', () => {
 
-            const fieldData = createFieldData({ rules: ['test', 'nullable'] })
+            const fieldData = createFieldData({ validation: ['test', 'nullable'] })
 
             const ruleMock = mockRule('test');
             ruleMock.mockImplementation(() => {
