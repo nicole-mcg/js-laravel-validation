@@ -1,9 +1,10 @@
 import RULES from './rules'
+import MESSAGES from './messages'
 
 const toExport = {};
 
 // { fieldName: {value, rules} }
-function validateForm(formData) {
+function validateForm({ formData, includeMessages=true }) {
 
     const keys = Object.keys(formData);
 
@@ -11,6 +12,7 @@ function validateForm(formData) {
 
     let fields = [];
     let errors = [];
+    let messages = [];
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
         const rules = formData[key].rules.split('|');
@@ -34,6 +36,10 @@ function validateForm(formData) {
             fields.push(key);
             errors.push(result.errors);
 
+            if (includeMessages) {
+                messages.push( result.errors.map(rule => MESSAGES[rule]()) );
+            }
+
             if (bail) {
                 break;
             }
@@ -53,9 +59,12 @@ function validateForm(formData) {
     }
 
     return {
-        errors: errors.length === 0 ? false : errors.reduce((errors, error, index) => {
-            errors[fields[index]] = error;
-            return errors;
+        errors: errors.length === 0 ? false : errors.reduce((keyedErrors, error, index) => {
+            keyedErrors[fields[index]] = {
+                rules: error,
+            }
+            if (includeMessages) keyedErrors[fields[index]].messages = messages[index];
+            return keyedErrors;
         }, {}),
     }
 }

@@ -1,14 +1,17 @@
 
 import { validate } from '../index'
 import RULES from '../rules'
+import MESSAGES from '../messages'
 
 const { validateField, validateForm, parseRule } = validate;
 
 const oldRules = Object.assign({}, RULES);
+const oldMessages = Object.assign({}, MESSAGES);
 
 describe('Form Validator', () => {
 
     const mockedRules = [];
+    const mockedMessages = [];
 
     function mockValidateField(returnVal) {
         const mock = jest.fn();
@@ -25,11 +28,23 @@ describe('Form Validator', () => {
         return mock;
     }
 
+    function mockMessage(name, returnVal) {
+        const mock = jest.fn();
+        mock.mockReturnValue(returnVal);
+        MESSAGES[name] = mock;
+        mockedMessages.push(name);
+        return mock;
+    }
+
     function restoreMocks() {
         validate.validateForm = validateForm;
         validate.validateField = validateField;
+
         mockedRules.forEach(rule => RULES[rule] = oldRules[rule]);
         mockedRules.length = 0;
+
+        mockedMessages.forEach(message => MESSAGES[message] = oldMessages[message]);
+        mockedMessages.length = 0;
     }
 
     describe('validateForm', () => {
@@ -43,7 +58,7 @@ describe('Form Validator', () => {
 
             const validateField = mockValidateField({});
 
-            validateForm(formData);
+            validateForm({ formData} );
             expect(validateField).toHaveBeenCalledWith({
                 key: 'test',
                 value: 1,
@@ -51,7 +66,7 @@ describe('Form Validator', () => {
             }, formData)
 
             restoreMocks();
-        })
+        });
 
         it('can return an error', () => {
             const formData = {
@@ -64,11 +79,42 @@ describe('Form Validator', () => {
                 errors: ['required']
             });
 
-            expect(validateForm(formData)).toEqual({
+            expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
-                    test: ['required'],
+                    test: {
+                        rules: ['required'],
+                    }
+                }
+            });
+            expect(validateField).toHaveBeenCalled();
+
+            restoreMocks();
+        });
+
+        it('can return an error with a message', () => {
+            const formData = {
+                test: {
+                    rules: 'testRule',
+                }
+            }
+
+            const validateField = mockValidateField({
+                errors: ['testRule']
+            });
+
+            const messageMock = mockMessage('testRule', 'hello');
+
+            expect(validateForm({ formData, includeMessages: true } )).toEqual({
+                errors: {
+                    test: {
+                        rules: ['testRule'],
+                        messages: ['hello'],
+                    }
                 }
             })
+
+            expect(validateField).toHaveBeenCalled();
+            expect(messageMock).toHaveBeenCalled();
 
             restoreMocks();
         });
@@ -93,9 +139,11 @@ describe('Form Validator', () => {
                 errors: ['required'],
             });
 
-            expect(validateForm(formData)).toEqual({
+            expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
-                    test: ['required'],
+                    test: {
+                        rules: ['required'],
+                    },
                 }
             })
 
@@ -122,9 +170,11 @@ describe('Form Validator', () => {
                 errors: ['required'],
             });
 
-            expect(validateForm(formData)).toEqual({
+            expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
-                    test: ['required'],
+                    test: {
+                        rules: ['required'],
+                    }
                 }
             })
 
@@ -158,9 +208,11 @@ describe('Form Validator', () => {
                 errors: ['required'],
             });
 
-            expect(validateForm(formData)).toEqual({
+            expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
-                    test: ['required'],
+                    test: {
+                        rules: ['required'],
+                    },
                 }
             })
 
@@ -180,9 +232,11 @@ describe('Form Validator', () => {
                 errors: ['required', 'string'],
             });
 
-            expect(validateForm(formData)).toEqual({
+            expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
-                    test: ['required'],
+                    test: {
+                        rules: ['required'],
+                    },
                 }
             })
 
