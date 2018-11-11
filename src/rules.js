@@ -5,6 +5,8 @@
 export default {
   accepted: ({ value }) => isNotEmpty(value),
 
+  //active url
+
   after: ({ value, params }) => b(new Date(value) > new Date(params[0])),
   after_or_equal: ({ value, params }) => b(new Date(value) >= new Date(params[0])),
 
@@ -95,7 +97,10 @@ export default {
   min: ({ value, params }) => sizeOf(value) >= params[0],
 
   not_in: ({ value, params }) => !params.includes(value),
+
   //not_regex
+
+  //nullable
 
   numeric: ({ value }) => typeof value === 'number',
 
@@ -138,6 +143,10 @@ export default {
   string: ({ value }) => typeof value === 'string',
 
   //timezone
+
+  //url
+
+  //uuid
 };
 
 
