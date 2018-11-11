@@ -139,6 +139,23 @@ describe('Form Validator', () => {
 
             expect(validateField(fieldData)).toEqual({});
             expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        it('can allow a nullable field', () => {
+            const fieldData = createFieldData({
+                value: null,
+                rules:"test|nullable"
+            });
+
+
+            const ruleMock = mockRule('test', false);
+
+            expect(validateField(fieldData)).toEqual({});
+            expect(console.warn).not.toHaveBeenCalled();
+
+
+            expect(ruleMock).toHaveBeenCalled();
+            restoreMocks();
         })
 
         it('can detect an invalid field', () => {
@@ -169,7 +186,9 @@ describe('Form Validator', () => {
 
             expect(validateField(fieldData)).toEqual({});
             expect(console.warn).toHaveBeenCalled();
+            expect(ruleMock).toHaveBeenCalled();
 
+            restoreMocks();
         })
     })
 

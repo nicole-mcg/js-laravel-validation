@@ -62,6 +62,10 @@ function validateField(fieldData, formData) {
             continue;
         }
 
+        if (rule.key === 'nullable') {
+            continue;
+        }
+
         if (!RULES[rule.key]) {
             console.warn(`Could not find rule on field ${fieldData.key} rule=${rules[i]}`);
             continue;
@@ -73,7 +77,6 @@ function validateField(fieldData, formData) {
             ...rule,
             value: fieldData.value,
             values,
-            nullable
         }
 
         let result = false;
@@ -85,6 +88,9 @@ function validateField(fieldData, formData) {
         }
 
         if (!result) {
+            if ((nullable && fieldData.value === null)) {
+                continue;
+            }
             return {
                 error: true,
                 rule: rules[i],

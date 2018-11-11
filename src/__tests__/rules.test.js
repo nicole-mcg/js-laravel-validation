@@ -13,10 +13,12 @@ describe('Rules', () => {
                     value=undefined,
                     values=undefined,
                     params=undefined,
+                    nullable=false,
                 } = test;
                 if (values !== undefined) ruleParams.values = values;
                 if (value !== undefined) ruleParams.value = value;
                 if (params !== undefined) ruleParams.params = params;
+                ruleParams.nullable = nullable;
                 const testName = `can ${result ? 'allow' : 'deny'} a ${desc}`;
                 const testFunc = () => {
                     if (result === undefined) {
