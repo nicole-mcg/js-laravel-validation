@@ -10,6 +10,28 @@ Set custom messages:
     validate.setCustomMessage('required', ({ key, value }) => `${key} field is required.`)
 ```
 
+The parameter to your `createMessage` function will the same field object you supplied in your `formData`. Differences are it will have a `key` prop with the field name, and the `validation` prop will be an array of rules (with parameters if any)
+
+E.g: 
+````
+    validateForm({ 
+        name: {
+            value: "c mcg",
+            validation: 'required|string',
+            label: 'Full Name', //Custom property
+        }
+    })
+```
+will call the custom message function with
+```
+{
+    name: 'name',
+    validation: ['required', 'string'],
+    value: "c mcg",
+    label: 'Full Name',
+}
+```
+
 ### Usage
 
 Currently no dist is provided
@@ -20,11 +42,11 @@ Currently no dist is provided
   const formData = {
     username: {
       value: 'test1',
-      rules: 'required|string'
+      validation: 'required|string'
     },
     password: {
       value null,
-      rules: required|string'
+      validation: required|string'
     }
   }
   
