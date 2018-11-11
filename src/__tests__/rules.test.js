@@ -1389,5 +1389,39 @@ describe('Rules', () => {
             value: 'google.ca',
             result: false,
         }
-    ])
+    ]);
+
+    createRuleTests('uuid', [
+        {
+            desc: 'valid UUID v1',
+            value: "719f6806-e5d3-11e8-9f32-f2801f1b9fd1",
+            result: true,
+        },
+        {
+            desc: 'valid UUID v3',
+            value: 'a3bb189e-8bf9-3888-9912-ace4e6543002',
+            result: true,
+        },
+        {
+            desc: 'valid UUID v4',
+            value: '9d8d5851-1921-4a34-8e73-ef95f328c536',
+            result: true,
+        },
+        {
+            desc: 'valid UUID v5',
+            value: 'a6edc906-2f9f-5fb2-a373-efac406f0ef2',
+            result: true,
+        },
+        {
+            desc: 'UUID that is too long',
+            value: 'aiedc906-2f9f-5fb2-a373-efac406f0ef28',
+            result: false,
+        },
+        {
+            desc: 'UUID that is too short',
+            value: 'a6ed906-2f9f-5fb2-a373-efac406f0ef2',
+            result: false,
+        }
+    ]);
+
 });
