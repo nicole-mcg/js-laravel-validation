@@ -3,6 +3,16 @@ import MESSAGES from './messages'
 
 const toExport = {};
 
+function setCustomMessages(messages) {
+    MESSAGES = Object.assign({}, MESSAGES, messages);
+}
+
+function setCustomMessage({ rule, createMessage }) {
+    setCustomMessages({
+        [rule]: createMessage
+    });
+}
+
 // { fieldName: {value, rules} }
 function validateForm({ formData, includeMessages=true }) {
 
@@ -142,6 +152,9 @@ function validateField(fieldData, formData) {
         errors: errors.length === 0 ? false : errors,
     }
 }
+
+toExport.setCustomMessage = setCustomMessage;
+toExport.setCustomMessages = setCustomMessages;
 
 toExport.validateForm = validateForm;
 toExport.validateField = validateField;
