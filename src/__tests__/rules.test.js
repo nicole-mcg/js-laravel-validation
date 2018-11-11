@@ -1105,6 +1105,33 @@ describe('Rules', () => {
         }
     ])
 
+    createRuleTests('size', [
+        {
+            desc: 'valid number',
+            value: 2,
+            params: [2],
+            result: true,
+        },
+        {
+            desc: 'valid string',
+            value: "2",
+            params: [1],
+            result: true,
+        },
+        {
+            desc: 'string param',
+            value: 0,
+            params: ["0"],
+            result: true,
+        },
+        {
+            desc: 'invalid number',
+            value: 0,
+            params: [1],
+            result: false,
+        },
+    ])
+
     createRuleTests('string', [
         {
             desc: 'string',

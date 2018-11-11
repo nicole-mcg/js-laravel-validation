@@ -112,8 +112,7 @@ export default {
 
   same: ({ value, values, params }) => b(value == values[params[0]]),//allows same arrays and objects
 
-
-  //size
+  size: ({ value, params }) => sizeOf(value) === parseInt(params[0]),
 
   string: ({ value }) => typeof value === 'string',
 
