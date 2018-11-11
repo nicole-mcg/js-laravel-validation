@@ -103,12 +103,12 @@ export default {
   //regex
 
   required: ({ value }) => isNotEmpty(value),
-
-  //required_if
-  //required_unless
-  //required_with
-  //required_with_all
-  //required_without
+  required_if: ({ value, params, values }) => values[params[0]] == params[1] ? isNotEmpty(value) : true,
+  required_unless: ({ value, params, values }) => values[params[0]] != params[1] ? isNotEmpty(value) : true,
+  //required_with: ({ value, params, values }) => values[params[0]] != params[1] || isNotEmpty(value),
+  // required_with_all
+  // required_without
+  // required_without_all
 
   same: ({ value, values, params }) => b(value == values[params[0]]),//allows same arrays and objects
 

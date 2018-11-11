@@ -1022,6 +1022,68 @@ describe('Rules', () => {
 
     createRuleTests('required', NOT_EMPTY_TESTS);
 
+    createRuleTests('required_if', [
+        {
+            desc: 'required value',
+            value: 1,
+            params: ['test', 2],
+            values: { test: 2 },
+            result: true,
+        },
+        {
+            desc: 'filled unrequired value',
+            value: 1,
+            params: ['test', 2],
+            values: { test: 1 },
+            result: true,
+        },
+        {
+            desc: 'empty unrequired value',
+            value: 0,
+            params: ['test', 2],
+            values: { test: 1 },
+            result: true,
+        },
+        {
+            desc: 'empty required value',
+            value: 0,
+            params: ['test', 2],
+            values: { test: 2 },
+            result: false,
+        }
+    ]);
+
+    createRuleTests('required_unless', [
+        {
+            desc: 'required value',
+            value: 1,
+            params: ['test', 2],
+            values: { test: 0 },
+            result: true,
+        },
+        {
+            desc: 'filled unrequired value',
+            value: 1,
+            params: ['test', 2],
+            values: { test: 2 },
+            result: true,
+        },
+        {
+            desc: 'empty unrequired value',
+            value: 0,
+            params: ['test', 2],
+            values: { test: 2 },
+            result: true,
+        },
+        {
+            desc: 'empty required value',
+            value: 0,
+            params: ['test', 2],
+            values: { test: 1 },
+            result: false,
+        }
+    ]);
+
     createRuleTests('same', [
         {
             desc: 'same number',
