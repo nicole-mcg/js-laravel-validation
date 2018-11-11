@@ -18,11 +18,15 @@ Currently no dist is provided
     }
   }
   
-  const result = validateForm(formData);
+  const result = validateForm({
+    formData,
+    includeMessages: true,
+  });
   
   if (result.errors) {
     Object.keys(result.errors).forEach(key => {
-      console.log(`invalid field field=${result.errors[key]} rule=${key}`
+      const error = result.errors[key];
+      console.log(`invalid field field=${key} rules=${error.rules} messages=${error.messages}`
     }
   }
 ```
