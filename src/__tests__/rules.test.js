@@ -1424,4 +1424,17 @@ describe('Rules', () => {
         }
     ]);
 
+    createRuleTests('timezone', [
+        {
+            desc: 'valid timezone',
+            value: "America/New_York",
+            result: true,
+        },
+        {
+            desc: 'invalid timezone',
+            value: "Canada/Ontario",
+            result: false,
+        }
+    ]);
+
 });

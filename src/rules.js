@@ -1,6 +1,8 @@
 // Based on laravel validation rules
 // https://laravel.com/docs/5.7/validation#rule-accepted
 
+import timezones from './timezones.js'
+
 
 export default {
   accepted: ({ value }) => isNotEmpty(value),
@@ -36,6 +38,7 @@ export default {
   
   date: ({ value }) => b(typeof value !== 'number' && !isNaN(Date.parse(value))),
   date_equals: ({ value, params }) => (Date.parse(value) !== NaN && Date.parse(value) === Date.parse(params[0])),
+
   //date_format
 
   different: ({ value, values, params }) => b(value != values[params[0]]),//allows same arrays and objects
@@ -145,7 +148,7 @@ export default {
 
   string: ({ value }) => typeof value === 'string',
 
-  //timezone
+  timezone: ({ value }) => timezones.includes(value),
 
   url: ({ value }) => /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(value),
 
@@ -156,6 +159,8 @@ export default {
 /*****************************/
 /** START OF UTIL FUNCTIONS **/
 /*****************************/
+
+//These functions are tested through rules that use them
 
 
 function isNotEmpty(value) {
