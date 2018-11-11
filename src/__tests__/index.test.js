@@ -1,9 +1,14 @@
 
-import { validate } from '../index.js'
+import { validate } from '../index'
+import RULES from '../rules'
 
 const { validateField, validateForm, parseRule } = validate;
 
+const oldRules = Object.assign({}, RULES);
+
 describe('Form Validator', () => {
+
+    const mockedRules = [];
 
     function mockValidateField(returnVal) {
         const mock = jest.fn();
@@ -12,9 +17,19 @@ describe('Form Validator', () => {
         return mock;
     }
 
+    function mockRule(name, returnVal) {
+        const mock = jest.fn();
+        mock.mockReturnValue(returnVal);
+        RULES[name] = mock;
+        mockedRules.push(name);
+        return mock;
+    }
+
     function restoreMocks() {
         validate.validateForm = validateForm;
         validate.validateField = validateField;
+        mockedRules.forEach(rule => RULES[rule] = oldRules[rule]);
+        mockedRules.length = 0;
     }
 
     describe('validateForm', () => {
@@ -103,7 +118,23 @@ describe('Form Validator', () => {
             console.warn = oldWarn;
         })
 
+        it('can allow a field with no rules', () => {
+            const fieldData = createFieldData({ value: "hey" })
+
+            expect(validateField(fieldData)).toEqual({});
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
         it('can allow a validated field', () => {
+            const fieldData = createFieldData({ value: "hey" })
+
+
+
+            expect(validateField(fieldData)).toEqual({});
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        it('can allow a field with no rules', () => {
             const fieldData = createFieldData({ value: "hey" })
 
             expect(validateField(fieldData)).toEqual({});
@@ -121,6 +152,20 @@ describe('Form Validator', () => {
         it('will throw a warning if there is an unknown rule', () => {
 
             const fieldData = createFieldData({ rules: 'unknown' })
+
+            expect(validateField(fieldData)).toEqual({});
+            expect(console.warn).toHaveBeenCalled();
+
+        });
+
+        it('will throw a warning if there is an error validating rule', () => {
+
+            const fieldData = createFieldData({ rules: 'test' })
+
+            const ruleMock = mockRule('test');
+            ruleMock.mockImplementation(() => {
+                throw new Error();
+            });
 
             expect(validateField(fieldData)).toEqual({});
             expect(console.warn).toHaveBeenCalled();

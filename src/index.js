@@ -74,7 +74,15 @@ function validateField(fieldData, formData) {
             values,
         }
 
-        if (!RULES[rule.key](params)) {
+        let result = false;
+        try {
+            result = RULES[rule.key](params);
+        } catch (e) {
+            console.warn(`Error validative rule, most likely invalid params: rule${rule.key} field=${fieldData.key}`)
+            continue;
+        }
+
+        if (!result) {
             return {
                 error: true,
                 rule: rules[i],
