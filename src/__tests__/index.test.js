@@ -175,6 +175,15 @@ describe('Form Validator', () => {
 
         });
 
+        it('will throw a warning if a nullable field has an unknown rule', () => {
+
+            const fieldData = createFieldData({ rules: 'unknown|nullable' })
+
+            expect(validateField(fieldData)).toEqual({});
+            expect(console.warn).toHaveBeenCalled();
+
+        });
+
         it('will throw a warning if there is an error validating rule', () => {
 
             const fieldData = createFieldData({ rules: 'test' })
@@ -189,7 +198,24 @@ describe('Form Validator', () => {
             expect(ruleMock).toHaveBeenCalled();
 
             restoreMocks();
-        })
+        });
+
+        it('will throw a warning if there is an error validating rule with a nullable value', () => {
+
+            const fieldData = createFieldData({ rules: 'test|nullable ' })
+
+            const ruleMock = mockRule('test');
+            ruleMock.mockImplementation(() => {
+                throw new Error();
+            });
+
+            expect(validateField(fieldData)).toEqual({});
+            expect(console.warn).toHaveBeenCalled();
+            expect(ruleMock).toHaveBeenCalled();
+
+            restoreMocks();
+        });
+
     })
 
 })
