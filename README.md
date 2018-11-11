@@ -1,6 +1,6 @@
 # JS-Laravel-validation
 
-### Setup
+## Setup
 
 Set custom messages:
 
@@ -32,7 +32,7 @@ will call the custom message function with
 }
 ```
 
-### Usage
+## Usage
 
 Currently no dist is provided
 
