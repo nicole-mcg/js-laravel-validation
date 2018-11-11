@@ -51,6 +51,7 @@ function validateField(fieldData, formData) {
     }, {});
 
     const rules = fieldData.rules.split('|');
+    const nullable = rules.includes('nullable');
 
     for (let i = 0; i < rules.length; i++) {
         let rule;
@@ -72,6 +73,7 @@ function validateField(fieldData, formData) {
             ...rule,
             value: fieldData.value,
             values,
+            nullable
         }
 
         let result = false;
