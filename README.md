@@ -2,7 +2,7 @@
 
 ### Usage
 
-Currently no dist is provided so this may change
+Currently no dist is provided
 
 ```
   import { validateForm } from 'js-laravel-validation'
@@ -20,7 +20,9 @@ Currently no dist is provided so this may change
   
   const result = validateForm(formData);
   
-  if (result.error) {
-    console.log(`invalid field ${result.key} rule=${result.rule}`
+  if (result.errors) {
+    Object.keys(result.errors).forEach(key => {
+      console.log(`invalid field field=${result.errors[key]} rule=${key}`
+    }
   }
 ```
