@@ -56,6 +56,7 @@ export default {
       return count;
     }, 0) === 1);
   },
+
   email: ({ value }) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value),
 
   file: ({ value }) => value instanceof File,
@@ -95,7 +96,8 @@ export default {
   not_in: ({ value, params }) => !params.includes(value),
   //not_regex
 
-  numeric: ({ value }) => !isNaN(value),
+  numeric: ({ value }) => typeof value === 'number',
+
   present: ({ value }) => value !== undefined,
 
   //regex
@@ -123,6 +125,7 @@ function isNotEmpty(value) {
 }
 
 function sizeOf(value) {
+  //TODO files, images other things
   if (value.hasOwnProperty('length')) {
     value = value.length;
   }
