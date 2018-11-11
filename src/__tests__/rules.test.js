@@ -1192,6 +1192,99 @@ describe('Rules', () => {
         }
     ]);
 
+    createRuleTests('required_without', [
+        {
+            desc: 'filled required value',
+            value: 1,
+            params: ['test'],
+            values: {
+                test: 0
+            },
+            result: true,
+        },
+        {
+            desc: 'empty unrequired value',
+            value: 0,
+            params: ['test'],
+            values: {
+                test: 1,
+            },
+            result: true,
+        },
+        {
+            desc: 'filled required value (2 params)',
+            value: 1,
+            params: ['test', 'test2'],
+            values: {
+                test: 0,
+                test2: 1,
+            },
+            result: true,
+        },
+        {
+            desc: 'filled unrequired value',
+            value: 1,
+            params: ['test', 'test2'],
+            values: {
+                test: 1,
+                test2: 1,
+            },
+            result: true,
+        },
+        {
+            desc: 'empty required value',
+            value: 0,
+            params: ['test', 'test2'],
+            values: {
+                test: 0,
+                test2: 1,
+            },
+            result: false,
+        }
+    ]);
+
+    createRuleTests('required_without_all', [
+        {
+            desc: 'filled required value',
+            value: 1,
+            params: ['test', 'test2'],
+            values: {
+                test: 0,
+                test2: 0,
+            },
+            result: true,
+        },
+        {
+            desc: 'empty unrequired value',
+            value: 0,
+            params: ['test', 'test2'],
+            values: {
+                test: 1,
+                test2: 1,
+            },
+            result: true,
+        },
+        {
+            desc: 'filled unrequired value',
+            value: 1,
+            params: ['test'],
+            values: {
+                test: 1,
+            },
+            result: true,
+        },
+        {
+            desc: 'empty required value',
+            value: 0,
+            params: ['test', 'test2'],
+            values: {
+                test: 0,
+                test2: 0,
+            },
+            result: false,
+        }
+    ]);
+
     createRuleTests('same', [
         {
             desc: 'same number',

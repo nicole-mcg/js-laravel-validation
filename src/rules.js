@@ -118,8 +118,18 @@ export default {
     ).length === params.length;
     return !required || isNotEmpty(value);
   },
-  // required_without
-  // required_without_all
+  required_without: ({ value, params, values }) => {
+    const required = Object.keys(values).filter(
+      key => params.includes(key) ? !isNotEmpty(values[key]) : false 
+    ).length > 0;
+    return !required || isNotEmpty(value);
+  },
+  required_without_all: ({ value, params, values }) => {
+    const required = Object.keys(values).filter(
+      key => params.includes(key) ? !isNotEmpty(values[key]) : false
+    ).length === params.length;
+    return !required || isNotEmpty(value);
+  },
 
   same: ({ value, values, params }) => b(value == values[params[0]]),//allows same arrays and objects
 
