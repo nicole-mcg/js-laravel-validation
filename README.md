@@ -28,7 +28,7 @@ will call the custom message function with
 
 ```
 {
-    name: 'name',
+    key: 'name',
     validation: ['required', 'string'],
     value: "c mcg",
     label: 'Full Name',
