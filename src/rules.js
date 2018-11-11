@@ -105,7 +105,12 @@ export default {
   required: ({ value }) => isNotEmpty(value),
   required_if: ({ value, params, values }) => values[params[0]] == params[1] ? isNotEmpty(value) : true,
   required_unless: ({ value, params, values }) => values[params[0]] != params[1] ? isNotEmpty(value) : true,
-  //required_with: ({ value, params, values }) => values[params[0]] != params[1] || isNotEmpty(value),
+  required_with: ({ value, params, values }) => {
+    const required = Object.keys(values).filter(
+      key => params.includes(key) ? isNotEmpty(values[key]) : false 
+    ).length > 0;
+    return !required || isNotEmpty(value);
+  },
   // required_with_all
   // required_without
   // required_without_all
