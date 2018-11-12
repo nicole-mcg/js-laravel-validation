@@ -4,7 +4,7 @@
 
 Set custom messages:
 
-```
+```javascript
     import { validate } from 'js-laravel-validation'
     
     validate.setCustomMessage('required', ({ key, value }) => `${key} field is required.`)
@@ -14,7 +14,7 @@ The parameter to your `createMessage` function will the same field object you su
 
 E.g: 
 
-```
+```javascript
     validateForm({ 
         name: {
             value: "c mcg",
@@ -26,7 +26,7 @@ E.g:
 
 will call the custom message function with
 
-```
+```javascript
 {
     key: 'name',
     validation: ['required', 'string'],
@@ -39,7 +39,7 @@ will call the custom message function with
 
 Currently no dist is provided
 
-```
+```javascript
   import { validateForm } from 'js-laravel-validation'
   
   const formData = {
