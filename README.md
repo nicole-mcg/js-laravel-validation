@@ -49,7 +49,7 @@ Currently no dist is provided
     },
     password: {
       value null,
-      validation: required|string'
+      validation: 'required|string'
     }
   }
   
