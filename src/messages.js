@@ -1,5 +1,5 @@
 
-export default {
+const messages = {
   accepted: () => "",
 
   // active_url: ({ value }) => {
@@ -102,3 +102,5 @@ export default {
 
   uuid: () => "",
 };
+
+export default messages;

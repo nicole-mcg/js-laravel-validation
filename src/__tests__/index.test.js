@@ -1,12 +1,37 @@
 
 import { validate } from '../index'
 import RULES from '../rules'
-import MESSAGES from '../messages'
+import defaultMessages from '../messages'
 
-const { validateField, validateForm, parseRule } = validate;
+let MESSAGES = defaultMessages;
+
+const { validateField, validateForm, parseRule, setMessage, setMessages } = validate;
 
 const oldRules = Object.assign({}, RULES);
 const oldMessages = Object.assign({}, MESSAGES);
+
+describe('Custom messages', () => {
+
+    it('can override an existing message', () => {
+        setMessage('test', () => 'hey!');
+
+        expect(defaultMessages.test).toBeTruthy();
+        expect(defaultMessages.test()).toEqual('hey!')
+    });
+
+    it('can override existing messages', () => {
+        setMessages({
+            test: () => 'hey!',
+            test2: () => 'hello',
+        });
+
+        expect(defaultMessages.test).toBeTruthy();
+        expect(defaultMessages.test()).toEqual('hey!');
+        expect(defaultMessages.test2).toBeTruthy();
+        expect(defaultMessages.test2()).toEqual('hello')
+    });
+
+})
 
 describe('Form Validator', () => {
 

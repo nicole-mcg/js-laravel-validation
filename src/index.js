@@ -5,12 +5,12 @@ let MESSAGES = defaultMessages;
 
 const toExport = {};
 
-function setCustomMessages(messages) {
-    MESSAGES = Object.assign({}, MESSAGES, messages);
+function setMessages(messages) {
+    Object.assign(MESSAGES, messages);
 }
 
-function setCustomMessage({ rule, createMessage }) {
-    setCustomMessages({
+function setMessage(rule, createMessage) {
+    setMessages({
         [rule]: createMessage
     });
 }
@@ -155,8 +155,8 @@ function validateField(fieldData, formData) {
     }
 }
 
-toExport.setCustomMessage = setCustomMessage;
-toExport.setCustomMessages = setCustomMessages;
+toExport.setMessage = setMessage;
+toExport.setMessages = setMessages;
 
 toExport.validateForm = validateForm;
 toExport.validateField = validateField;
