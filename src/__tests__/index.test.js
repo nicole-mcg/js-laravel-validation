@@ -1,34 +1,31 @@
 
 import { validate } from '../index'
 import RULES from '../rules'
-import defaultMessages from '../messages'
+import { setMessageHandler, setMessageHandlers, getMessage, getMessageHandler } from '../messages'
 
-let MESSAGES = defaultMessages;
-
-const { validateField, validateForm, parseRule, setMessage, setMessages } = validate;
+const { validateField, validateForm, parseRule } = validate;
 
 const oldRules = Object.assign({}, RULES);
-const oldMessages = Object.assign({}, MESSAGES);
 
 describe('Custom messages', () => {
 
     it('can override an existing message', () => {
-        setMessage('test', () => 'hey!');
+        setMessageHandler('test', () => 'hey!');
 
-        expect(defaultMessages.test).toBeTruthy();
-        expect(defaultMessages.test()).toEqual('hey!')
+        expect(getMessageHandler('test')).toBeTruthy();
+        expect(getMessage('test')).toEqual('hey!')
     });
 
     it('can override existing messages', () => {
-        setMessages({
+        setMessageHandlers({
             test: () => 'hey!',
             test2: () => 'hello',
         });
 
-        expect(defaultMessages.test).toBeTruthy();
-        expect(defaultMessages.test()).toEqual('hey!');
-        expect(defaultMessages.test2).toBeTruthy();
-        expect(defaultMessages.test2()).toEqual('hello')
+        expect(getMessageHandler('test')).toBeTruthy();
+        expect(getMessage('test')).toEqual('hey!');
+        expect(getMessageHandler('test2')).toBeTruthy();
+        expect(getMessage('test2')).toEqual('hello')
     });
 
 })
@@ -36,7 +33,7 @@ describe('Custom messages', () => {
 describe('Form Validator', () => {
 
     const mockedRules = [];
-    const mockedMessages = [];
+    const mockedMessages = {};
 
     function mockValidateField(returnVal) {
         const mock = jest.fn();
@@ -53,11 +50,11 @@ describe('Form Validator', () => {
         return mock;
     }
 
-    function mockMessage(name, returnVal) {
+    function mockMessage(rule, returnVal) {
         const mock = jest.fn();
         mock.mockReturnValue(returnVal);
-        MESSAGES[name] = mock;
-        mockedMessages.push(name);
+        mockedMessages[rule] = getMessageHandler(rule);
+        setMessageHandler(rule, mock);
         return mock;
     }
 
@@ -68,7 +65,7 @@ describe('Form Validator', () => {
         mockedRules.forEach(rule => RULES[rule] = oldRules[rule]);
         mockedRules.length = 0;
 
-        mockedMessages.forEach(message => MESSAGES[message] = oldMessages[message]);
+        Object.keys(mockedMessages).forEach(rule => setMessageHandler(rule, mockedMessages[rule]));
         mockedMessages.length = 0;
     }
 

@@ -1,19 +1,7 @@
 import RULES from './rules'
-import defaultMessages from './messages'
-
-let MESSAGES = defaultMessages;
+import { getMessage } from './messages'
 
 const toExport = {};
-
-function setMessages(messages) {
-    Object.assign(MESSAGES, messages);
-}
-
-function setMessage(rule, createMessage) {
-    setMessages({
-        [rule]: createMessage
-    });
-}
 
 // { fieldName: {value, validation} }
 function validateForm({ formData, includeMessages=true }) {
@@ -49,7 +37,7 @@ function validateForm({ formData, includeMessages=true }) {
             errors.push(result.errors);
 
             if (includeMessages) {
-                messages.push( result.errors.map(rule => MESSAGES[rule](fieldData)) );
+                messages.push( result.errors.map(rule => getMessage(rule, fieldData)) );
             }
 
             if (bail) {
@@ -154,9 +142,6 @@ function validateField(fieldData, formData) {
         errors: errors.length === 0 ? false : errors,
     }
 }
-
-toExport.setMessage = setMessage;
-toExport.setMessages = setMessages;
 
 toExport.validateForm = validateForm;
 toExport.validateField = validateField;

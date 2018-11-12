@@ -103,4 +103,29 @@ const messages = {
   uuid: () => "",
 };
 
-export default messages;
+//export default messages;
+
+function setMessageHandlers(newMessages) {
+  Object.assign(messages, newMessages);
+}
+
+function setMessageHandler(rule, createMessage) {
+  setMessageHandlers({
+    [rule]: createMessage
+  });
+}
+
+function getMessage(rule, params) {
+  return messages[rule](params);
+}
+
+function getMessageHandler(rule) {
+  return messages[rule];
+}
+
+export {
+  setMessageHandlers,
+  setMessageHandler,
+  getMessage,
+  getMessageHandler,
+}
