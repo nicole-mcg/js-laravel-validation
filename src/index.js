@@ -116,6 +116,10 @@ function validateField(fieldData, formData) {
             continue;
         }
 
+        if (rule.key === "") {
+            continue;
+        }
+
         if (!RULES[rule.key]) {
             console.warn(`Could not find rule on field ${fieldData.key} rule=${validation[i]}`);
             continue;

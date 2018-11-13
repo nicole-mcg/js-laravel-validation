@@ -1,6 +1,6 @@
 
 const messages = {
-  accepted: () => "",
+  /*accepted: () => "",
 
   // active_url: ({ value }) => {
     //This cannot be supported because JS does not support hostname lookups (dns_get_record in PHP)
@@ -100,7 +100,7 @@ const messages = {
 
   url: () => "",
 
-  uuid: () => "",
+  uuid: () => "",*/
 };
 
 //export default messages;
@@ -116,6 +116,9 @@ function setMessageHandler(rule, createMessage) {
 }
 
 function getMessage(rule, params) {
+  if (messages[rule] === undefined) {
+    return rule;
+  }
   return messages[rule](params);
 }
 
