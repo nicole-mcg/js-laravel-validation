@@ -27,7 +27,7 @@ Install: `npm install js-laravel-validation`
   }
 ```
 
-## Default export of `js-laravel-validation`
+## API
 
 | Function Name  | Description |
 | ------------- | ------------- |
