@@ -1,6 +1,6 @@
 {
   "name": "js-laravel-validation",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Laravel style form validation for JavaScript",
   "main": "index.js",
   "scripts": {

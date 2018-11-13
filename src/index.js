@@ -6,6 +6,12 @@ const toExport = {};
 // { fieldName: {value, validation} }
 function validateForm({ formData, includeMessages=true }) {
 
+    if (formData === undefined) {
+        console.warn(`No formData specified to validateForm.\
+            Make sure to pass an object { formData: {} }`);
+        return { errors: false };
+    }
+
     const keys = Object.keys(formData);
 
     let bail = false;
@@ -35,6 +41,10 @@ function validateForm({ formData, includeMessages=true }) {
             key,
             validation,
         };
+
+        if (fieldData.value === undefined) {
+            fieldData.value = null;
+        }
 
         const result = toExport.validateField(fieldData, formData);
 
