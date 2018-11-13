@@ -103,9 +103,7 @@ describe('Form Validator', () => {
 
             expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
-                    test: {
-                        errors: [{ rule: 'required' }],
-                    }
+                    test: ['required'],
                 }
             });
             expect(validateField).toHaveBeenCalled();
@@ -130,12 +128,7 @@ describe('Form Validator', () => {
 
             expect(validateForm({ formData, includeMessages: true } )).toEqual({
                 errors: {
-                    test: {
-                        errors: [{
-                            rule: 'testRule',
-                            message: 'hello',
-                        }],
-                    }
+                    test: ['hello'],
                 }
             })
 
@@ -172,9 +165,7 @@ describe('Form Validator', () => {
 
             expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
-                    test: {
-                        errors: [{ rule: 'required' }],
-                    },
+                    test: ['required'],
                 }
             })
 
@@ -203,9 +194,7 @@ describe('Form Validator', () => {
 
             expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
-                    test: {
-                        errors: [{ rule: 'required' }],
-                    }
+                    test: ['required'],
                 }
             })
 
@@ -241,9 +230,7 @@ describe('Form Validator', () => {
 
             expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
-                    test: {
-                        errors: [{ rule: 'required' }],
-                    },
+                    test: ['required'],
                 }
             })
 
@@ -265,9 +252,7 @@ describe('Form Validator', () => {
 
             expect(validateForm({ formData, includeMessages: false } )).toEqual({
                 errors: {
-                    test: {
-                        errors: [{ rule: 'required' }],
-                    },
+                    test: ['required'],
                 }
             })
 

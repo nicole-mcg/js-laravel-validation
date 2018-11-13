@@ -76,16 +76,8 @@ function validateForm({ formData, includeMessages=true }) {
 
     return {
         errors: errors.length === 0 ? false : errors.reduce((keyedErrors, fieldErrors, i) => {
-
-            fieldErrors = fieldErrors.map((rule, j) => {
-                rule = {
-                    rule,
-                }
-                if (includeMessages) rule.message = messages[i][j];
-                return rule;
-            })
-
-            keyedErrors[fields[i]] = { errors: fieldErrors };
+            fieldErrors = fieldErrors.map((rule, j) => includeMessages ? messages[i][j] : rule)
+            keyedErrors[fields[i]] = fieldErrors;
             return keyedErrors;
         }, {}),
     }
