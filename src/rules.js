@@ -99,6 +99,7 @@ export default {
   max: ({ value, params }) => sizeOf(value) <= params[0],
 
   //mimetypes?
+  //mimes?
 
   min: ({ value, params }) => sizeOf(value) >= params[0],
 
