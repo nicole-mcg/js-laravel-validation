@@ -2,42 +2,9 @@
 
 ## Setup
 
-Set custom messages:
-
-```javascript
-    import { validate } from 'js-laravel-validation'
-    
-    validate.setCustomMessage('required', ({ key, value }) => `${key} field is required.`)
-```
-
-The parameter to your `createMessage` function will the same field object you supplied in your `formData`. Differences are it will have a `key` prop with the field name, and the `validation` prop will be an array of rules (with parameters if any)
-
-E.g: 
-
-```javascript
-    validateForm({ 
-        name: {
-            value: "c mcg",
-            validation: 'required|string',
-            label: 'Full Name', //Custom property
-        }
-    })
-```
-
-will call the custom message function with
-
-```javascript
-{
-    key: 'name',
-    validation: ['required', 'string'],
-    value: "c mcg",
-    label: 'Full Name',
-}
-```
+Install: `npm install js-laravel-validation`
 
 ## Usage
-
-Currently no dist is provided
 
 ```javascript
   import { validateForm } from 'js-laravel-validation'
@@ -53,18 +20,21 @@ Currently no dist is provided
     }
   }
   
-  const result = validateForm({
-    formData,
-    includeMessages: true,
-  });
+  const result = validateForm({ formData });
   
   if (result.errors) {
-    Object.keys(result.errors).forEach(key => {
-      const errors = result.errors[key];
-      
-      errors.forEach(error => {
-        console.log(`invalid field field=${key} rule=${error.rule} messages=${error.message}`
-      }
-    }
+    //handle errors
   }
 ```
+
+## Documentation
+
+### Default export of `js-laravel-validation`
+
+| Function Name  | Description |
+| ------------- | ------------- |
+| validateForm(options)  | Takes a number of options to validate the specified form data  |
+| getMessage(rule, fieldData)  | Gets an error message for the specified rule and field data  |
+| setMessageHandler(rule, createMessage)  | Sets or eplaces the current message handler for the specified rule |
+| setMessageHandlers(messages)  | Replaces multiple message handers  |
+| getMessageHandler(rule)  | Returns the current message handler function for the specified rule  |
