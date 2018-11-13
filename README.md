@@ -1,5 +1,9 @@
 # JS-Laravel-validation
 
+All rules are base on documentation from https://laravel.com/docs/5.7/validation#available-validation-rules
+
+
+
 ## Setup
 
 Install: `npm install js-laravel-validation`
@@ -36,3 +40,17 @@ Install: `npm install js-laravel-validation`
 | setMessageHandler(rule, createMessage)  | Sets or replaces the current message handler for the specified rule |
 | setMessageHandlers(messages)  | Replaces multiple message handers  |
 | getMessageHandler(rule)  | Returns the current message handler function for the specified rule  |
+
+Function documentation to come
+
+## Missing Rules
+- active_url 
+  - This cannot be supported because JS does not support hostname lookups (dns_get_record in PHP)
+  - This could be implemented if there was a reliable way to host a small API to do the lookup
+- date_format
+- dimensions
+- mimetypes
+- mime
+- not_regex
+- regex
+ 
