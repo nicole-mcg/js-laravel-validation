@@ -33,6 +33,6 @@ Install: `npm install js-laravel-validation`
 | ------------- | ------------- |
 | validateForm(options)  | Takes a number of options to validate the specified form data  |
 | getMessage(rule, fieldData)  | Gets an error message for the specified rule and field data  |
-| setMessageHandler(rule, createMessage)  | Sets or eplaces the current message handler for the specified rule |
+| setMessageHandler(rule, createMessage)  | Sets or replaces the current message handler for the specified rule |
 | setMessageHandlers(messages)  | Replaces multiple message handers  |
 | getMessageHandler(rule)  | Returns the current message handler function for the specified rule  |
