@@ -15,7 +15,13 @@ function validateForm({ formData, includeMessages=true }) {
     let messages = [];
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
-        const validation = formData[key].validation.split('|');
+
+        if (typeof formData[key] !== 'object') {
+            continue;
+        }
+
+        const validationString = formData[key].validation || "";
+        const validation = validationString.split('|');
 
         if (validation.includes('bail')) {
             bail = true;
@@ -147,4 +153,4 @@ toExport.validateForm = validateForm;
 toExport.validateField = validateField;
 toExport.parseRule = parseRule;
 
-exports.validate = toExport;
+export const validate = toExport;
