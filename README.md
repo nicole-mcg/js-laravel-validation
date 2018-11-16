@@ -55,4 +55,5 @@ Function documentation to come
 - mime
 - not_regex
 - regex
+  - Regex requires extra parsing to remove forward slashes around regex
  
