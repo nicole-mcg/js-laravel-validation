@@ -2,7 +2,8 @@
 
 All rules are base on documentation from https://laravel.com/docs/5.7/validation#available-validation-rules
 
-
+ - No dependencies
+ - 
 
 ## Setup
 
