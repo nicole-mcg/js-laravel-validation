@@ -2,19 +2,36 @@
 
 ## Options
 
-| Option  | Description |
-| ------------- | ------------- |
-| formData  | The form data to validate. In the form of
-```
-{
+<table>
+  <thead>
+    <th>Option</th>
+    <th>Description</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        formData
+      </td>
+      <td>
+        The form data to validate.<br>In the form of:
+        <pre>{
   [fieldName]: {
     value: [value],
     rules: [rules], // E.g "required|image"
   }
-}
-```
-|
-| includeMessages  | `errors.field` will be a message instead of rule name  |
+}</pre>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        includeMessages
+      </td>
+      <td>
+        errors[field]` will be a message instead of rule name
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ## Return value
 
