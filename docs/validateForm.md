@@ -17,7 +17,7 @@ Takes a number of options to validate form data
       <td>
         The form data to validate. In the form of:
 <pre>{
-  [fieldName]: { // E.g { value: 'value', validation: 'required' }
+  [fieldName]: { // E.g { value: 123, validation: 'required' }
     value: [value],
     validation: [rules], E.g "required|image"
   }
