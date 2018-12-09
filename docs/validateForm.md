@@ -39,7 +39,7 @@ Takes a number of options to validate form data
 
 ```
 {
-  [fieldName]: [rule|message],
+  [fieldName]: [array of failed rules or messages], // Eg. ['required']
   ...
 }
 ```
