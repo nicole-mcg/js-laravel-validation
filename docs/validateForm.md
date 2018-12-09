@@ -40,7 +40,7 @@ Takes a number of options to validate form data
 
 ```
 {// E.g { username: ['required'] }
-  [fieldName]: [failed rules or messages]
+  [fieldName]: [failed rule names or error messages]
   ...
 }
 ```
