@@ -38,6 +38,9 @@ Takes a number of options to validate form data
 
 ## Return value
 
+returns object with `errors` key if there were any validation errors
+
+Example `errors` value
 ```
 {// E.g { username: ['required'] }
   [fieldName]: [failed rule names or error messages]
