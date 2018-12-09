@@ -330,6 +330,12 @@ describe('Rules', () => {
             result: true,
         },
         {
+            desc: 'valid value (zero)',
+            value: 1,
+            params: [0, 2],
+            result: true,
+        },
+        {
             desc: 'valid value (string)',
             value: "test",
             params: [3, 5],
@@ -396,6 +402,17 @@ describe('Rules', () => {
             result: true,
         },
         {
+            desc: 'confirmed null value',
+            ruleParams: {
+                value: null,
+                key: "test",
+                values: {
+                    test_confirmed: null,
+                },
+            },
+            result: true,
+        },
+        {
             desc: "non-confirmed value",
             ruleParams: {
                 value: "hey",
@@ -412,17 +429,6 @@ describe('Rules', () => {
                 key: "test",
                 values: {
                     test_confirmed: "yo",
-                },
-            },
-            result: false,
-        },
-        {
-            desc: 'confirmed null value',
-            ruleParams: {
-                value: null,
-                key: "test",
-                values: {
-                    test_confirmed: null,
                 },
             },
             result: false,
@@ -454,6 +460,11 @@ describe('Rules', () => {
             desc: 'null value',
             value: null,
             result: false,
+        },
+        {
+            desc: 'boolean value',
+            value: false,
+            result: false,
         }
     ]);
 
@@ -469,7 +480,13 @@ describe('Rules', () => {
             value: new Date('01/21/2018'),
             params: [ new Date('01/20/2018') ],
             result: false,
-        }
+        },
+        {
+            desc: 'null date',
+            value: null,
+            params: [ null ],
+            result: false,
+        },
     ]);
 
     createRuleTests('different', [
@@ -501,6 +518,15 @@ describe('Rules', () => {
             result: true,
         },
         {
+            desc: 'different value (0 and false)',
+            value: 0,
+            params: ['test'],
+            values: {
+                test: false,
+            },
+            result: true,
+        },
+        {
             desc: 'same array',
             value: [1],
             params: ['test'],
@@ -510,12 +536,32 @@ describe('Rules', () => {
             result: true,
         },
         {
+            desc: 'different value (null and undefined)',
+            value: null,
+            params: ['test'],
+            values: {},
+            result: true,
+        },
+        {
             desc: 'same bool',
             value: true,
             params: ['test'],
             values: {
                 test: true,
             },
+            result: false,
+        },
+        {
+            desc: 'same value (null)',
+            value: null,
+            params: ['test'],
+            values: { test: null },
+            result: false,
+        },
+        {
+            desc: 'same value (undefined)',
+            params: ['test'],
+            values: {},
             result: false,
         },
     ]);
@@ -544,6 +590,11 @@ describe('Rules', () => {
             value: 2345,
             params: [3],
             result: false,
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
         }
     ]);
 
@@ -571,6 +622,11 @@ describe('Rules', () => {
             value: 2345,
             params: [2, 4],
             result: false,
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
         }
     ])
 
@@ -581,6 +637,17 @@ describe('Rules', () => {
                 value: "hey",
                 values: {
                     x: 'hey',
+                    y: 'hi',
+                }
+            },
+            result: true,
+        },
+        {
+            desc: 'distinct null value',
+            ruleParams: {
+                value: null,
+                values: {
+                    x: { x: 0 },
                     y: 'hi',
                 }
             },
@@ -599,13 +666,25 @@ describe('Rules', () => {
             result: false,
         },
         {
+            skip: true,
             desc: 'indistinct object',
             ruleParams: {
-                value: "hey",
+                value: { x: 0 },
                 values: {
                     x: { x: 0 },
                     y: 'hi',
-                    z: { x : 0 },
+                    z: { x: 0 },
+                }
+            },
+            result: false,
+        },
+        {
+            desc: 'indistinct null value',
+            ruleParams: {
+                value: null,
+                values: {
+                    x: null,
+                    y: null,
                 }
             },
             result: false,
@@ -638,6 +717,11 @@ describe('Rules', () => {
             value: "test@test",
             result: false,
         },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
     ]);
 
     createRuleTests('file', [
@@ -655,7 +739,12 @@ describe('Rules', () => {
             desc: 'object',
             value: {},
             result: false,
-        }
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
     ])
 
     createRuleTests('filled', createNotEmptyTests({ isFalseEmpty: false }));
@@ -731,7 +820,7 @@ describe('Rules', () => {
             result: true,
         },
         {
-            desc: 'undefined field',
+            desc: 'null field',
             params: ['test'],
             value: 1,
             values: { test: null },
@@ -758,7 +847,12 @@ describe('Rules', () => {
             desc: "object",
             value: {},
             result: false,
-        }
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
     ]);
 
     createRuleTests('in', [
@@ -769,36 +863,54 @@ describe('Rules', () => {
             result: true,
         },
         {
+            desc: 'null value that is in specified values',
+            value: null,
+            params: [null],
+            result: true,
+        },
+        {
+            skip: true,
+            desc: 'object that is in specified values',
+            value: { x: 0 },
+            params: [1, { x: 0 }, 2, 4],
+            result: true,
+        },
+        {
             desc: 'number that is not in specified values',
             value: 0,
             params: [1, 2, 3, 4],
             result: false,
         },
-        {
-            desc: 'object that is in specified values',
-            value: { x: 0 },
-            params: [1, { x: 0 }, 2, 4],
-            result: false,
-        }
     ]);
 
     createRuleTests('in_array', [
         {
             desc: 'number that is in specified values',
             value: 0,
-            params: [[1, 0, 2, 4]],
+            values: { test: [0] },
+            params: ['test'],
+            result: true,
+        },
+        {
+            skip: true,
+            desc: 'object that is in specified values',
+            value: { x: 0 },
+            values: { test: [{ x: 0 }] },
+            params: ['test'],
+            result: true,
+        },
+        {
+            desc: 'null value that is in specified values',
+            value: null,
+            values: { test: [null] },
+            params: ['test'],
             result: true,
         },
         {
             desc: 'number that is not in specified values',
             value: 0,
-            params: [[1, 2, 3, 4]],
-            result: false,
-        },
-        {
-            desc: 'object that is in specified values',
-            value: { x: 0 },
-            params: [[1, { x: 0 }, 2, 4]],
+            values: { test: [1, 2, 3] },
+            params: ['test'],
             result: false,
         }
     ])
@@ -827,7 +939,12 @@ describe('Rules', () => {
         {
             desc: 'undefined value',
             result: false,
-        }
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
     ]);
 
     createRuleTests('ip', [
@@ -845,7 +962,12 @@ describe('Rules', () => {
             desc: 'invalid ip',
             value: "10.255.255.2555",
             result: false,
-        }
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
     ])
 
     createRuleTests('ipv4', [
@@ -858,7 +980,12 @@ describe('Rules', () => {
             desc: 'invalid ipv4',
             value: "10.255.255.2555",
             result: false,
-        }
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
     ]);
 
     createRuleTests('ipv6', [
@@ -871,7 +998,12 @@ describe('Rules', () => {
             desc: 'invalid ipv6',
             value: "10.255.255.255",
             result: false,
-        }
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
     ]);
 
     createRuleTests('json', [
@@ -895,6 +1027,11 @@ describe('Rules', () => {
         {
             desc: "string",
             value: "test",
+            result: false,
+        },
+        {
+            desc: 'null value',
+            value: null,
             result: false,
         },
     ]);
@@ -991,7 +1128,12 @@ describe('Rules', () => {
             value: 1,
             params: [0],
             result: false,
-        }
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
     ])
 
     createRuleTests('min', [
@@ -1012,28 +1154,40 @@ describe('Rules', () => {
             value: 0,
             params: [1],
             result: false,
-        }
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
     ]);
 
     createRuleTests('not_in', [
         {
             desc: 'number that is not in specified values',
             value: 0,
-            params: [1, 2, 3, 4],
+            params: [1, 2],
+            result: true,
+        },
+        {
+            skip: true,
+            desc: 'object that is in specified values',
+            value: { x: 0 },
+            params: [1, { x: 0 }],
             result: true,
         },
         {
             desc: 'number that is in specified values',
             value: 0,
-            params: [1, 0, 2, 4],
+            params: [1, 0],
             result: false,
         },
         {
-            desc: 'object that is in specified values',
-            value: { x: 0 },
-            params: [1, { x: 0 }, 2, 4],
-            result: true,
-        }
+            desc: 'null value that is in specified values',
+            value: null,
+            params: [1, null],
+            result: false,
+        },
     ]);
 
     createRuleTests('numeric', [
@@ -1065,6 +1219,11 @@ describe('Rules', () => {
         {
             desc: "object",
             value: {},
+            result: false,
+        },
+        {
+            desc: 'null value',
+            value: null,
             result: false,
         },
     ]);
@@ -1352,7 +1511,7 @@ describe('Rules', () => {
             values: {
                 test: 1,
             },
-            result: true,
+            result: false,
         },
         {
             desc: 'different number',
@@ -1390,6 +1549,12 @@ describe('Rules', () => {
             params: [1],
             result: false,
         },
+        {
+            desc: 'null value',
+            value: null,
+            params: [1],
+            result: false,
+        },
     ])
 
     createRuleTests('string', [
@@ -1412,7 +1577,12 @@ describe('Rules', () => {
             desc: 'number',
             value: 1,
             result: false,
-        }
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
     ]);
 
     createRuleTests('url', [
@@ -1436,7 +1606,12 @@ describe('Rules', () => {
             desc: 'url with no protocol',
             value: 'google.ca',
             result: false,
-        }
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
     ]);
 
     createRuleTests('uuid', [
@@ -1469,7 +1644,12 @@ describe('Rules', () => {
             desc: 'UUID that is too short',
             value: 'a6ed906-2f9f-5fb2-a373-efac406f0ef2',
             result: false,
-        }
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
     ]);
 
     createRuleTests('timezone', [
@@ -1482,7 +1662,12 @@ describe('Rules', () => {
             desc: 'invalid timezone',
             value: "Canada/Ontario",
             result: false,
-        }
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
     ]);
 
 });

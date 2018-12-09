@@ -27,7 +27,7 @@ export default {
   before_or_equal: ({ value, params }) => b(new Date(value) <= new Date(params[0])),
 
   between: ({ value, params }) => {
-    if (!value) return false;
+    if (typeof value !== 'number' && !value) return false;
     const [min, max] = params;
     value = sizeOf(value);
     return value > min && value < max;
@@ -35,17 +35,20 @@ export default {
 
   boolean: ({ value }) => typeof value === 'boolean',
 
-  confirmed: ({ value, key, values }) => isNotEmpty(value) && b(value === values[`${key}_confirmed`]),
+  confirmed: ({ value, key, values }) => b(value === values[`${key}_confirmed`]),
 
   date: ({ value }) => b(typeof value !== 'number' && !isNaN(Date.parse(value))),
-  date_equals: ({ value, params }) => (Date.parse(value) && Date.parse(value) === Date.parse(params[0])),
+  date_equals: ({ value, params }) => (Date.parse(value) === Date.parse(params[0])),
 
   //date_format
 
-  different: ({ value, values, params }) => b(value != values[params[0]]),//allows same arrays and objects
+  different: ({ value, values, params }) => b(value !== values[params[0]]),//allows same arrays and objects
 
-  digits: ({ value, params }) => !isNaN(value) && value.toString().length === parseInt(params[0]),
+  digits: ({ value, params }) => !isNaN(value) && (typeof value === 'number' || b(value)) && value.toString().length === parseInt(params[0]),
   digits_between: ({ value, params }) => {
+    if (typeof value !== 'number' && !b(value)) {
+      return false;
+    }
     const len = value.toString().length;
     const [min, max] = params;
     return len > min && len < max;
@@ -60,11 +63,11 @@ export default {
 
   distinct: ({ values, value }) => {
     return (Object.keys(values).reduce((count, key) => {
-      if (values[key] == value) {
+      if (values[key] === value) {
         count++;
       }
       return count;
-    }, 0) === 1);
+    }, 0) <= 1);
   },
 
   email: ({ value }) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value),
@@ -79,7 +82,7 @@ export default {
   image: ({ value }) => value instanceof Image,
 
   in: ({ value, params }) => params.includes(value),
-  in_array: ({ value, params }) => params[0].includes(value),
+  in_array: ({ value, values, params }) => typeof values[params[0]] === 'object' && b(values[params[0]].includes) && values[params[0]].includes(value),
   
   integer: ({ value }) => {
     return Number.isInteger(typeof value === 'string' ? parseInt(value) : value);
@@ -90,19 +93,20 @@ export default {
   ipv6: ({ value }) => checkipv6(value),
 
   json: ({ value }) => {
-    try { JSON.parse(value ); } catch (e) { return false ;}
+    if (typeof value !== 'string') return false;
+    try { JSON.parse(value); } catch (e) { return false ;}
     return true;
   },
 
   lt: ({ value, values, params }) => value < values[params[0]],
   lte: ({ value, values, params }) => value <= values[params[0]],
 
-  max: ({ value, params }) => sizeOf(value) <= params[0],
+  max: ({ value, params }) => (b(value) || typeof value === 'number') && sizeOf(value) <= params[0],
 
   //mimetypes?
   //mimes?
 
-  min: ({ value, params }) => sizeOf(value) >= params[0],
+  min: ({ value, params }) => (b(value) || typeof value === 'number') && sizeOf(value) >= params[0],
 
   not_in: ({ value, params }) => !params.includes(value),
 
@@ -144,9 +148,12 @@ export default {
     return !required || isNotEmpty(value);
   },
 
-  same: ({ value, values, params }) => b(value == values[params[0]]),//allows same arrays and objects
+  same: ({ value, values, params }) => b(value === values[params[0]]),//allows same arrays and objects
 
-  size: ({ value, params }) => sizeOf(value) === parseInt(params[0]),
+  size: ({ value, params }) => {
+    const size = !b(value) && typeof value !== 'number' ? 0 : sizeOf(value);
+     return size === parseInt(params[0])
+  },
 
   string: ({ value }) => typeof value === 'string',
 
@@ -163,7 +170,6 @@ export default {
 /*****************************/
 
 //These functions are tested through rules that use them
-
 
 function isNotEmpty(value) {
   return typeof value === 'number' || typeof value === 'boolean' || !! value;
