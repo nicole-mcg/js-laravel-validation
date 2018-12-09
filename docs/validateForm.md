@@ -27,7 +27,7 @@
         includeMessages
       </td>
       <td>
-        `errors[field]` will be a message instead of rule name (Currently default message are rule name)
+        `errors[field]` will be a message instead of rule name (Currently default messages are rule name)
       </td>
     </tr>
   </tbody>
