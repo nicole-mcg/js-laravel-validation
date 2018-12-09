@@ -28,7 +28,7 @@ Sets or replaces the current message handler for the specified rule.<br>You will
         Where fieldData will be in the form of:<br>
 <pre>{// E.g { key: 'username' validation: 'between:3,10', value: 'c-mcg' }
   key: [fieldName],
-  validation: [rule],
+  validation: [rules],
   value: [value],
   // Will include any extra properties on field that are
   // given to validateForm. E.g "label" key
