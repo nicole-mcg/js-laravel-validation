@@ -52,7 +52,11 @@ Function documentation to come
 - date_format
   - This can be added with something like `return new Date(value).format(params[0]) === value;`
 - dimensions
-  - This requires named params which could be `pair = params[i].split('='); namedParams = { [pair[0]]: pair[1] }`
+  - This requires named params which could be 
+   ```
+   pair = params[i].split('=');
+   namedParams = { [pair[0]]: pair[1] }
+   ```
 - mimetypes
 - mime
 - not_regex
