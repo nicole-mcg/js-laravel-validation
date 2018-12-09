@@ -27,6 +27,7 @@ export default {
   before_or_equal: ({ value, params }) => b(new Date(value) <= new Date(params[0])),
 
   between: ({ value, params }) => {
+    if (!value) return false;
     const [min, max] = params;
     value = sizeOf(value);
     return value > min && value < max;

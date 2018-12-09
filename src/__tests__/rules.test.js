@@ -347,6 +347,12 @@ describe('Rules', () => {
             params: [1, 2],
             result: false,
         },
+        {
+            desc: 'null value',
+            value: null,
+            params: [1, 2],
+            result: false,
+        }
     ])
 
     createRuleTests('boolean', [
