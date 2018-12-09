@@ -1,8 +1,6 @@
 import {
     setMessageHandlers,
     setMessageHandler,
-    getMessage,
-    getMessageHandler,
 } from './messages';
 
 import { validate } from './index';
