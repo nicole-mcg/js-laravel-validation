@@ -25,12 +25,12 @@ Sets or replaces the current message handler for the specified rule.<br>You will
       <td>
         A function which handles message creation. E.g <code>(rule, fieldData) => `${rule} failed`</code><br>
         Where fieldData will be in the form of:<br>
-<pre>{
-  key: [fieldName], // The field's key from formData given to validateForm
-  validation: [rule], // Directly from formData given to validateForm
-  value: [value] // Directly from formData given to validateForm
-  ... // Will include any extra properties on field that are
-      // given to validateForm. E.g "label" key
+<pre>{// E.g { key: 'username' validation: 'between:3,10', value: 'c-mcg' }
+  key: [fieldName],
+  validation: [rule],
+  value: [value],
+  // Will include any extra properties on field that are
+  // given to validateForm. E.g "label" key
 }</pre>
       </td>
     </tr>
