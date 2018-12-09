@@ -41,10 +41,6 @@ Install: `npm install js-laravel-validation`
 | [setMessageHandler(rule, createMessage)](https://github.com/c-mcg/js-laravel-validation/blob/master/docs/setMessageHandler.md)  | Sets or replaces the current message handler for the specified rule |
 | [setMessageHandlers(messages)](https://github.com/c-mcg/js-laravel-validation/blob/master/docs/setMessageHandlers.md)  | Replaces multiple message handers  |
 
-
-
-Function documentation to come
-
 ## Missing Rules
 - active_url 
   - This cannot be supported because JS does not support hostname lookups (dns_get_record in PHP)
