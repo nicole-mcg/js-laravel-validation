@@ -17,9 +17,9 @@ Takes a number of options to validate form data
       <td>
         The form data to validate. In the form of:
 <pre>{
-  [fieldName]: {
+  [fieldName]: { // E.g { value: 'value', validation: 'required' }
     value: [value],
-    rules: [rules], // E.g "required|image"
+    validation: [rules], E.g "required|image"
   }
 }</pre>
       </td>
@@ -38,8 +38,8 @@ Takes a number of options to validate form data
 ## Return value
 
 ```
-{
-  [fieldName]: [array of failed rules or messages], // Eg. ['required']
+{// E.g { username: ['required'] }
+  [fieldName]: [failed rules or messages]
   ...
 }
 ```
