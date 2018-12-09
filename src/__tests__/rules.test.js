@@ -350,7 +350,7 @@ describe('Rules', () => {
         {
             desc: 'null value',
             value: null,
-            params: [1, 2],
+            params: [-1, 1],
             result: false,
         }
     ])
@@ -374,6 +374,11 @@ describe('Rules', () => {
         {
             desc: 'falsy value',
             value: 0,
+            result: false,
+        },
+        {
+            desc: 'null value',
+            value: null,
             result: false,
         }
     ]);
