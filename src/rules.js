@@ -35,7 +35,7 @@ export default {
   boolean: ({ value }) => typeof value === 'boolean',
 
   confirmed: ({ value, key, values }) => b(value === values[`${key}_confirmed`]),
-  
+
   date: ({ value }) => b(typeof value !== 'number' && !isNaN(Date.parse(value))),
   date_equals: ({ value, params }) => (Date.parse(value) !== NaN && Date.parse(value) === Date.parse(params[0])),
 
@@ -165,7 +165,7 @@ export default {
 
 
 function isNotEmpty(value) {
-  return !! value;
+  return typeof value === 'number' || !! value;
 }
 
 function sizeOf(value) {

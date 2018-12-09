@@ -55,8 +55,13 @@ describe('Rules', () => {
             result: true,
         },
         {
-            desc: 'falsy value',
+            desc: 'zero',
             value: 0,
+            result: true,
+        },
+        {
+            desc: 'null',
+            value: null,
             result: false,
         },
         {
@@ -1058,14 +1063,21 @@ describe('Rules', () => {
         },
         {
             desc: 'empty unrequired value',
-            value: 0,
+            value: null,
             params: ['test', 2],
             values: { test: 1 },
             result: true,
         },
         {
-            desc: 'empty required value',
+            desc: 'zero',
             value: 0,
+            params: ['test', 2],
+            values: { test: 2 },
+            result: true,
+        },
+        {
+            desc: 'empty required value',
+            value: null,
             params: ['test', 2],
             values: { test: 2 },
             result: false,
@@ -1089,14 +1101,21 @@ describe('Rules', () => {
         },
         {
             desc: 'empty unrequired value',
-            value: 0,
+            value: null,
             params: ['test', 2],
             values: { test: 2 },
             result: true,
         },
         {
-            desc: 'empty required value',
+            desc: 'zero',
             value: 0,
+            params: ['test', 2],
+            values: { test: 1},
+            result: true,
+        },
+        {
+            desc: 'empty required value',
+            value: null,
             params: ['test', 2],
             values: { test: 1 },
             result: false,
@@ -1108,46 +1127,42 @@ describe('Rules', () => {
             desc: 'filled required value',
             value: 1,
             params: ['test'],
-            values: {
-                test: 1
-            },
+            values: { test: 1 },
             result: true,
         },
         {
             desc: 'empty unrequired value',
+            value: null,
+            params: ['test'],
+            values: { test: null },
+            result: true,
+        },
+        {
+            desc: 'zero',
             value: 0,
             params: ['test'],
-            values: {
-                test: 0
-            },
+            values: { test: 1 },
             result: true,
         },
         {
             desc: 'filled required value (2 params)',
             value: 1,
             params: ['test', 'test2'],
-            values: {
-                test: 0,
-                test2: 1,
-            },
+            values: { test: null, test2: 1 },
             result: true,
         },
         {
             desc: 'filled unrequired value',
             value: 1,
             params: ['test'],
-            values: {
-                test: 0
-            },
+            values: { test: null },
             result: true,
         },
         {
             desc: 'empty required value',
-            value: 0,
+            value: null,
             params: ['test'],
-            values: {
-                test: 1
-            },
+            values: { test: 1 },
             result: false,
         }
     ]);
@@ -1157,39 +1172,35 @@ describe('Rules', () => {
             desc: 'filled required value',
             value: 1,
             params: ['test', 'test2'],
-            values: {
-                test: 1,
-                test2: 1,
-            },
+            values: { test: 1, test2: 1 },
             result: true,
         },
         {
             desc: 'empty unrequired value',
+            value: null,
+            params: ['test', 'test2'],
+            values: { test: 1, test2: null },
+            result: true,
+        },
+        {
+            desc: 'zero',
             value: 0,
             params: ['test', 'test2'],
-            values: {
-                test: 1,
-                test2: 0,
-            },
+            values: { test: 1, test2: 1 },
             result: true,
         },
         {
             desc: 'filled unrequired value',
             value: 1,
             params: ['test'],
-            values: {
-                test: 0,
-            },
+            values: { test: null },
             result: true,
         },
         {
             desc: 'empty required value',
-            value: 0,
+            value: null,
             params: ['test', 'test2'],
-            values: {
-                test: 1,
-                test2: 1,
-            },
+            values: { test: 1, test2: 1 },
             result: false,
         }
     ]);
@@ -1199,48 +1210,42 @@ describe('Rules', () => {
             desc: 'filled required value',
             value: 1,
             params: ['test'],
-            values: {
-                test: 0
-            },
+            values: { test: null },
             result: true,
         },
         {
             desc: 'empty unrequired value',
+            value: null,
+            params: ['test'],
+            values: { test: 1 },
+            result: true,
+        },
+        {
+            desc: 'zero',
             value: 0,
             params: ['test'],
-            values: {
-                test: 1,
-            },
+            values: { test: null },
             result: true,
         },
         {
             desc: 'filled required value (2 params)',
             value: 1,
             params: ['test', 'test2'],
-            values: {
-                test: 0,
-                test2: 1,
-            },
+            values: { test: null, test2: 1 },
             result: true,
         },
         {
             desc: 'filled unrequired value',
             value: 1,
             params: ['test', 'test2'],
-            values: {
-                test: 1,
-                test2: 1,
-            },
+            values: { test: 1, test2: 1 },
             result: true,
         },
         {
             desc: 'empty required value',
-            value: 0,
+            value: null,
             params: ['test', 'test2'],
-            values: {
-                test: 0,
-                test2: 1,
-            },
+            values: { test: null, test2: 1 },
             result: false,
         }
     ]);
@@ -1250,39 +1255,35 @@ describe('Rules', () => {
             desc: 'filled required value',
             value: 1,
             params: ['test', 'test2'],
-            values: {
-                test: 0,
-                test2: 0,
-            },
+            values: { test: null, test2: null },
             result: true,
         },
         {
             desc: 'empty unrequired value',
+            value: null,
+            params: ['test', 'test2'],
+            values: { test: 1, test2: 1 },
+            result: true,
+        },
+        {
+            desc: 'zero',
             value: 0,
             params: ['test', 'test2'],
-            values: {
-                test: 1,
-                test2: 1,
-            },
+            values: { test: null, test2: null },
             result: true,
         },
         {
             desc: 'filled unrequired value',
             value: 1,
             params: ['test'],
-            values: {
-                test: 1,
-            },
+            values: { test: 1 },
             result: true,
         },
         {
             desc: 'empty required value',
-            value: 0,
+            value: null,
             params: ['test', 'test2'],
-            values: {
-                test: 0,
-                test2: 0,
-            },
+            values: { test: null, test2: null },
             result: false,
         }
     ]);
