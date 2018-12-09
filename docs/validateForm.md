@@ -13,8 +13,8 @@
         formData
       </td>
       <td>
-        The form data to validate.<br>In the form of:
-        <pre>{
+        The form data to validate. In the form of:
+<pre>{
   [fieldName]: {
     value: [value],
     rules: [rules], // E.g "required|image"
