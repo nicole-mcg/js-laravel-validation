@@ -35,7 +35,7 @@ export default {
 
   boolean: ({ value }) => typeof value === 'boolean',
 
-  confirmed: ({ value, key, values }) => b(value === values[`${key}_confirmed`]),
+  confirmed: ({ value, key, values }) => isNotEmpty(value) && b(value === values[`${key}_confirmed`]),
 
   date: ({ value }) => b(typeof value !== 'number' && !isNaN(Date.parse(value))),
   date_equals: ({ value, params }) => (Date.parse(value) && Date.parse(value) === Date.parse(params[0])),
@@ -166,7 +166,7 @@ export default {
 
 
 function isNotEmpty(value) {
-  return typeof value === 'number' || !! value;
+  return typeof value === 'number' || typeof value === 'boolean' || !! value;
 }
 
 function sizeOf(value) {
@@ -178,7 +178,7 @@ function sizeOf(value) {
 }
 
 function b(value) {
-  return isNotEmpty(value)
+  return !! value;
 }
 
 function isIpv4(value) {

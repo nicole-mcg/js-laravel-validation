@@ -43,7 +43,7 @@ describe('Rules', () => {
     }
 
     // For rules: accepted, filled, required
-    const createNotEmptyTests = (isZeroEmpty=false) => [
+    const createNotEmptyTests = ({ isZeroEmpty=false, isFalseEmpty=true }={}) => [
         {
             desc: 'boolean (true)',
             value: true,
@@ -67,11 +67,11 @@ describe('Rules', () => {
         {
             desc: 'boolean (false)',
             value: false,
-            result: false,
+            result: !isFalseEmpty,
         },
     ];
 
-    createRuleTests('accepted', createNotEmptyTests(true));
+    createRuleTests('accepted', createNotEmptyTests({ isZeroEmpty: true }));
 
     createRuleTests('after', [
         {
@@ -415,6 +415,17 @@ describe('Rules', () => {
                 },
             },
             result: false,
+        },
+        {
+            desc: 'confirmed null value',
+            ruleParams: {
+                value: null,
+                key: "test",
+                values: {
+                    test_confirmed: null,
+                },
+            },
+            result: false,
         }
     ]);
 
@@ -642,7 +653,7 @@ describe('Rules', () => {
         }
     ])
 
-    createRuleTests('filled', createNotEmptyTests());
+    createRuleTests('filled', createNotEmptyTests({ isFalseEmpty: false }));
 
     createRuleTests('gt', [
         {
@@ -1075,7 +1086,7 @@ describe('Rules', () => {
         }
     ]);
 
-    createRuleTests('required', createNotEmptyTests());
+    createRuleTests('required', createNotEmptyTests({ isFalseEmpty: false }));
 
     createRuleTests('required_if', [
         {
