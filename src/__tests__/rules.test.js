@@ -247,6 +247,11 @@ describe('Rules', () => {
             }},
             result: false,
         },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        }
     ]);
 
     // bail: is on by default and can be set in `validateForm` call
