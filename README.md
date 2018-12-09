@@ -2,10 +2,6 @@
 
 All rules are base on documentation from https://laravel.com/docs/5.7/validation#available-validation-rules
 
- - No dependencies
- - Works in Node.js and browser
- - Takes form data as an object
-
 ## Setup
 
 Install: `npm install js-laravel-validation`
