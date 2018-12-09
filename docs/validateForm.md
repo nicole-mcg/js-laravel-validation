@@ -1,5 +1,7 @@
 # `validateForm(options)`
 
+Takes a number of options to validate form data
+
 ## Options
 
 <table>
@@ -27,7 +29,7 @@
         includeMessages
       </td>
       <td>
-        `errors[field]` will be a message instead of rule name (Currently default messages are rule name)
+        <code>errors[field]</code> will be a message instead of rule name (Currently default messages are rule name)
       </td>
     </tr>
   </tbody>
