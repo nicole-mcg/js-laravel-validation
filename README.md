@@ -38,7 +38,7 @@ Install: `npm install js-laravel-validation`
 | Function Name  | Description |
 | ------------- | ------------- |
 | [validateForm(options)](https://github.com/c-mcg/js-laravel-validation/blob/master/docs/validateForm.md)  | Takes a number of options to validate the form data  |
-| [setMessageHandler(rule, createMessage)](https://github.com/c-mcg/js-laravel-validation/blob/master/docs/setMessage.md)  | Sets or replaces the current message handler for the specified rule |
+| [setMessageHandler(rule, createMessage)](https://github.com/c-mcg/js-laravel-validation/blob/master/docs/setMessageHandler.md)  | Sets or replaces the current message handler for the specified rule |
 | setMessageHandlers(messages)  | Replaces multiple message handers  |
 
 
