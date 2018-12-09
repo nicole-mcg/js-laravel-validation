@@ -29,7 +29,7 @@ Takes a number of options to validate form data
         includeMessages
       </td>
       <td>
-        <code>errors[field]</code> will be an array of messages instead of rule names.<br>
+        <code>result.errors[field]</code> will be an array of messages instead of rule names.<br>
         (Currently default messages are rule names)
       </td>
     </tr>
