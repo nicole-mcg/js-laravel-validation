@@ -5,7 +5,7 @@ import timezones from './timezones.js'
 
 
 export default {
-  accepted: ({ value }) => isNotEmpty(value),
+  accepted: ({ value }) => isNotEmpty(value) && value != 0,
 
   // active_url: ({ value }) => {
     //This cannot be supported because JS does not support hostname lookups (dns_get_record in PHP)
