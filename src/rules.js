@@ -37,7 +37,7 @@ export default {
   confirmed: ({ value, key, values }) => b(value === values[`${key}_confirmed`]),
 
   date: ({ value }) => b(typeof value !== 'number' && !isNaN(Date.parse(value))),
-  date_equals: ({ value, params }) => (Date.parse(value) !== NaN && Date.parse(value) === Date.parse(params[0])),
+  date_equals: ({ value, params }) => (Date.parse(value) && Date.parse(value) === Date.parse(params[0])),
 
   //date_format
 
