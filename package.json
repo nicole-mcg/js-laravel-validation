@@ -4,7 +4,7 @@
   "description": "Laravel style form validation for JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose",
+    "test": "jest",
     "webpack": "webpack",
     "watch": "webpack --watch",
     "build": "babel src -d dist"
