@@ -4,7 +4,7 @@ All rules are base on documentation from https://laravel.com/docs/5.7/validation
 
  - No dependencies
  - Works in Node.js and browser
- - Works with any front-end framework
+ - Takes form data as an object
 
 ## Setup
 
