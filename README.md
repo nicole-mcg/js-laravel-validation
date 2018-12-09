@@ -1,4 +1,4 @@
-# JS-Laravel-validation [![npm version](https://badge.fury.io/js/js-laravel-validation.svg)](https://badge.fury.io/js/js-laravel-validation) <img src="https://travis-ci.org/c-mcg/JS-Laravel-validation.svg?branch=master"/>
+# JS-Laravel-validation [![npm version](https://badge.fury.io/js/js-laravel-validation.svg)](https://badge.fury.io/js/js-laravel-validation) [![Build Status](https://travis-ci.org/c-mcg/JS-Laravel-validation.svg?branch=master)](https://travis-ci.org/c-mcg/JS-Laravel-validation)
 
 All rules are base on documentation from https://laravel.com/docs/5.7/validation#available-validation-rules
 
