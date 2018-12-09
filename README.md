@@ -29,7 +29,7 @@ Install: `npm install js-laravel-validation`
   const result = validateForm({ formData });
   
   if (result.errors) {
-    console.log(formData.errors); // will be { password: 'required' }
+    console.log(formData.errors); // will be { password: ['required', 'string'] }
   }
 ```
 
