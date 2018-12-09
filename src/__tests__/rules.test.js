@@ -157,7 +157,7 @@ describe('Rules', () => {
         },
         {
             desc: 'null value',
-            value: 'f%',
+            value: null,
             result: false,
         }
     ]);
@@ -181,6 +181,11 @@ describe('Rules', () => {
         {
             desc: 'number string',
             value: "1",
+            result: false,
+        },
+        {
+            desc: 'null value',
+            value: null,
             result: false,
         }
     ]);
@@ -216,6 +221,11 @@ describe('Rules', () => {
             value: '$test4',
             result: false,
         },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        }
     ]);
 
     createRuleTests('array', [

@@ -15,9 +15,9 @@ export default {
   after: ({ value, params }) => b(new Date(value) > new Date(params[0])),
   after_or_equal: ({ value, params }) => b(new Date(value) >= new Date(params[0])),
 
-  alpha: ({ value }) => !/[^a-z]/i.test(value),
-  alpha_dash: ({ value }) => /^[A-Za-z\-]+$/i.test(value),
-  alpha_num: ({ value }) => /^[a-z0-9]+$/i.test(value),
+  alpha: ({ value }) => b(typeof value === 'string') && !/[^a-z]/i.test(value),
+  alpha_dash: ({ value }) => b(typeof value === 'string') && /^[A-Za-z\-]+$/i.test(value),
+  alpha_num: ({ value }) => b(typeof value === 'string') && /^[a-z0-9]+$/i.test(value),
 
   array: ({ value }) => Array.isArray(value),
 
