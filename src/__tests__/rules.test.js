@@ -449,6 +449,11 @@ describe('Rules', () => {
             desc: 'string',
             value: "whatup",
             result: false,
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
         }
     ]);
 
