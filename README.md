@@ -1,4 +1,4 @@
-# JS-Laravel-validation
+# JS-Laravel-validation <img src="https://travis-ci.org/c-mcg/JS-Laravel-validation.svg?branch=master"/>
 
 All rules are base on documentation from https://laravel.com/docs/5.7/validation#available-validation-rules
 
