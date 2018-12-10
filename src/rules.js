@@ -130,7 +130,7 @@ export default {
 
   min: ({ value, params }) => (b(value) || typeof value === 'number') && sizeOf(value) >= params[0],
 
-  not_in: ({ value, params }) => !params.includes(value),
+  not_in: ({ value, params }) => params.findIndex(param => deepEquals(param, value)) === -1,
 
   //not_regex
 
@@ -230,7 +230,7 @@ function deepEquals(x, y) {
     for (var prop in x) {
       if (y.hasOwnProperty(prop))
       {  
-        if (! deepEqual(x[prop], y[prop]))
+        if (! deepEquals(x[prop], y[prop]))
           return false;
       }
       else
