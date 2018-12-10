@@ -666,7 +666,6 @@ describe('Rules', () => {
             result: false,
         },
         {
-            skip: true,
             desc: 'indistinct object',
             ruleParams: {
                 value: { x: 0 },
@@ -1228,7 +1227,6 @@ describe('Rules', () => {
             result: true,
         },
         {
-            skip: false,
             desc: 'object that is in specified values',
             value: { x: 0 },
             params: [1, { x: 0 }],

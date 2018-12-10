@@ -64,7 +64,7 @@ export default {
 
   distinct: ({ values, value }) => {
     return (Object.keys(values).reduce((count, key) => {
-      if (values[key] === value) {
+      if (deepEquals(values[key], value)) {
         count++;
       }
       return count;
