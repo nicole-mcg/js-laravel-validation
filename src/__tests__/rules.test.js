@@ -1232,7 +1232,7 @@ describe('Rules', () => {
             desc: 'object that is in specified values',
             value: { x: 0 },
             params: [1, { x: 0 }],
-            result: true,
+            result: false,
         },
         {
             desc: 'number that is in specified values',
