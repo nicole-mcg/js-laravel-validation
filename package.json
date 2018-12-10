@@ -1,6 +1,6 @@
 {
   "name": "js-laravel-validation",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Laravel style form validation for JavaScript",
   "main": "index.js",
   "scripts": {
@@ -28,15 +28,15 @@
   },
   "homepage": "https://github.com/c-mcg/JS-Laravel-validation#readme",
   "devDependencies": {
+    "@babel/cli": "^7.2.0",
     "@babel/core": "^7.1.5",
     "@babel/preset-env": "^7.1.5",
-    "babel-cli": "^6.26.0",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
     "jest": "^23.6.0",
     "webpack": "^4.25.1",
-    "webpack-cli": "^3.1.2",
-    "babel-core": "^7.0.0-bridge.0"
+    "webpack-cli": "^3.1.2"
   },
   "jest": {
     "transform": {
