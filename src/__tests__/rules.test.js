@@ -628,6 +628,111 @@ describe('Rules', () => {
             value: null,
             result: false,
         }
+    ]);
+
+    createRuleTests('dimensions', [
+        {
+            desc: 'valid width',
+            value: { width: 100 },
+            params: ['width=100'],
+            result: true,
+        },
+        {
+            desc: 'valid width (min, max)',
+            value: { width: 150 },
+            params: ['min_width=100', 'max_width=200'],
+            result: true,
+        },
+        {
+            desc: 'valid min width',
+            value: { width: 100 },
+            params: ['min_width=100'],
+            result: true,
+        },
+        {
+            desc: 'valid max width',
+            value: { width: 100 },
+            params: ['max_width=100'],
+            result: true,
+        },
+        {
+            desc: 'valid height',
+            value: { height: 100 },
+            params: ['height=100'],
+            result: true,
+        },
+        {
+            desc: 'valid min height',
+            value: { height: 100 },
+            params: ['min_height=100'],
+            result: true,
+        },
+        {
+            desc: 'valid max height',
+            value: { height: 100 },
+            params: ['max_height=100'],
+            result: true,
+        },
+        {
+            desc: 'invalid width (more)',
+            value: { width: 101 },
+            params: ['width=100'],
+            result: false,
+        },
+        {
+            desc: 'invalid width (less)',
+            value: { width: 99 },
+            params: ['width=100'],
+            result: false,
+        },
+        {
+            desc: 'invalid width (min, max) (more)',
+            value: { width: 201 },
+            params: ['min_width=100', 'max_width=200'],
+            result: false,
+        },
+        {
+            desc: 'invalid width (min, max) (less)',
+            value: { width: 99 },
+            params: ['min_width=100', 'max_width=200'],
+            result: false,
+        },
+        {
+            desc: 'invalid min width',
+            value: { width: 99 },
+            params: ['min_width=100'],
+            result: false,
+        },
+        {
+            desc: 'invalid max width',
+            value: { width: 101 },
+            params: ['max_width=100'],
+            result: false,
+        },
+        {
+            desc: 'invalid height (more)',
+            value: { height: 101 },
+            params: ['height=100'],
+            result: false,
+        },
+        {
+            desc: 'invalid height (less)',
+            value: { height: 99 },
+            params: ['height=100'],
+            result: false,
+        },
+        {
+            desc: 'invalid min height',
+            value: { height: 99 },
+            params: ['min_height=100'],
+            result: false,
+        },
+        {
+            desc: 'invalid max height',
+            value: { height: 101 },
+            params: ['max_height=100'],
+            result: false,
+        },
     ])
 
     createRuleTests('distinct', [

@@ -16,11 +16,11 @@ Install: `npm install js-laravel-validation`
   const formData = {
     username: {
       value: 'test1',
-      validation: 'required|string'
+      validation: 'required|string',
     },
     password: {
       value null,
-      validation: 'required|string'
+      validation: 'required|string',
     }
   }
   
@@ -46,13 +46,8 @@ Install: `npm install js-laravel-validation`
 - date_format
   - This can be added with something like `return new Date(value).format(params[0]) === value;`
   - Unfortunately that isn't so easy in vanilla js atm
-- dimensions
-  - This requires named params which could be 
-   ```
-   pair = params[i].split('=');
-   namedParams = { [pair[0]]: pair[1] }
-   ```
-- not_regex
-- regex
+
+- not_regex (to come)
+- regex (to come)
   - Regex requires extra parsing to remove forward slashes around regex
  

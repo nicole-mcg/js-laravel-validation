@@ -22,7 +22,7 @@ export default {
 
   array: ({ value }) => Array.isArray(value),
 
-  //bail: is on by default but is `validateForm` call
+  //bail: handled in index.js
 
   before: ({ value, params }) => b(new Date(value) < new Date(params[0])),
   before_or_equal: ({ value, params }) => b(new Date(value) <= new Date(params[0])),
@@ -55,12 +55,41 @@ export default {
     return len > min && len < max;
   },
 
-  //this need named
-  // dimensions: ({ value, params }) => {
-  //   if (value.hasOwnProperty('width') && value.hasOwnProperty('height')) {
-  //     return
-  //   }
-  // }
+  dimensions: ({ value, params }) => {
+    if (!value) return false;
+    const width = parseInt(value.width);
+    const height = parseInt(value.height);
+
+    for (let i = 0; i < params.length; i++) {
+      const param = params[i];
+      if (!param) continue;
+
+      const pair = param.split('=');
+      const paramVal = parseInt(pair[1]);
+      switch(pair[0]) {
+        case 'width':
+          if (width !== paramVal) return false;
+          break;
+        case 'min_width':
+          if (width < paramVal) return false;
+          break;
+        case 'max_width':
+          if (width > paramVal) return false;
+          break;
+        case 'height':
+          if (height !== paramVal) return false;
+          break;
+        case 'min_height':
+          if (height < paramVal) return false;
+          break;
+        case 'max_height':
+          if (height > paramVal) return false;
+          break;
+      }
+    }
+    
+    return true;
+  },
 
   distinct: ({ values, value }) => {
     return (Object.keys(values).reduce((count, key) => {
