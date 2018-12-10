@@ -868,7 +868,7 @@ describe('Rules', () => {
             result: true,
         },
         {
-            skip: true,
+            skip: false,
             desc: 'object that is in specified values',
             value: { x: 0 },
             params: [1, { x: 0 }, 2, 4],

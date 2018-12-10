@@ -82,7 +82,7 @@ export default {
 
   image: ({ value }) => value instanceof Image,
 
-  in: ({ value, params }) => params.includes(value),
+  in: ({ value, params }) => params.findIndex(param => deepEquals(param, value)) !== -1,
   in_array: ({ value, values, params }) => typeof values[params[0]] === 'object' && b(values[params[0]].includes) && values[params[0]].includes(value),
   
   integer: ({ value }) => {
