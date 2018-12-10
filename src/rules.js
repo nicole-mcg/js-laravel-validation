@@ -104,7 +104,7 @@ export default {
   max: ({ value, params }) => (b(value) || typeof value === 'number') && sizeOf(value) <= params[0],
 
   mimetypes: ({ value, params }) => {
-    if (!(value instanceof File)) {
+    if (!value || !value.type) {
       return false;
     }
     return params.includes(value.type);

@@ -1134,7 +1134,34 @@ describe('Rules', () => {
             value: null,
             result: false,
         },
+    ]);
+
+    createRuleTests('mimetypes', [
+        {
+            desc: 'matching type',
+            value: { type: 'test' },
+            params: ['test'],
+            result: true,
+        },
+        {
+            desc: 'matching type (2nd param)',
+            value: { type: 'test' },
+            params: [null, 'test'],
+            result: true,
+        },
+        {
+            desc: 'not matching type',
+            value: { type: 'test' },
+            params: [null],
+            result: false,
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
     ])
+
 
     createRuleTests('min', [
         {
