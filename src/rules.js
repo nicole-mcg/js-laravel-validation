@@ -1,7 +1,7 @@
 // Based on laravel validation rules
 // https://laravel.com/docs/5.7/validation#rule-accepted
 
-import timezones from './timezones.js'
+import timezones from './constants/timezones.js'
 
 
 export default {
