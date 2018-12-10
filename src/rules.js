@@ -83,8 +83,11 @@ export default {
   image: ({ value }) => value instanceof Image,
 
   in: ({ value, params }) => params.findIndex(param => deepEquals(param, value)) !== -1,
-  in_array: ({ value, values, params }) => typeof values[params[0]] === 'object' && b(values[params[0]].includes) && values[params[0]].includes(value),
-  
+  in_array: ({ value, values, params }) => {
+    const array = values[params[0]];
+    if (!Array.isArray(array)) return false;
+    return array.findIndex(arrayVal => deepEquals(arrayVal, value)) !== -1;
+  },
   integer: ({ value }) => {
     return Number.isInteger(typeof value === 'string' ? parseInt(value) : value);
   },

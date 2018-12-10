@@ -868,7 +868,6 @@ describe('Rules', () => {
             result: true,
         },
         {
-            skip: false,
             desc: 'object that is in specified values',
             value: { x: 0 },
             params: [1, { x: 0 }, 2, 4],
@@ -891,7 +890,6 @@ describe('Rules', () => {
             result: true,
         },
         {
-            skip: true,
             desc: 'object that is in specified values',
             value: { x: 0 },
             values: { test: [{ x: 0 }] },
@@ -909,6 +907,13 @@ describe('Rules', () => {
             desc: 'number that is not in specified values',
             value: 0,
             values: { test: [1, 2, 3] },
+            params: ['test'],
+            result: false,
+        },
+        {
+            desc: 'param that is not an array (null)',
+            value: 0,
+            values: { test: null },
             params: ['test'],
             result: false,
         }
