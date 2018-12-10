@@ -45,15 +45,13 @@ Install: `npm install js-laravel-validation`
   - This could be implemented if there was a reliable way to host a small API to do the lookup
 - date_format
   - This can be added with something like `return new Date(value).format(params[0]) === value;`
-  - Unfortunately that isn't possible
+  - Unfortunately that isn't so easy in vanilla js atm
 - dimensions
   - This requires named params which could be 
    ```
    pair = params[i].split('=');
    namedParams = { [pair[0]]: pair[1] }
    ```
-- mimetypes
-- mime
 - not_regex
 - regex
   - Regex requires extra parsing to remove forward slashes around regex
