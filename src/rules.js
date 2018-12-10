@@ -2,6 +2,7 @@
 // https://laravel.com/docs/5.7/validation#rule-accepted
 
 import timezones from './constants/timezones.js'
+import mimes from './constants/mimes.js'
 
 
 export default {
@@ -109,7 +110,23 @@ export default {
     }
     return params.includes(value.type);
   },
-  //mimes?
+  mimes: ({ value, params }) => {
+    if (!value || !value.type) {
+      return false;
+    }
+
+    for (let i = 0; i < params.length; i++) {
+      const param = params[i];
+      const mimeType = mimes[param];
+      if (!mimeType) {
+        console.warn(`Invalid mime specified: ${param}`);
+        continue;
+      }
+      if (value.type === mimeType) return true;
+    }
+
+    return false;
+  },
 
   min: ({ value, params }) => (b(value) || typeof value === 'number') && sizeOf(value) >= params[0],
 

@@ -1136,7 +1136,7 @@ describe('Rules', () => {
         },
     ]);
 
-    createRuleTests('mimetypes', [
+    createRuleTests('mimetypes', [ // File.type should be correct mime type
         {
             desc: 'matching type',
             value: { type: 'test' },
@@ -1160,8 +1160,39 @@ describe('Rules', () => {
             value: null,
             result: false,
         },
-    ])
+    ]);
 
+    createRuleTests('mimes', [ // File.type should be correct mime type
+        {
+            desc: 'matching type (html)',
+            value: { type: 'text/html' },
+            params: ['html'],
+            result: true,
+        },
+        {
+            desc: 'matching type (htm)',
+            value: { type: 'text/html' },
+            params: ['html'],
+            result: true,
+        },
+        {
+            desc: 'matching type (html as 2nd param)',
+            value: { type: 'text/html' },
+            params: ['png', 'html'],
+            result: true,
+        },
+        {
+            desc: 'not matching type',
+            value: { type: '' },
+            params: ['html'],
+            result: false,
+        },
+        {
+            desc: 'null value',
+            value: null,
+            result: false,
+        },
+    ]);
 
     createRuleTests('min', [
         {
