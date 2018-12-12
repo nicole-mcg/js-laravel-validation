@@ -1,4 +1,4 @@
-# js-laravel-validation [![npm version](https://badge.fury.io/js/js-laravel-validation.svg)](https://badge.fury.io/js/js-laravel-validation) [![Build Status](https://travis-ci.org/c-mcg/js-laravel-validation.svg?branch=master)](https://travis-ci.org/c-mcg/JS-Laravel-validation)
+# js-laravel-validation [![npm version](https://badge.fury.io/js/js-laravel-validation.svg)](https://badge.fury.io/js/js-laravel-validation) [![Build Status](https://travis-ci.org/c-mcg/js-laravel-validation.svg?branch=master)](https://travis-ci.org/c-mcg/js-laravel-validation)
 
 Useful for having consistent server side and client side validation with Laravel
 
