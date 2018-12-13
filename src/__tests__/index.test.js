@@ -1,4 +1,5 @@
 
+/** global: jest */
 import { validate } from '../index'
 import RULES from '../rules'
 import { setMessageHandler, setMessageHandlers, getMessage, getMessageHandler } from '../messages'
@@ -32,42 +33,7 @@ describe('Custom messages', () => {
 
 describe('Form Validator', () => {
 
-    const mockedRules = [];
-    const mockedMessages = {};
-
-    function mockValidateField(returnVal) {
-        const mock = jest.fn();
-        mock.mockReturnValue(returnVal);
-        validate.validateField = mock;
-        return mock;
-    }
-
-    function mockRule(name, returnVal) {
-        const mock = jest.fn();
-        mock.mockReturnValue(returnVal);
-        RULES[name] = mock;
-        mockedRules.push(name);
-        return mock;
-    }
-
-    function mockMessage(rule, returnVal) {
-        const mock = jest.fn();
-        mock.mockReturnValue(returnVal);
-        mockedMessages[rule] = getMessageHandler(rule);
-        setMessageHandler(rule, mock);
-        return mock;
-    }
-
-    function restoreMocks() {
-        validate.validateForm = validateForm;
-        validate.validateField = validateField;
-
-        mockedRules.forEach(rule => RULES[rule] = oldRules[rule]);
-        mockedRules.length = 0;
-
-        Object.keys(mockedMessages).forEach(rule => setMessageHandler(rule, mockedMessages[rule]));
-        mockedMessages.length = 0;
-    }
+    
 
     describe('validateForm', () => {
         it('can pass field data to validateField', () => {
@@ -147,35 +113,6 @@ describe('Form Validator', () => {
             const formData = {
                 test: {
                     value: null,
-                    validation: 'required|bail',
-                },
-                test2: {
-                    value: null,
-                    validation: 'required',
-                }
-            }
-
-            const validateField = mockValidateField();
-            validateField.mockReturnValueOnce({
-                errors: ['required'],
-            });
-            validateField.mockReturnValueOnce({
-                errors: ['required'],
-            });
-
-            expect(validateForm({ formData, includeMessages: false } )).toEqual({
-                errors: {
-                    test: ['required'],
-                }
-            })
-
-            restoreMocks();
-        });
-
-        it('can bail on first error if bail is on second field', () => {
-            const formData = {
-                test: {
-                    value: null,
                     validation: 'required',
                 },
                 test2: {
@@ -185,42 +122,6 @@ describe('Form Validator', () => {
             }
 
             const validateField = mockValidateField();
-            validateField.mockReturnValueOnce({
-                errors: ['required'],
-            });
-            validateField.mockReturnValueOnce({
-                errors: ['required'],
-            });
-
-            expect(validateForm({ formData, includeMessages: false } )).toEqual({
-                errors: {
-                    test: ['required'],
-                }
-            })
-
-            restoreMocks();
-        });
-
-        it('can bail on first error if bail is on third field', () => {
-            const formData = {
-                test: {
-                    value: null,
-                    validation: 'required',
-                },
-                test2: {
-                    value: null,
-                    validation: 'required',
-                },
-                test3: {
-                    value: null,
-                    validation: 'required|bail',
-                }
-            }
-
-            const validateField = mockValidateField();
-            validateField.mockReturnValueOnce({
-                errors: ['required'],
-            });
             validateField.mockReturnValueOnce({
                 errors: ['required'],
             });
@@ -286,9 +187,7 @@ describe('Form Validator', () => {
     })
 
     describe('validateField', () => {
-        function createFieldData({ key="test", value, validation}={}) {
-            return { key, value, validation };
-        }
+        
 
         const oldWarn = console.warn;
 
@@ -403,3 +302,43 @@ describe('Form Validator', () => {
     })
 
 })
+
+function createFieldData({ key="test", value, validation}={}) {
+    return { key, value, validation };
+}
+
+var mockedRules = [];
+var mockedMessages = {};
+function mockValidateField(returnVal) {
+    const mock = jest.fn();
+    mock.mockReturnValue(returnVal);
+    validate.validateField = mock;
+    return mock;
+}
+
+function mockRule(name, returnVal) {
+    const mock = jest.fn();
+    mock.mockReturnValue(returnVal);
+    RULES[name] = mock;
+    mockedRules.push(name);
+    return mock;
+}
+
+function mockMessage(rule, returnVal) {
+    const mock = jest.fn();
+    mock.mockReturnValue(returnVal);
+    mockedMessages[rule] = getMessageHandler(rule);
+    setMessageHandler(rule, mock);
+    return mock;
+}
+
+function restoreMocks() {
+    validate.validateForm = validateForm;
+    validate.validateField = validateField;
+
+    mockedRules.forEach(rule => RULES[rule] = oldRules[rule]);
+    mockedRules.length = 0;
+
+    Object.keys(mockedMessages).forEach(rule => setMessageHandler(rule, mockedMessages[rule]));
+    mockedMessages.length = 0;
+}
