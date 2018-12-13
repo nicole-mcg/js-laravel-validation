@@ -11,7 +11,7 @@ Install: `npm install js-laravel-validation`
 ## Usage
 
 ```javascript
-    import { validateForm } from "js-laravel-validation";
+  import { validateForm } from "js-laravel-validation";
 
   const formData = {
     username: {
