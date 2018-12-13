@@ -11,24 +11,25 @@ Install: `npm install js-laravel-validation`
 ## Usage
 
 ```javascript
-  import { validateForm } from 'js-laravel-validation'
-  
+    import { validateForm } from "js-laravel-validation";
+
   const formData = {
     username: {
-      value: 'test1',
-      validation: 'required|string',
+      value: "test1",
+      validation: "required|string"
     },
     password: {
-      value null,
-      validation: 'required|string',
+      value: null,
+      validation: "required|string"
     }
-  }
-  
+  };
+
   const result = validateForm({ formData });
-  
+
   if (result.errors) {
-    console.log(formData.errors); // will be { password: ['required', 'string'] }
+    console.log(result.errors); // will be { password: ['required', 'string'] }
   }
+
 ```
 
 ## API
