@@ -1,6 +1,6 @@
 filter:
     excluded_paths:
-        - 'dist/*'
+        - "dist/*"
 checks:
     javascript:
         no_param_assign: true
