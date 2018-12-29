@@ -1,8 +1,8 @@
 
 /** global: jest */
-import { validate } from '../index'
-import RULES from '../rules'
-import { setMessageHandler, setMessageHandlers, getMessage, getMessageHandler } from '../messages'
+import { validate } from '../src/index'
+import RULES from '../src/rules'
+import { setMessageHandler, setMessageHandlers, getMessage, getMessageHandler } from '../src/messages'
 
 const { validateField, validateForm, parseRule } = validate;
 

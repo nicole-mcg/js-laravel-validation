@@ -1,4 +1,4 @@
-import rules from '../rules';
+import rules from '../src/rules';
 
 describe('Rules', () => {
 
