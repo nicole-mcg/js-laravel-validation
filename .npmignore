@@ -1,5 +1,8 @@
-
+docs
 src
+tests
 .babelrc
 .gitignore
+.scrutinizer.yml
+.travis.yml
 .webpack.config.js
