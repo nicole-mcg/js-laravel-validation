@@ -10,10 +10,11 @@ checks:
         no_alert: true
         eqeqeq: true
         no_var: true
-
+                    
 build:
     nodes:
         analysis:
+            project_setup:
+                override: true
             tests:
-                override:
-                    - js-scrutinizer-run
+                override: [js-scrutinizer-run]
