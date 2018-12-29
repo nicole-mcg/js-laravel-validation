@@ -1,0 +1,19 @@
+filter:
+    excluded_paths:
+        - 'dist/*'
+checks:
+    javascript:
+        no_param_assign: true
+        no_loop_var_assign: true
+        no_implicit_undefined_return: true
+        no_else_return: true
+        no_alert: true
+        eqeqeq: true
+        no_var: true
+
+build:
+    nodes:
+        analysis:
+            tests:
+                override:
+                    - js-scrutinizer-run
