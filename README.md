@@ -1,4 +1,4 @@
-# js-laravel-validation [![npm version](https://badge.fury.io/js/js-laravel-validation.svg)](https://badge.fury.io/js/js-laravel-validation) [![Build Status](https://travis-ci.org/niknakbakpak/js-laravel-validation.svg?branch=master)](https://travis-ci.org/niknakbakpak/js-laravel-validation)
+# js-laravel-validation [![npm version](https://badge.fury.io/js/js-laravel-validation.svg)](https://badge.fury.io/js/js-laravel-validation) [![Build Status](https://travis-ci.org/nik-m2/js-laravel-validation.svg?branch=master)](https://travis-ci.org/nik-m2/js-laravel-validation)
 
 Useful for having consistent server side and client side validation with Laravel
 
@@ -36,9 +36,9 @@ Install: `npm install js-laravel-validation`
 
 | Function Name  | Description |
 | ------------- | ------------- |
-| [validateForm(options)](https://github.com/niknakbakpak/js-laravel-validation/blob/master/docs/validateForm.md)  | Takes a number of options to validate the form data  |
-| [setMessageHandler(rule, createMessage)](https://github.com/niknakbakpak/js-laravel-validation/blob/master/docs/setMessageHandler.md)  | Sets or replaces the current message handler for the specified rule |
-| [setMessageHandlers(messages)](https://github.com/niknakbakpak/js-laravel-validation/blob/master/docs/setMessageHandlers.md)  | Replaces multiple message handers  |
+| [validateForm(options)](https://github.com/nik-m2/js-laravel-validation/blob/master/docs/validateForm.md)  | Takes a number of options to validate the form data  |
+| [setMessageHandler(rule, createMessage)](https://github.com/nik-m2/js-laravel-validation/blob/master/docs/setMessageHandler.md)  | Sets or replaces the current message handler for the specified rule |
+| [setMessageHandlers(messages)](https://github.com/nik-m2/js-laravel-validation/blob/master/docs/setMessageHandlers.md)  | Replaces multiple message handers  |
 
 ## Missing Rules
 - active_url 

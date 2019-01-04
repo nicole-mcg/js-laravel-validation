@@ -26,7 +26,7 @@ Sets or replaces the current message handler for the specified rule.<br>You will
         A function which handles message creation.<br>
         E.g: <code>fieldData => `${fieldData.name} is required`</code><br>
         Where fieldData will be in the form of:<br>
-<pre>{// E.g { key: 'username' validation: 'between:3,10', value: 'niknakbakpak' }
+<pre>{// E.g { key: 'username' validation: 'between:3,10', value: 'nik-m2' }
   key: [fieldName],
   validation: [rules],
   value: [value],

@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/niknakbakpak/js-laravel-validation.git"
+    "url": "git+https://github.com/nik-m2/js-laravel-validation.git"
   },
   "keywords": [
     "laravel",
@@ -24,9 +24,9 @@
   "author": "Connor McGrogan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/niknakbakpak/JS-Laravel-validation/issues"
+    "url": "https://github.com/nik-m2/JS-Laravel-validation/issues"
   },
-  "homepage": "https://github.com/niknakbakpak/JS-Laravel-validation#readme",
+  "homepage": "https://github.com/nik-m2/JS-Laravel-validation#readme",
   "devDependencies": {
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.1.5",
