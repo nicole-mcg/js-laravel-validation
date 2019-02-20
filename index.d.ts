@@ -9,7 +9,7 @@ var validation = {
   };
 exports.validation = validation;
 
-export type MessageHandler = (field: any) => string;
+export type MessageHandler = (field: IValidationFormField) => string;
 
 export interface IValidationFormField {
     [index: string]: any;
@@ -30,9 +30,9 @@ export interface ValidationResult {
     errors?: IValidationErrors;
 }
 
-export const validation: {
-    validateForm: (options: IValidateFormOptions) => ValidationResult;
+export namespace validation {
+    export function validateForm(options: IValidateFormOptions): ValidationResult;
 
-    setMessageHandlers: (newMessages: { [rule: string]: MessageHandler }) => void;
-    setMessageHandler: (rule: string, createMessage: MessageHandler) => void;
+    export function setMessageHandlers(newMessages: { [rule: string]: MessageHandler }): void;
+    export function setMessageHandler(rule: string, createMessage: MessageHandler): void;
 }
