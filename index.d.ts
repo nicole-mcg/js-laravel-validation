@@ -35,6 +35,4 @@ export const validation: {
 
     setMessageHandlers: (newMessages: { [rule: string]: MessageHandler }) => void;
     setMessageHandler: (rule: string, createMessage: MessageHandler) => void;
-    getMessage: (rule: string, field: any) => string;
-    getMessageHandler: (rule: string) => MessageHandler; 
 }
