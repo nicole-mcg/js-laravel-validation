@@ -30,9 +30,7 @@ export interface ValidationResult {
     errors?: IValidationErrors;
 }
 
-export namespace validation {
-    export function validateForm(options: IValidateFormOptions): ValidationResult;
+export function validateForm(options: IValidateFormOptions): ValidationResult;
 
-    export function setMessageHandlers(newMessages: { [rule: string]: MessageHandler }): void;
-    export function setMessageHandler(rule: string, createMessage: MessageHandler): void;
-}
+export function setMessageHandlers(newMessages: { [rule: string]: MessageHandler }): void;
+export function setMessageHandler(rule: string, createMessage: MessageHandler): void;
