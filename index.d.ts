@@ -19,7 +19,7 @@ export interface IValidationFormField {
 
 export interface IValidateFormOptions {
     formData: { [fieldName: string]: IValidationFormField };
-    includeMessages: boolean;
+    includeMessages?: boolean;
 }
 
 export interface IValidationErrors {
