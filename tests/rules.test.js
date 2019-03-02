@@ -396,7 +396,7 @@ describe('Rules', () => {
                 value: "hey",
                 key: "test",
                 values: {
-                    test_confirmed: "hey",
+                    test_confirmation: "hey",
                 },
             },
             result: true,
@@ -407,7 +407,7 @@ describe('Rules', () => {
                 value: null,
                 key: "test",
                 values: {
-                    test_confirmed: null,
+                    test_confirmation: null,
                 },
             },
             result: true,
@@ -428,7 +428,7 @@ describe('Rules', () => {
                 value: "hey",
                 key: "test",
                 values: {
-                    test_confirmed: "yo",
+                    test_confirmation: "yo",
                 },
             },
             result: false,
