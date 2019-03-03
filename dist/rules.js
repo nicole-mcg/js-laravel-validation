@@ -87,7 +87,7 @@ var _default = {
     var value = _ref12.value,
         key = _ref12.key,
         values = _ref12.values;
-    return b(value === values["".concat(key, "_confirmed")]);
+    return b(value === values["".concat(key, "_confirmation")]);
   },
   date: function date(_ref13) {
     var value = _ref13.value;
