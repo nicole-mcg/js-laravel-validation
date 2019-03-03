@@ -129,6 +129,7 @@ function validateField(fieldData, formData) {
 
         const params = {
             ...rule,
+            key: fieldData.key,
             value: fieldData.value,
             values,
         }

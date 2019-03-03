@@ -161,6 +161,7 @@ function validateField(fieldData, formData) {
 
 
     var params = _objectSpread({}, rule, {
+      key: fieldData.key,
       value: fieldData.value,
       values: values
     });
