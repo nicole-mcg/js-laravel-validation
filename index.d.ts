@@ -1,14 +1,3 @@
-
-
-var validation = {
-    setMessageHandlers: _messages.setMessageHandlers,
-    setMessageHandler: _messages.setMessageHandler,
-    getMessage: _messages.getMessage,
-    getMessageHandler: _messages.getMessageHandler,
-    validateForm: _index.validate.validateForm
-  };
-exports.validation = validation;
-
 export type MessageHandler = (field: IValidationFormField) => string;
 
 export interface IValidationFormField {
