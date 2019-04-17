@@ -1370,12 +1370,12 @@ describe('Rules', () => {
         {
             desc: "string integer",
             value: "1",
-            result: false
+            result: true
         },
         {
             desc: "string float",
             value: "1.1",
-            result: false,
+            result: true,
         },
         {
             desc: "string",

@@ -173,12 +173,11 @@ export default {
       return true;
     }
 
-    try {
-      parseInt(value);
-      return true;
-    } catch (e) {}
+    if (!value) {
+      return false;
+    }
 
-    return false;
+    return !isNaN(value);
   },
 
   present: ({ value }) => value !== undefined,
