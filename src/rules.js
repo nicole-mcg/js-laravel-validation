@@ -68,26 +68,26 @@ export default {
       const paramVal = parseInt(pair[1]);
       switch(pair[0]) {
         case 'width':
-          if (width !== paramVal) return false;
-          break;
+        if (width !== paramVal) return false;
+        break;
         case 'min_width':
-          if (width < paramVal) return false;
-          break;
+        if (width < paramVal) return false;
+        break;
         case 'max_width':
-          if (width > paramVal) return false;
-          break;
+        if (width > paramVal) return false;
+        break;
         case 'height':
-          if (height !== paramVal) return false;
-          break;
+        if (height !== paramVal) return false;
+        break;
         case 'min_height':
-          if (height < paramVal) return false;
-          break;
+        if (height < paramVal) return false;
+        break;
         case 'max_height':
-          if (height > paramVal) return false;
-          break;
+        if (height > paramVal) return false;
+        break;
       }
     }
-    
+
     return true;
   },
 
@@ -168,7 +168,18 @@ export default {
 
   //nullable: implemented in `validateField` method (index.js)
 
-  numeric: ({ value }) => typeof value === 'number',
+  numeric: ({ value }) => {
+    if (typeof value === 'number') {
+      return true;
+    }
+
+    try {
+      parseInt(value);
+      return true;
+    } catch (e) {}
+
+    return false;
+  },
 
   present: ({ value }) => value !== undefined,
 
@@ -179,98 +190,98 @@ export default {
   required_unless: ({ value, params, values }) => values[params[0]] != params[1] ? isNotEmpty(value) : true,
   required_with: ({ value, params, values }) => {
     const required = Object.keys(values).filter(
-      key => params.includes(key) ? isNotEmpty(values[key]) : false 
-    ).length > 0;
-    return !required || isNotEmpty(value);
-  },
-  required_with_all: ({ value, params, values }) => {
-    const required = Object.keys(values).filter(
       key => params.includes(key) ? isNotEmpty(values[key]) : false
-    ).length === params.length;
-    return !required || isNotEmpty(value);
-  },
-  required_without: ({ value, params, values }) => {
-    const required = Object.keys(values).filter(
-      key => params.includes(key) ? !isNotEmpty(values[key]) : false 
-    ).length > 0;
-    return !required || isNotEmpty(value);
-  },
-  required_without_all: ({ value, params, values }) => {
-    const required = Object.keys(values).filter(
-      key => params.includes(key) ? !isNotEmpty(values[key]) : false
-    ).length === params.length;
-    return !required || isNotEmpty(value);
-  },
+      ).length > 0;
+      return !required || isNotEmpty(value);
+    },
+    required_with_all: ({ value, params, values }) => {
+      const required = Object.keys(values).filter(
+        key => params.includes(key) ? isNotEmpty(values[key]) : false
+        ).length === params.length;
+        return !required || isNotEmpty(value);
+      },
+      required_without: ({ value, params, values }) => {
+        const required = Object.keys(values).filter(
+          key => params.includes(key) ? !isNotEmpty(values[key]) : false
+          ).length > 0;
+          return !required || isNotEmpty(value);
+        },
+        required_without_all: ({ value, params, values }) => {
+          const required = Object.keys(values).filter(
+            key => params.includes(key) ? !isNotEmpty(values[key]) : false
+            ).length === params.length;
+            return !required || isNotEmpty(value);
+          },
 
-  same: ({ value, values, params }) => b(value === values[params[0]]),//allows same arrays and objects
+          same: ({ value, values, params }) => b(value === values[params[0]]),//allows same arrays and objects
 
-  size: ({ value, params }) => {
-    const size = !b(value) && typeof value !== 'number' ? 0 : sizeOf(value);
-     return size === parseInt(params[0])
-  },
+          size: ({ value, params }) => {
+            const size = !b(value) && typeof value !== 'number' ? 0 : sizeOf(value);
+            return size === parseInt(params[0])
+          },
 
-  string: ({ value }) => typeof value === 'string',
+          string: ({ value }) => typeof value === 'string',
 
-  timezone: ({ value }) => timezones.includes(value),
+          timezone: ({ value }) => timezones.includes(value),
 
-  url: ({ value }) => /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(value),
+          url: ({ value }) => /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(value),
 
-  uuid: ({ value }) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value),
-};
+          uuid: ({ value }) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value),
+        };
 
 
-/*****************************/
-/** START OF UTIL FUNCTIONS **/
-/*****************************/
+        /*****************************/
+        /** START OF UTIL FUNCTIONS **/
+        /*****************************/
 
-//These functions are tested through rules that use them
+        //These functions are tested through rules that use them
 
-function isNotEmpty(value) {
-  return typeof value === 'number' || typeof value === 'boolean' || !! value;
-}
+        function isNotEmpty(value) {
+          return typeof value === 'number' || typeof value === 'boolean' || !! value;
+        }
 
-function sizeOf(value) {
-  //TODO files, images other things
-  if (value.hasOwnProperty('length')) {
-    value = value.length;
-  }
-  return value;
-}
+        function sizeOf(value) {
+          //TODO files, images other things
+          if (value.hasOwnProperty('length')) {
+            value = value.length;
+          }
+          return value;
+        }
 
-function b(value) {
-  return !! value;
-}
+        function b(value) {
+          return !! value;
+        }
 
-function isIpv4(value) {
-  return /^(?:\d{1,3}(?:\.|$)){4}/.test(value);
-}
+        function isIpv4(value) {
+          return /^(?:\d{1,3}(?:\.|$)){4}/.test(value);
+        }
 
-// Created by Dartware
-//http://download.dartware.com/thirdparty/ipv6validator.js
-function checkipv6(str) {
-	return (/^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$/.test(str));
-}
+        // Created by Dartware
+        //http://download.dartware.com/thirdparty/ipv6validator.js
+        function checkipv6(str) {
+          return (/^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$/.test(str));
+        }
 
-function deepEquals(x, y) {
-  if (x === y) {
-    return true;
-  }
-  else if ((typeof x == "object" && x != null) && (typeof y == "object" && y != null)) {
-    if (Object.keys(x).length != Object.keys(y).length)
-      return false;
+        function deepEquals(x, y) {
+          if (x === y) {
+            return true;
+          }
+          else if ((typeof x == "object" && x != null) && (typeof y == "object" && y != null)) {
+            if (Object.keys(x).length != Object.keys(y).length)
+            return false;
 
-    for (var prop in x) {
-      if (y.hasOwnProperty(prop))
-      {  
-        if (! deepEquals(x[prop], y[prop]))
+            for (var prop in x) {
+              if (y.hasOwnProperty(prop))
+              {
+                if (! deepEquals(x[prop], y[prop]))
+                return false;
+              }
+              else
+              return false;
+            }
+
+            return true;
+          }
+          else
           return false;
-      }
-      else
-        return false;
-    }
-
-    return true;
-  }
-  else 
-    return false;
-}
+        }
