@@ -318,7 +318,17 @@ var _default = {
   //nullable: implemented in `validateField` method (index.js)
   numeric: function numeric(_ref40) {
     var value = _ref40.value;
-    return typeof value === 'number';
+
+    if (typeof value === 'number') {
+      return true;
+    }
+
+    try {
+      parseInt(value);
+      return true;
+    } catch (e) {}
+
+    return false;
   },
   present: function present(_ref41) {
     var value = _ref41.value;
