@@ -1,134 +1,134 @@
 
 const messages = {
-  /*accepted: () => "",
+    accepted: () => "",
 
-  // active_url: ({ value }) => {
-    //This cannot be supported because JS does not support hostname lookups (dns_get_record in PHP)
-    //This could be implemented if there was a reliable way to host a small API to do the lookup
-  // },
+    // active_url: ({ value }) => {
+      //This cannot be supported because JS does not support hostname lookups (dns_get_record in PHP)
+      //This could be implemented if there was a reliable way to host a small API to do the lookup
+    // },
 
-  after: () => "",
-  after_or_equal: () => "",
+    after: () => "",
+    after_or_equal: () => "",
 
-  alpha: () => "",
-  alpha_dash: () => "",
-  alpha_num: () => "",
+    alpha: () => "",
+    alpha_dash: () => "",
+    alpha_num: () => "",
 
-  array: () => "",
+    array: () => "",
 
-  //bail: is on by default but is `validateForm` call
+    //bail: is on by default but is `validateForm` call
 
-  before: () => "",
-  before_or_equal: () => "",
+    before: () => "",
+    before_or_equal: () => "",
 
-  between: () => "",
+    between: () => "",
 
-  boolean: () => "",
+    boolean: () => "",
 
-  confirmed: () => "",
-  
-  date: () => "",
-  date_equals: () => "",
+    confirmed: () => "",
+    
+    date: () => "",
+    date_equals: () => "",
 
-  //date_format
+    //date_format
 
-  different: () => "",
+    different: () => "",
 
-  digits: () => "",
-  digits_between: () => "",
+    digits: () => "",
+    digits_between: () => "",
 
-  distinct: () => "",
+    distinct: () => "",
 
-  email: () => "",
+    email: () => "",
 
-  file: () => "",
+    file: () => "",
 
-  filled: () => "",
+    filled: () => "",
 
-  gt: () => "",
-  gte: () => "",
+    gt: () => "",
+    gte: () => "",
 
-  image: () => "",
+    image: () => "",
 
-  in: () => "",
-  in_array: () => "",
-  
-  integer: () => "",
+    in: () => "",
+    in_array: () => "",
+    
+    integer: () => "",
 
-  ip: () => "",
-  ipv4: () => "",
-  ipv6: () => "",
+    ip: () => "",
+    ipv4: () => "",
+    ipv6: () => "",
 
-  json: () => "",
+    json: () => "",
 
-  lt: () => "",
-  lte: () => "",
+    lt: () => "",
+    lte: () => "",
 
-  max: () => "",
+    max: () => "",
 
-  //mimetypes?
+    //mimetypes?
 
-  min: () => "",
+    min: () => "",
 
-  not_in: () => "",
+    not_in: () => "",
 
-  //not_regex
+    //not_regex
 
-  //nullable: implemented in `validateField` method (index.js)
+    //nullable: implemented in `validateField` method (index.js)
 
-  numeric: () => "",
+    numeric: () => "",
 
-  present: () => "",
+    present: () => "",
 
-  //regex
+    //regex
 
-  required: () => "",
-  required_if: () => "",
-  required_unless: () => "",
-  required_with: () => "",
-  required_with_all: () => "",
-  required_without: () => "",
-  required_without_all: () => "",
+    required: () => "",
+    required_if: () => "",
+    required_unless: () => "",
+    required_with: () => "",
+    required_with_all: () => "",
+    required_without: () => "",
+    required_without_all: () => "",
 
-  same: () => "",
+    same: () => "",
 
-  size: () => "",
+    size: () => "",
 
-  string: () => "",
+    string: () => "",
 
-  timezone: () => "",
+    timezone: () => "",
 
-  url: () => "",
+    url: () => "",
 
-  uuid: () => "",*/
+    uuid: () => "",
 };
 
 //export default messages;
 
 function setMessageHandlers(newMessages) {
-  Object.assign(messages, newMessages);
+    Object.assign(messages, newMessages);
 }
 
 function setMessageHandler(rule, createMessage) {
-  setMessageHandlers({
-    [rule]: createMessage
-  });
+    setMessageHandlers({
+      [rule]: createMessage
+    });
 }
 
 function getMessage(rule, params) {
-  if (messages[rule] === undefined) {
-    return rule;
-  }
-  return messages[rule](params);
+    if (messages[rule] === undefined) {
+        return "";
+    }
+    return messages[rule](params);
 }
 
 function getMessageHandler(rule) {
-  return messages[rule];
+    return messages[rule];
 }
 
 export {
-  setMessageHandlers,
-  setMessageHandler,
-  getMessage,
-  getMessageHandler,
+    setMessageHandlers,
+    setMessageHandler,
+    getMessage,
+    getMessageHandler,
 }

@@ -53,8 +53,8 @@ function validateForm({ formData, includeMessages=true }) {
             errors.push(result.errors);
 
             if (includeMessages) {
-                const messages = result.errors.map(rule => generateMessage(rule, fieldData));
-                messages.push(messages);
+                const fieldMessages = result.errors.map(rule => generateMessage(rule, fieldData));
+                messages.push(fieldMessages);
             }
 
             if (bail) {

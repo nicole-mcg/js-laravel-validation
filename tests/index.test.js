@@ -2,7 +2,8 @@
 /** global: jest */
 import { validate } from '../src/index'
 import RULES from '../src/rules'
-import { setMessageHandler, setMessageHandlers, getMessage, getMessageHandler } from '../src/messages'
+import { setMessageHandler, setMessageHandlers, getMessageHandler } from '../src/messages'
+import { generateMessage } from '../src/placeholders'
 
 const { validateField, validateForm, parseRule } = validate;
 
@@ -14,7 +15,7 @@ describe('Custom messages', () => {
         setMessageHandler('test', () => 'hey!');
 
         expect(getMessageHandler('test')).toBeTruthy();
-        expect(getMessage('test')).toEqual('hey!')
+        expect(generateMessage('test')).toEqual('hey!')
     });
 
     it('can override existing messages', () => {
@@ -24,9 +25,9 @@ describe('Custom messages', () => {
         });
 
         expect(getMessageHandler('test')).toBeTruthy();
-        expect(getMessage('test')).toEqual('hey!');
+        expect(generateMessage('test')).toEqual('hey!');
         expect(getMessageHandler('test2')).toBeTruthy();
-        expect(getMessage('test2')).toEqual('hello')
+        expect(generateMessage('test2')).toEqual('hello')
     });
 
 })
