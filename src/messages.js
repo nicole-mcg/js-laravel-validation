@@ -1,106 +1,113 @@
 
 const messages = {
-    accepted: () => "",
+    accepted: () => "The :attribute must be accepted.",
 
     // active_url: ({ value }) => {
       //This cannot be supported because JS does not support hostname lookups (dns_get_record in PHP)
       //This could be implemented if there was a reliable way to host a small API to do the lookup
     // },
 
-    after: () => "",
-    after_or_equal: () => "",
+    after: () => "The :attribute must be a date after :date.",
+    after_or_equal: () => "The :attribute must be a date after or equal to :date.",
 
-    alpha: () => "",
-    alpha_dash: () => "",
-    alpha_num: () => "",
+    alpha: () => "The :attribute may only contain letters.",
+    alpha_dash: () => "The :attribute may only contain letters, numbers, dashes and underscores.", // I don't think that's what this rule does
+    alpha_num: () => "The :attribute may only contain letters and numbers.",
 
-    array: () => "",
+    array: () => "The :attribute must be an array.",
 
     //bail: is on by default but is `validateForm` call
 
-    before: () => "",
-    before_or_equal: () => "",
+    before: () => "The :attribute must be a date before :date.",
+    before_or_equal: () => "The :attribute must be a date before or equal to :date.",
 
-    between: () => "",
+    between: () => "",  // TODO this one is more complicated
 
-    boolean: () => "",
+    boolean: () => "The :attribute field must be true or false.",
 
-    confirmed: () => "",
+    confirmed: () => "The :attribute confirmation does not match.",
     
-    date: () => "",
-    date_equals: () => "",
+    date: () => "The :attribute is not a valid date.",
+    date_equals: () => "The :attribute must be a date equal to :date.",
 
-    //date_format
+    //date_format: () => "The :attribute does not match the format :format.",
 
-    different: () => "",
+    different: () => "The :attribute and :other must be different.",
 
-    digits: () => "",
-    digits_between: () => "",
+    digits: () => "The :attribute must be :digits digits.",
+    digits_between: () => "The :attribute must be between :min and :max digits.",
 
-    distinct: () => "",
+    dimensions: () => "The :attribute has invalid image dimensions.",
 
-    email: () => "",
+    distinct: () => "The :attribute field has a duplicate value.",
 
-    file: () => "",
+    email: () => "The :attribute must be a valid email address.",
 
-    filled: () => "",
+    file: () => "The :attribute must be a file.",
 
-    gt: () => "",
-    gte: () => "",
+    filled: () => "The :attribute field must have a value.",
 
-    image: () => "",
+    gt: () => "", // TODO this one is more complicated
+    gte: () => "", // TODO this one is more complicated
 
-    in: () => "",
-    in_array: () => "",
+    image: () => "The :attribute must be an image.",
+
+    in: () => "The selected :attribute is invalid.",
+    in_array: () => "The :attribute field does not exist in :other.",
     
-    integer: () => "",
+    integer: () => "The :attribute must be an integer.",
 
-    ip: () => "",
-    ipv4: () => "",
-    ipv6: () => "",
+    ip: () => "The :attribute must be a valid IP address.",
+    ipv4: () => "The :attribute must be a valid IPv4 address.",
+    ipv6: () => "The :attribute must be a valid IPv6 address.",
 
-    json: () => "",
+    json: () => "The :attribute must be a valid JSON string.",
 
-    lt: () => "",
-    lte: () => "",
+    lt: () => "", // TODO this is more complicated, and is it done with size?
+    lte: () => "", // TODO this is more complicated, and is it done with size?
 
-    max: () => "",
+    max: () => "", // TODO this is more complicated, and is it done with size?
 
-    //mimetypes?
+    // mimes?
+    // mimetypes?
 
-    min: () => "",
+    min: () => "", // TODO this is more complicated, and is it done with size?
 
-    not_in: () => "",
+    not_in: () => "The selected :attribute is invalid.",
 
     //not_regex
 
     //nullable: implemented in `validateField` method (index.js)
 
-    numeric: () => "",
+    numeric: () => "The :attribute must be a number.",
 
-    present: () => "",
+    present: () => "The :attribute field must be present.",
 
     //regex
 
-    required: () => "",
-    required_if: () => "",
-    required_unless: () => "",
-    required_with: () => "",
-    required_with_all: () => "",
-    required_without: () => "",
-    required_without_all: () => "",
+    required: () => "The :attribute field is required.",
+    required_if: () => "The :attribute field is required when :other is :value.",
+    required_unless: () => "The :attribute field is required unless :other is in :values.",
+    required_with: () => "The :attribute field is required when :values is present.",
+    required_with_all: () => "The :attribute field is required when :values are present.",
+    required_without: () => "The :attribute field is required when :values is not present.",
+    required_without_all: () => "The :attribute field is required when none of :values are present.",
 
-    same: () => "",
+    same: () => "The :attribute and :other must match.",
 
-    size: () => "",
+    size: () => "", // TODO this is more complicated
+    
+    // TODO starts_with
 
-    string: () => "",
+    string: () => "The :attribute must be a string.",
 
-    timezone: () => "",
+    timezone: () => "The :attribute must be a valid zone.",
 
-    url: () => "",
+    // TODO unique
 
-    uuid: () => "",
+    url: () => "The :attribute format is invalid.",
+
+    uuid: () => "The :attribute must be a valid UUID.",
 };
 
 //export default messages;
