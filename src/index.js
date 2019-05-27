@@ -1,5 +1,5 @@
 import RULES from './rules'
-import { getMessage } from './messages'
+import { generateMessage } from './placeholders'
 
 const toExport = {};
 
@@ -53,7 +53,8 @@ function validateForm({ formData, includeMessages=true }) {
             errors.push(result.errors);
 
             if (includeMessages) {
-                messages.push( result.errors.map(rule => getMessage(rule, fieldData)) );
+                const messages = result.errors.map(rule => generateMessage(rule, fieldData));
+                messages.push(messages);
             }
 
             if (bail) {
