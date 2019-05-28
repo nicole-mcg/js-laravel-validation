@@ -100,6 +100,13 @@ export default {
     },
     
     email: ({ value }) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value),
+
+    ends_with: ({ value, params }) => {
+        if (Array.isArray(value)) {
+            value = value.join("");
+        }
+        return String(value).endsWith(params[0]);
+    },
     
     file: ({ value }) => value instanceof File,
     

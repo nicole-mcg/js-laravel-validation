@@ -828,6 +828,33 @@ describe('Rules', () => {
         },
     ]);
 
+    createRuleTests('ends_with', [
+        {
+            desc: 'string',
+            value: "hello",
+            params: ['ello'],
+            result: true,
+        },
+        {
+            desc: 'array',
+            value: [..."governor"],
+            params: ['ernor'],
+            result: true,
+        },
+        {
+            desc: 'string',
+            value: "hello",
+            params: ['hell'],
+            result: false,
+        },
+        {
+            desc: 'array',
+            value: [..."governor"],
+            params: ['gov'],
+            result: false,
+        },
+    ]);
+
     createRuleTests('file', [
         {
             desc: 'file',
@@ -849,7 +876,7 @@ describe('Rules', () => {
             value: null,
             result: false,
         },
-    ])
+    ]);
 
     createRuleTests('filled', createNotEmptyTests({ isFalseEmpty: false }));
 
