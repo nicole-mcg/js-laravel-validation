@@ -1,5 +1,5 @@
 
-const messages = {
+export const messages = {
     accepted: () => "The :attribute must be accepted.",
 
     // active_url: ({ value }) => {
@@ -122,11 +122,11 @@ function setMessageHandler(rule, createMessage) {
     });
 }
 
-function getMessage(rule, params) {
+function getMessage(rule, fieldData) {
     if (messages[rule] === undefined) {
         return "";
     }
-    return messages[rule](params);
+    return messages[rule](fieldData);
 }
 
 function getMessageHandler(rule) {

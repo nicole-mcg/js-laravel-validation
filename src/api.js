@@ -5,12 +5,16 @@ import {
     getMessageHandler,
 } from './messages';
 
+import {
+    generateMessage,
+} from './placeholders';
+
 import { validate } from './index';
 
 const validation = {
     setMessageHandlers,
     setMessageHandler,
-    getMessage,
+    getMessage: generateMessage,
     getMessageHandler,
     validateForm: validate.validateForm,
 }
