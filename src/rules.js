@@ -225,6 +225,13 @@ export default {
         return size === parseInt(params[0])
     },
 
+    starts_with: ({ value, params }) => {
+        if (Array.isArray(value)) {
+            value = value.join("");
+        }
+        return String(value).startsWith(params[0])
+    },
+
     string: ({ value }) => typeof value === 'string',
 
     timezone: ({ value }) => timezones.includes(value),

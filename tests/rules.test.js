@@ -1748,7 +1748,34 @@ describe('Rules', () => {
             params: [1],
             result: false,
         },
-    ])
+    ]);
+
+    createRuleTests('starts_with', [
+        {
+            desc: 'string',
+            value: "hello",
+            params: ['hell'],
+            result: true,
+        },
+        {
+            desc: 'array',
+            value: [..."governor"],
+            params: ['gov'],
+            result: true,
+        },
+        {
+            desc: 'string',
+            value: "hello",
+            params: ['ello'],
+            result: false,
+        },
+        {
+            desc: 'array',
+            value: [..."governor"],
+            params: ['nor'],
+            result: false,
+        },
+    ]);
 
     createRuleTests('string', [
         {
