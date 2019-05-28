@@ -7,7 +7,7 @@ exports.validate = void 0;
 
 var _rules = _interopRequireDefault(require("./rules"));
 
-var _messages = require("./messages");
+var _placeholders = require("./placeholders");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -71,9 +71,10 @@ function validateForm(_ref) {
       errors.push(result.errors);
 
       if (includeMessages) {
-        messages.push(result.errors.map(function (rule) {
-          return (0, _messages.getMessage)(rule, fieldData);
-        }));
+        var fieldMessages = result.errors.map(function (rule) {
+          return (0, _placeholders.generateMessage)(rule, fieldData);
+        });
+        messages.push(fieldMessages);
       }
 
       if (bail) {

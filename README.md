@@ -32,7 +32,7 @@ Install: `npm install js-laravel-validation`
 
 ```
 
-## API
+## Docs
 
 | Function Name  | Description |
 | ------------- | ------------- |
