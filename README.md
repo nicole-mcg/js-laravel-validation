@@ -41,16 +41,16 @@ Install: `npm install js-laravel-validation`
 | [setMessageHandlers(messages)](https://github.com/nik-m2/js-laravel-validation/blob/master/docs/setMessageHandlers.md)  | Replaces multiple message handers  |
 
 ## Missing Rules
-- active_url 
+- `active_url` 
   - This cannot be supported because JS does not support hostname lookups (dns_get_record in PHP)
   - This could be implemented if there was a reliable way to host a small API to do the lookup
-- date_format
+- `date_format`
   - This can be added with something like `return new Date(value).format(params[0]) === value;`
   - Unfortunately that isn't so easy in vanilla js atm
-- exists & unqiue
+- `exists & unqiue`
    - These are both rules relating to the database
 
-- not_regex (to come)
-- regex (to come)
+- `not_regex` (to come)
+- `regex` (to come)
   - Regex requires extra parsing to remove forward slashes around regex
  
