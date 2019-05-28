@@ -47,6 +47,8 @@ Install: `npm install js-laravel-validation`
 - date_format
   - This can be added with something like `return new Date(value).format(params[0]) === value;`
   - Unfortunately that isn't so easy in vanilla js atm
+- exists & unqiue
+   - These are both rules relating to the database
 
 - not_regex (to come)
 - regex (to come)
