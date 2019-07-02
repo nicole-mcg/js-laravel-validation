@@ -802,6 +802,17 @@ describe('Rules', () => {
             result: true,
         },
         {
+            desc: 'valid email with plus sign',
+            value: "test+test@test.ca",
+            result: true,
+        },
+        
+        {
+            desc: 'valid email with period',
+            value: "test.test@test.ca",
+            result: true,
+        },
+        {
             desc: 'email with no @ sign',
             value: "test.ca",
             result: false,

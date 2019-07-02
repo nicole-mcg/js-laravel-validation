@@ -182,67 +182,77 @@ var _default = {
   },
   email: function email(_ref20) {
     var value = _ref20.value;
-    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value);
+    return /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value);
   },
-  file: function file(_ref21) {
-    var value = _ref21.value;
+  ends_with: function ends_with(_ref21) {
+    var value = _ref21.value,
+        params = _ref21.params;
+
+    if (Array.isArray(value)) {
+      value = value.join("");
+    }
+
+    return String(value).endsWith(params[0]);
+  },
+  file: function file(_ref22) {
+    var value = _ref22.value;
     return value instanceof File;
   },
-  filled: function filled(_ref22) {
-    var value = _ref22.value;
+  filled: function filled(_ref23) {
+    var value = _ref23.value;
     return isNotEmpty(value);
   },
-  gt: function gt(_ref23) {
-    var value = _ref23.value,
-        values = _ref23.values,
-        params = _ref23.params;
-    return values[params[0]] === undefined || value > values[params[0]];
-  },
-  gte: function gte(_ref24) {
+  gt: function gt(_ref24) {
     var value = _ref24.value,
         values = _ref24.values,
         params = _ref24.params;
+    return values[params[0]] === undefined || value > values[params[0]];
+  },
+  gte: function gte(_ref25) {
+    var value = _ref25.value,
+        values = _ref25.values,
+        params = _ref25.params;
     return values[params[0]] === undefined || value >= values[params[0]];
   },
-  image: function image(_ref25) {
-    var value = _ref25.value;
+  image: function image(_ref26) {
+    var value = _ref26.value;
     return value instanceof Image;
   },
-  in: function _in(_ref26) {
-    var value = _ref26.value,
-        params = _ref26.params;
+  in: function _in(_ref27) {
+    var value = _ref27.value,
+        params = _ref27.params;
     return params.findIndex(function (param) {
       return deepEquals(param, value);
     }) !== -1;
   },
-  in_array: function in_array(_ref27) {
-    var value = _ref27.value,
-        values = _ref27.values,
-        params = _ref27.params;
+  in_array: function in_array(_ref28) {
+    var value = _ref28.value,
+        values = _ref28.values,
+        params = _ref28.params;
     var array = values[params[0]];
     if (!Array.isArray(array)) return false;
     return array.findIndex(function (arrayVal) {
       return deepEquals(arrayVal, value);
     }) !== -1;
   },
-  integer: function integer(_ref28) {
-    var value = _ref28.value;
+  integer: function integer(_ref29) {
+    var value = _ref29.value;
     return Number.isInteger(typeof value === 'string' ? parseInt(value) : value);
   },
-  ip: function ip(_ref29) {
-    var value = _ref29.value;
+  ip: function ip(_ref30) {
+    var value = _ref30.value;
     return isIpv4(value) || checkipv6(value);
   },
-  ipv4: function ipv4(_ref30) {
-    var value = _ref30.value;
+  ipv4: function ipv4(_ref31) {
+    var value = _ref31.value;
     return isIpv4(value);
   },
-  ipv6: function ipv6(_ref31) {
-    var value = _ref31.value;
+  ipv6: function ipv6(_ref32) {
+    var value = _ref32.value;
     return checkipv6(value);
   },
-  json: function json(_ref32) {
-    var value = _ref32.value;
+  json: function json(_ref33) {
+    var value = _ref33.value;
     if (typeof value !== 'string') return false;
 
     try {
@@ -253,26 +263,26 @@ var _default = {
 
     return true;
   },
-  lt: function lt(_ref33) {
-    var value = _ref33.value,
-        values = _ref33.values,
-        params = _ref33.params;
-    return value < values[params[0]];
-  },
-  lte: function lte(_ref34) {
+  lt: function lt(_ref34) {
     var value = _ref34.value,
         values = _ref34.values,
         params = _ref34.params;
+    return value < values[params[0]];
+  },
+  lte: function lte(_ref35) {
+    var value = _ref35.value,
+        values = _ref35.values,
+        params = _ref35.params;
     return value <= values[params[0]];
   },
-  max: function max(_ref35) {
-    var value = _ref35.value,
-        params = _ref35.params;
-    return (b(value) || typeof value === 'number') && sizeOf(value) <= params[0];
-  },
-  mimetypes: function mimetypes(_ref36) {
+  max: function max(_ref36) {
     var value = _ref36.value,
         params = _ref36.params;
+    return (b(value) || typeof value === 'number') && sizeOf(value) <= params[0];
+  },
+  mimetypes: function mimetypes(_ref37) {
+    var value = _ref37.value,
+        params = _ref37.params;
 
     if (!value || !value.type) {
       return false;
@@ -280,9 +290,9 @@ var _default = {
 
     return params.includes(value.type);
   },
-  mimes: function mimes(_ref37) {
-    var value = _ref37.value,
-        params = _ref37.params;
+  mimes: function mimes(_ref38) {
+    var value = _ref38.value,
+        params = _ref38.params;
 
     if (!value || !value.type) {
       return false;
@@ -302,22 +312,22 @@ var _default = {
 
     return false;
   },
-  min: function min(_ref38) {
-    var value = _ref38.value,
-        params = _ref38.params;
-    return (b(value) || typeof value === 'number') && sizeOf(value) >= params[0];
-  },
-  not_in: function not_in(_ref39) {
+  min: function min(_ref39) {
     var value = _ref39.value,
         params = _ref39.params;
+    return (b(value) || typeof value === 'number') && sizeOf(value) >= params[0];
+  },
+  not_in: function not_in(_ref40) {
+    var value = _ref40.value,
+        params = _ref40.params;
     return params.findIndex(function (param) {
       return deepEquals(param, value);
     }) === -1;
   },
   //not_regex
   //nullable: implemented in `validateField` method (index.js)
-  numeric: function numeric(_ref40) {
-    var value = _ref40.value;
+  numeric: function numeric(_ref41) {
+    var value = _ref41.value;
 
     if (typeof value === 'number') {
       return true;
@@ -329,90 +339,100 @@ var _default = {
 
     return !isNaN(value);
   },
-  present: function present(_ref41) {
-    var value = _ref41.value;
+  present: function present(_ref42) {
+    var value = _ref42.value;
     return value !== undefined;
   },
   //regex
-  required: function required(_ref42) {
-    var value = _ref42.value;
+  required: function required(_ref43) {
+    var value = _ref43.value;
     return isNotEmpty(value);
   },
-  required_if: function required_if(_ref43) {
-    var value = _ref43.value,
-        params = _ref43.params,
-        values = _ref43.values;
-    return values[params[0]] == params[1] ? isNotEmpty(value) : true;
-  },
-  required_unless: function required_unless(_ref44) {
+  required_if: function required_if(_ref44) {
     var value = _ref44.value,
         params = _ref44.params,
         values = _ref44.values;
-    return values[params[0]] != params[1] ? isNotEmpty(value) : true;
+    return values[params[0]] == params[1] ? isNotEmpty(value) : true;
   },
-  required_with: function required_with(_ref45) {
+  required_unless: function required_unless(_ref45) {
     var value = _ref45.value,
         params = _ref45.params,
         values = _ref45.values;
-    var required = Object.keys(values).filter(function (key) {
-      return params.includes(key) ? isNotEmpty(values[key]) : false;
-    }).length > 0;
-    return !required || isNotEmpty(value);
+    return values[params[0]] != params[1] ? isNotEmpty(value) : true;
   },
-  required_with_all: function required_with_all(_ref46) {
+  required_with: function required_with(_ref46) {
     var value = _ref46.value,
         params = _ref46.params,
         values = _ref46.values;
     var required = Object.keys(values).filter(function (key) {
       return params.includes(key) ? isNotEmpty(values[key]) : false;
-    }).length === params.length;
+    }).length > 0;
     return !required || isNotEmpty(value);
   },
-  required_without: function required_without(_ref47) {
+  required_with_all: function required_with_all(_ref47) {
     var value = _ref47.value,
         params = _ref47.params,
         values = _ref47.values;
     var required = Object.keys(values).filter(function (key) {
-      return params.includes(key) ? !isNotEmpty(values[key]) : false;
-    }).length > 0;
+      return params.includes(key) ? isNotEmpty(values[key]) : false;
+    }).length === params.length;
     return !required || isNotEmpty(value);
   },
-  required_without_all: function required_without_all(_ref48) {
+  required_without: function required_without(_ref48) {
     var value = _ref48.value,
         params = _ref48.params,
         values = _ref48.values;
     var required = Object.keys(values).filter(function (key) {
       return params.includes(key) ? !isNotEmpty(values[key]) : false;
+    }).length > 0;
+    return !required || isNotEmpty(value);
+  },
+  required_without_all: function required_without_all(_ref49) {
+    var value = _ref49.value,
+        params = _ref49.params,
+        values = _ref49.values;
+    var required = Object.keys(values).filter(function (key) {
+      return params.includes(key) ? !isNotEmpty(values[key]) : false;
     }).length === params.length;
     return !required || isNotEmpty(value);
   },
-  same: function same(_ref49) {
-    var value = _ref49.value,
-        values = _ref49.values,
-        params = _ref49.params;
+  same: function same(_ref50) {
+    var value = _ref50.value,
+        values = _ref50.values,
+        params = _ref50.params;
     return b(value === values[params[0]]);
   },
   //allows same arrays and objects
-  size: function size(_ref50) {
-    var value = _ref50.value,
-        params = _ref50.params;
+  size: function size(_ref51) {
+    var value = _ref51.value,
+        params = _ref51.params;
     var size = !b(value) && typeof value !== 'number' ? 0 : sizeOf(value);
     return size === parseInt(params[0]);
   },
-  string: function string(_ref51) {
-    var value = _ref51.value;
+  starts_with: function starts_with(_ref52) {
+    var value = _ref52.value,
+        params = _ref52.params;
+
+    if (Array.isArray(value)) {
+      value = value.join("");
+    }
+
+    return String(value).startsWith(params[0]);
+  },
+  string: function string(_ref53) {
+    var value = _ref53.value;
     return typeof value === 'string';
   },
-  timezone: function timezone(_ref52) {
-    var value = _ref52.value;
+  timezone: function timezone(_ref54) {
+    var value = _ref54.value;
     return _timezones.default.includes(value);
   },
-  url: function url(_ref53) {
-    var value = _ref53.value;
+  url: function url(_ref55) {
+    var value = _ref55.value;
     return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(value);
   },
-  uuid: function uuid(_ref54) {
-    var value = _ref54.value;
+  uuid: function uuid(_ref56) {
+    var value = _ref56.value;
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
   }
 };

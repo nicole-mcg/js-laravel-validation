@@ -99,7 +99,7 @@ export default {
         }, 0) <= 1);
     },
     
-    email: ({ value }) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value),
+    email: ({ value }) => /^\w+([\.+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value),
 
     ends_with: ({ value, params }) => {
         if (Array.isArray(value)) {
