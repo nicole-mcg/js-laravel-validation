@@ -1281,6 +1281,52 @@ describe('Rules', () => {
             value: null,
             result: false,
         },
+        {
+            desc: 'string with numeric rule and small value',
+            value: "0",
+            params: [1],
+            ruleParams: { rules: ["integer", "max:1"] },
+            result: true,
+        },
+        {
+            desc: 'string with numeric rule and large value',
+            value: "80",
+            params: [10],
+            ruleParams: { rules: ["integer", "max:10"] },
+            result: false,
+        },
+        {
+            desc: 'string without numieric rule, but number value, long string',
+            value: "80000000000",
+            params: [10],
+            ruleParams: { rules: ["string", "max:10"] },
+            result: false,
+        },
+        {
+            desc: 'string without numieric rule, but number value, short string',
+            value: "80",
+            params: [10],
+            ruleParams: { rules: ["string", "max:10"] },
+            result: true,
+        },
+        {
+            desc: 'short string',
+            value: "abc",
+            params: [10],
+            result: true,
+        },
+        {
+            desc: 'equal string',
+            value: "abcdefghij",
+            params: [10],
+            result: true,
+        },
+        {
+            desc: 'too long string',
+            value: "abcdefghijk",
+            params: [10],
+            result: false,
+        }
     ]);
 
     createRuleTests('mimetypes', [ // File.type should be correct mime type
@@ -1365,6 +1411,52 @@ describe('Rules', () => {
             value: null,
             result: false,
         },
+        {
+            desc: 'string with numeric rule and small value',
+            value: "0",
+            params: [1],
+            ruleParams: { rules: ["integer", "min:1"] },
+            result: false,
+        },
+        {
+            desc: 'string with numeric rule and large value',
+            value: "80",
+            params: [10],
+            ruleParams: { rules: ["integer", "min:10"] },
+            result: true,
+        },
+        {
+            desc: 'string without numieric rule, but number value, long string',
+            value: "80000000000",
+            params: [10],
+            ruleParams: { rules: ["string", "min:10"] },
+            result: true,
+        },
+        {
+            desc: 'string without numieric rule, but number value, short string',
+            value: "80",
+            params: [10],
+            ruleParams: { rules: ["string", "min:10"] },
+            result: false,
+        },
+        {
+            desc: 'short string',
+            value: "abc",
+            params: [10],
+            result: false,
+        },
+        {
+            desc: 'equal string',
+            value: "abcdefghij",
+            params: [10],
+            result: true,
+        },
+        {
+            desc: 'too long string',
+            value: "abcdefghijk",
+            params: [10],
+            result: true,
+        }
     ]);
 
     createRuleTests('not_in', [

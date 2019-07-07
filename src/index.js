@@ -132,6 +132,7 @@ function validateField(fieldData, formData) {
             ...rule,
             key: fieldData.key,
             value: fieldData.value,
+            rules: validation,
             values,
         }
 
