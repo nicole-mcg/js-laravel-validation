@@ -26,10 +26,10 @@ export default {
     before: ({ value, params }) => b(new Date(value) < new Date(params[0])),
     before_or_equal: ({ value, params }) => b(new Date(value) <= new Date(params[0])),
     
-    between: ({ value, params }) => {
+    between: ({ value, rules, params }) => {
         if (typeof value !== 'number' && !value) return false;
         const [min, max] = params;
-        value = sizeOf(value);
+        value = sizeOf(value, rules);
         return value > min && value < max;
     },
     
@@ -123,6 +123,7 @@ export default {
         if (!Array.isArray(array)) return false;
         return array.findIndex(arrayVal => deepEquals(arrayVal, value)) !== -1;
     },
+
     integer: ({ value }) => {
         return Number.isInteger(typeof value === 'string' ? parseInt(value) : value);
     },
