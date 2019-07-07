@@ -823,11 +823,6 @@ describe('Rules', () => {
             result: false,
         },
         {
-            desc: 'email with an invalid website (.invalid)',
-            value: "test@test.invalid",
-            result: false,
-        },
-        {
             desc: 'email with an invalid website (no .)',
             value: "test@test",
             result: false,
@@ -836,6 +831,21 @@ describe('Rules', () => {
             desc: 'null value',
             value: null,
             result: false,
+        },
+        {
+            desc: 'email with a long tld',
+            value: "test@domain.longtld",
+            result: true,
+        },
+        {
+            desc: 'email with underscore',
+            value: "test_test@domain.longtld",
+            result: true,
+        },
+        {
+            desc: 'email with multiple subdomains',
+            value: "test@subdomain.domain.longtld",
+            result: true,
         },
     ]);
 
