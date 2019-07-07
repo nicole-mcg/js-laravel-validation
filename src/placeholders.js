@@ -25,6 +25,13 @@ export const DEFAULT_PLACEHOLDERS = {
     "date_equals": {
         date: ({ params }) => params[0],
     },
+    "digits": {
+        digits: ({ params }) => params[0],
+    },
+    "digits_between": {
+        min: ({params}) => params[0],
+        max: ({params}) => params[1]
+    },
     "dimensions": {
         // TODO
     },
@@ -86,10 +93,10 @@ export const DEFAULT_PLACEHOLDERS = {
     },
 };
 
-export function generateMessage(rule, fieldData) {
+export function generateMessage(rule, ruleParams, fieldData) {
     const message = getMessage(rule, fieldData);
 
-    return replacePlaceholders(message, { rule, ...fieldData });
+    return replacePlaceholders(message, { rule, params: ruleParams, ...fieldData });
 }
 
 function replacePlaceholders(message, fieldData) {
@@ -104,8 +111,6 @@ function replacePlaceholders(message, fieldData) {
         const replacementValue = fieldData[placeholder];
 
         if (replacementValue === null || replacementValue === undefined) {
-            
-            
             replacementValue = getDefaultPlaceholderValue(placeholder, fieldData) || "";
         }
 
