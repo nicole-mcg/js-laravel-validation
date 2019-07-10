@@ -174,6 +174,11 @@ describe('Rules', () => {
             result: true,
         },
         {
+            desc: 'underscore alpha string',
+            value: "test_test",
+            result: true,
+        },
+        {
             desc: 'string with spaces',
             value: "test f",
             result: false,
