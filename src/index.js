@@ -92,7 +92,12 @@ function parseRule(rule) {
     };
 }
 
-// Returns array of failed rules or false if all rules passed.
+/**
+ * Returns array of failed rules or false if all rules passed.
+ *
+ * @param fieldData In the format { key, value, validation, ... }
+ * @param formData See `validateForm`
+ */
 function validateField(fieldData, formData) {
 
     const values = formData && Object.keys(formData).reduce((values, key) => {
