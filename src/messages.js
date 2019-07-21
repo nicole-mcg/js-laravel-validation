@@ -21,7 +21,7 @@ export const messages = {
     before: () => "The :attribute must be a date before :date.",
     before_or_equal: () => "The :attribute must be a date before or equal to :date.",
 
-    between: () => "",  // TODO this one is more complicated
+    between: () => "The :attribute must be between :min and :max.",
 
     boolean: () => "The :attribute field must be true or false.",
 
@@ -66,12 +66,12 @@ export const messages = {
     lt: () => "", // TODO this is more complicated, and is it done with size?
     lte: () => "", // TODO this is more complicated, and is it done with size?
 
-    max: () => "", // TODO this is more complicated, and is it done with size?
+    max: () => "The :attribute must be maximal :max.", // TODO this is more complicated, and is it done with size?
 
     // mimes?
     // mimetypes?
 
-    min: () => "", // TODO this is more complicated, and is it done with size?
+    min: () => "The :attribute must be at least :min.", // TODO this is more complicated, and is it done with size?
 
     not_in: () => "The selected :attribute is invalid.",
 

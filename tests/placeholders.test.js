@@ -5,6 +5,7 @@ const oldGetMessage = Messages.getMessage;
 
 describe('Placeholders', () => {
     const testRule = "foo";
+    const testRuleParams = [];
     const testMessage = "hello :dog what's up with :cat";
     const getMessage = jest.fn().mockReturnValue(testMessage);
 
@@ -21,7 +22,7 @@ describe('Placeholders', () => {
         const cat = "Reginald";
         const fieldData = { dog, cat };
 
-        const message = generateMessage(testRule, fieldData);
+        const message = generateMessage(testRule, testRuleParams, fieldData);
 
         expect(message).toEqual("hello Suzy what's up with Reginald");
         expect(getMessage).toHaveBeenCalledWith(testRule, fieldData);
@@ -31,7 +32,7 @@ describe('Placeholders', () => {
         const dog = "Suzy";
         const fieldData = { dog };
 
-        const message = generateMessage(testRule, fieldData);
+        const message = generateMessage(testRule, testRuleParams, fieldData);
 
         expect(message).toEqual("hello Suzy what's up with ");
         expect(getMessage).toHaveBeenCalledWith(testRule, fieldData);
@@ -41,7 +42,7 @@ describe('Placeholders', () => {
         const dog = "Suzy";
         const fieldData = { dog };
 
-        const message = generateMessage(testRule, fieldData);
+        const message = generateMessage(testRule, testRuleParams, fieldData);
 
         expect(message).toEqual("hello Suzy what's up with ");
         expect(getMessage).toHaveBeenCalledWith(testRule, fieldData);
@@ -58,7 +59,7 @@ describe('Placeholders', () => {
         messageRules.forEach((rule) => {
             it(`will replace placeholders in message for ${rule} rule`, () => {
                 const fieldData = { name: "some field", params };
-                const message = generateMessage(rule, fieldData);
+                const message = generateMessage(rule, testRuleParams, fieldData);
 
                 const placeholders = [];
                 let placeholderMatch = message.match(PLACEHOLDER_REGEX);

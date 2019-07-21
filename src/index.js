@@ -50,10 +50,10 @@ function validateForm({ formData, includeMessages=true }) {
 
         if (result.errors) {
             fields.push(key);
-            errors.push(result.errors);
+            errors.push(result.errors.map(rule => rule.key));
 
             if (includeMessages) {
-                const fieldMessages = result.errors.map(rule => generateMessage(rule, fieldData));
+                const fieldMessages = result.errors.map(rule => generateMessage(rule.key, rule.params, fieldData));
                 messages.push(fieldMessages);
             }
 
@@ -92,7 +92,12 @@ function parseRule(rule) {
     };
 }
 
-// {key, value, validation}
+/**
+ * Returns array of failed rules or false if all rules passed.
+ *
+ * @param fieldData In the format { key, value, validation, ... }
+ * @param formData See `validateForm`
+ */
 function validateField(fieldData, formData) {
 
     const values = formData && Object.keys(formData).reduce((values, key) => {
@@ -132,6 +137,7 @@ function validateField(fieldData, formData) {
             ...rule,
             key: fieldData.key,
             value: fieldData.value,
+            rules: validation,
             values,
         }
 
@@ -148,7 +154,7 @@ function validateField(fieldData, formData) {
             if (!overrideNullable && nullable && fieldData.value === null) {
                 continue;
             }
-            errors.push(rule.key);
+            errors.push(rule);
         }
     }
 

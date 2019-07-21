@@ -26,10 +26,10 @@ export default {
     before: ({ value, params }) => b(new Date(value) < new Date(params[0])),
     before_or_equal: ({ value, params }) => b(new Date(value) <= new Date(params[0])),
     
-    between: ({ value, params }) => {
+    between: ({ value, rules, params }) => {
         if (typeof value !== 'number' && !value) return false;
         const [min, max] = params;
-        value = sizeOf(value);
+        value = sizeOf(value, rules);
         return value > min && value < max;
     },
     
@@ -123,6 +123,7 @@ export default {
         if (!Array.isArray(array)) return false;
         return array.findIndex(arrayVal => deepEquals(arrayVal, value)) !== -1;
     },
+
     integer: ({ value }) => {
         return Number.isInteger(typeof value === 'string' ? parseInt(value) : value);
     },
@@ -140,7 +141,7 @@ export default {
     lt: ({ value, values, params }) => value < values[params[0]],
     lte: ({ value, values, params }) => value <= values[params[0]],
     
-    max: ({ value, params }) => (b(value) || typeof value === 'number') && sizeOf(value) <= params[0],
+    max: ({ value, params, rules }) => (b(value) || typeof value === 'number') && sizeOf(value, rules) <= params[0],
     
     mimetypes: ({ value, params }) => {
         if (!value || !value.type) {
@@ -166,7 +167,7 @@ export default {
         return false;
     },
     
-    min: ({ value, params }) => (b(value) || typeof value === 'number') && sizeOf(value) >= params[0],
+    min: ({ value, params, rules }) => (b(value) || typeof value === 'number') && sizeOf(value, rules) >= params[0],
     
     not_in: ({ value, params }) => params.findIndex(param => deepEquals(param, value)) === -1,
     
@@ -253,12 +254,20 @@ function isNotEmpty(value) {
     return typeof value === 'number' || typeof value === 'boolean' || !! value;
 }
 
-function sizeOf(value) {
+function sizeOf(value, rules) {
+    // If value is a string, but there is a numeric rule we parse the string as number.
+    if(rules !== undefined && typeof value === 'string' && hasNumericRule(rules)) {
+        return Number.parseFloat(value);
+    }
     //TODO files, images other things
     if (value.hasOwnProperty('length')) {
         value = value.length;
     }
     return value;
+}
+
+function hasNumericRule(rules) {
+    return rules.includes("number") || rules.includes("integer");
 }
 
 function b(value) {

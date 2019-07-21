@@ -65,7 +65,7 @@ describe('Form Validator', () => {
             }
 
             const validateField = mockValidateField({
-                errors: ['required']
+                errors: [ { key: 'required' } ]
             });
 
             expect(validateForm({ formData, includeMessages: false } )).toEqual({
@@ -88,7 +88,7 @@ describe('Form Validator', () => {
             }
 
             const validateField = mockValidateField({
-                errors: ['testRule']
+                errors: [ { key: 'testRule' } ]
             });
 
             const messageMock = mockMessage('testRule', 'hello');
@@ -124,10 +124,10 @@ describe('Form Validator', () => {
 
             const validateField = mockValidateField();
             validateField.mockReturnValueOnce({
-                errors: ['required'],
+                errors: [ { key: 'required' } ],
             });
             validateField.mockReturnValueOnce({
-                errors: ['required'],
+                errors: [ { key: 'required' } ],
             });
 
             expect(validateForm({ formData, includeMessages: false } )).toEqual({
@@ -149,7 +149,7 @@ describe('Form Validator', () => {
 
             const validateField = mockValidateField();
             validateField.mockReturnValueOnce({
-                errors: ['required', 'string'],
+                errors: [ { key: 'required' }, { key: 'string' } ],
             });
 
             expect(validateForm({ formData, includeMessages: false } )).toEqual({
@@ -239,14 +239,14 @@ describe('Form Validator', () => {
         it('can detect an invalid field', () => {
             const result = validateField(createFieldData({ validation: ['required'] }))
 
-            expect(result.errors).toEqual(['required']);
+            expect(result.errors).toEqual([ { key: 'required', params: [] } ]);
             expect(console.warn).not.toHaveBeenCalled();
         });
 
         it('can detect multiple rules on one field', () => {
             const result = validateField(createFieldData({ validation: ['required', 'string'] }))
 
-            expect(result.errors).toEqual(['required', 'string']);
+            expect(result.errors).toEqual([ { key: 'required', params: [] }, { key: 'string', params: [] }]);
             expect(console.warn).not.toHaveBeenCalled();
         })
 
@@ -277,7 +277,7 @@ describe('Form Validator', () => {
                 throw new Error();
             });
 
-            expect(validateField(fieldData)).toEqual({ errors: ['testRule'] });
+            expect(validateField(fieldData)).toEqual({ errors: [ { key: 'testRule', params: [] } ] });
             expect(console.warn).toHaveBeenCalled();
             expect(ruleMock).toHaveBeenCalled();
 
@@ -293,7 +293,7 @@ describe('Form Validator', () => {
                 throw new Error();
             });
 
-            expect(validateField(fieldData)).toEqual({ errors: ['test'] });
+            expect(validateField(fieldData)).toEqual({ errors: [ { key: 'test', params: [] } ] });
             expect(console.warn).toHaveBeenCalled();
             expect(ruleMock).toHaveBeenCalled();
 
