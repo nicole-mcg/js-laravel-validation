@@ -123,5 +123,11 @@ function getDefaultPlaceholderValue(placeholder, fieldData) {
     }
 
     const placeholderFunc = rulePlaceholders[placeholder];
-    return placeholderFunc && placeholderFunc(fieldData);
+    try{
+         return placeholderFunc && placeholderFunc(fieldData);   
+    }
+    catch(err){
+        console.warn(`Warning: the ${placeholder} property is not defined on ${fieldData.key}.`);
+        return null;   
+    }
 }
